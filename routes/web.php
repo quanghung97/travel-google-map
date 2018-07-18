@@ -16,8 +16,19 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('dashboard', 'HomeController@index')->name('dashboard');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/auth/google', 'SocialAuthController@redirectToProvider');
 Route::get('/auth/google/callback', 'SocialAuthController@handleProviderCallback');
+
+Route::group(['prefix'=>'admin'], function () {
+    Route::group(['prefix'=>'admin', 'middleware'=>['role:admin', 'auth']], function () {
+        Route::resource('permission', 'Admin\\PermissionController');
+        Route::resource('role', 'Admin\\RoleController');
+        Route::resource('user', 'Admin\\UserController');
+    });
+    Route::group(['prefix'=>'sub-admin', 'middleware'=>['role:sub_admin', 'auth']], function () {
+    });
+});
