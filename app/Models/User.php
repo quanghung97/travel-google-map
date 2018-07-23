@@ -19,6 +19,8 @@ class User extends Authenticatable
         'password',
         'g_avatar_url',
         'g_id',
+        'birthday',
+        'gender'
     ];
 
     protected $hidden = [
@@ -30,5 +32,33 @@ class User extends Authenticatable
         if ($value) {
             $this->attributes['password'] = app('hash')->needsRehash($value)?Hash::make($value):$value;
         }
+    }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment', 'user_id', 'id');
+    }
+
+    public function trips()
+    {
+        return $this->belongsToMany('App\Models\Trip', 'user_trip', 'user_id', 'trip_id');
+    }
+
+    public function tripsFollow()
+    {
+        return $this->belongsToMany('App\Models\Trip', 'user_trip', 'user_id', 'trip_id')
+        ->wherePivot('status', 'follow');
+    }
+
+    public function tripsVerify()
+    {
+        return $this->belongsToMany('App\Models\Trip', 'user_trip', 'user_id', 'trip_id')
+        ->wherePivot('status', 'waiting verify');
+    }
+
+    public function tripsJoin()
+    {
+        return $this->belongsToMany('App\Models\Trip', 'user_trip', 'user_id', 'trip_id')
+        ->wherePivot('status', 'join');
     }
 }
