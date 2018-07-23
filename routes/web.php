@@ -23,6 +23,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/auth/google', 'SocialAuthController@redirectToProvider');
 Route::get('/auth/google/callback', 'SocialAuthController@handleProviderCallback');
 
+Route::group(['prefix'=>'user', 'middleware'=>'auth'], function(){
+    Route::resource('profile','User\ProfileController')->only(['show','update','index']);
+    Route::post('upload','User\ProfileController@postUpload');
+});
+
 Route::group(['prefix'=>'admin'], function () {
     Route::group(['prefix'=>'admin', 'middleware'=>['role:admin', 'auth']], function () {
         Route::resource('permission', 'Admin\\PermissionController');

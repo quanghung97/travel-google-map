@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\Facades\UserRepository;
 
 class ProfileController extends Controller
 {
@@ -14,28 +15,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        
     }
 
     /**
@@ -46,7 +26,8 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = UserRepository::findOrFail($id);
+        return view('user.profile.index',['user'=>$user]);
     }
 
     /**
@@ -82,4 +63,19 @@ class ProfileController extends Controller
     {
         //
     }
+
+    public function postUpload()
+    {
+        $folderPath = 'downloads/photo/image';
+        if (!File::isDirectory($folderPath)) {
+            File::makeDirectory($folderPath, 0755, true); 
+        }
+        $file = Input::file('file');
+        $filename = '';
+        if(null != $file){
+            $filename = $file->getClientOriginalName();
+            $upload_success = Input::file('file')->move($folderPath, $filename);
+        } 
+    }
+
 }

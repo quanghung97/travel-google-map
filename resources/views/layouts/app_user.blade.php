@@ -94,7 +94,7 @@
 
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
-                      <li><a href="#pro"> Profile</a></li>
+                      <li><a href="{{url('user/profile/'.Auth::user()->id)}}"> Profile</a></li>
                       <li>
                         <a href="#set">
                           <span>Settings</span>

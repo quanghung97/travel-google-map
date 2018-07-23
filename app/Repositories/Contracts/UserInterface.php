@@ -10,4 +10,10 @@ interface UserInterface
      * @return  User
      */
     public function findOrCreateUser($user);
+
+    /**
+     * get all Users has permission
+     * @return  mixed
+     */
+    public function getAllPermission($id);
 }
