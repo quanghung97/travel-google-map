@@ -51,7 +51,17 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6',
+            'password_confirm' => 'required|same:password'
+        ],[
+            'name.required'=>'Bạn chưa nhập tên',
+            'email.required'=>'Bạn chưa nhập email',
+            'email.email'=>'Định dạng email không đúng',
+            'email.unique'=>'Email này đã tồn tại',
+            'password.required'=>'Bạn chưa nhập password',
+            'password.min'=>'Độ dài mật khẩu tối thiểu 6 kí tự',
+            'password_confirm.required'=>'Vui lòng nhập lại mật khẩu',
+            'password_confirm.same'=>'Mật khẩu xác nhận không đúng',
         ]);
     }
 
@@ -78,6 +88,6 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        return view('auth.login_register');
+        return view('auth.register');
     }
 }
