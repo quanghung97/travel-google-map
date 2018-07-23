@@ -42,8 +42,23 @@ class LoginController extends Controller
      *
      * @return void
      */
+
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
+        ],[
+            'email.required'=>'Bạn chưa nhập email',
+            'email.email'=>'Định dạng email không đúng',
+            'email.unique'=>'Email này đã tồn tại',
+            'password.required'=>'Bạn chưa nhập password',
+            'password.min'=>'Độ dài mật khẩu tối thiểu 6 kí tự',
+        ]);
+    } 
+
     public function showLoginForm()
     {
-        return view('auth.login_register');
+        return view('auth.login');
     }
 }
