@@ -6,7 +6,7 @@
       <!-- Meta, title, CSS, favicons, etc. -->
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   	<link rel="icon" href="images/favicon.ico" type="image/ico" />
 
       <title>User Travel </title>
@@ -39,6 +39,7 @@
       <link href="{{ URL::asset('gentelella_master/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css') }}" rel="stylesheet">
 
       @yield('css')
+      @yield('mapjs')
     </head>
 
     <body class="nav-md">
@@ -113,7 +114,7 @@
                       </li>
                     </ul>
                   </li>
-                
+
                   <li class="">
                     <a href="#create" class="user-profile dropdown-toggle" >
                           Lên kế hoạch

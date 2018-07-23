@@ -32,3 +32,5 @@ Route::group(['prefix'=>'admin'], function () {
     Route::group(['prefix'=>'sub-admin', 'middleware'=>['role:sub_admin', 'auth']], function () {
     });
 });
+
+Route::resource('user/trip', 'User\TripController');
