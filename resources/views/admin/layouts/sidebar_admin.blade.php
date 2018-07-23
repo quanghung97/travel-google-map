@@ -14,7 +14,7 @@
       @endrole
       @hasanyrole('admin|sub_admin')
 
-      <li><a href="{{ url('admin/match') }}"><i class="fa fa-desktop"></i> Manager Matches </a>
+      <li><a href="{{ url('admin/match') }}"><i class="fa fa-desktop"></i> Manager Trips </a>
 
       </li>
 
