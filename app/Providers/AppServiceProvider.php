@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
-    protected $repositories = ['User'];
+    protected $repositories = ['User','Comment','Image','Trip','WayPoint'];
 
     /**
      * Bootstrap any application services.
