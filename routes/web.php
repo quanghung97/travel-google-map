@@ -16,11 +16,11 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::get('dashboard', 'HomeController@index')->name('dashboard');
+Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/auth/google', 'SocialAuthController@redirectToProvider');
+Route::get('/auth/google', 'SocialAuthController@redirectToProvider')->name('loginWithGoogle');
 Route::get('/auth/google/callback', 'SocialAuthController@handleProviderCallback');
 
 Route::group(['prefix'=>'user', 'middleware'=>'auth'], function(){ 
