@@ -16,4 +16,6 @@ interface UserInterface
      * @return  mixed
      */
     public function getAllPermission($id);
+
+    public function updateAvatar($id, $image);
 }
