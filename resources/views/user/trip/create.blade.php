@@ -14,7 +14,7 @@
     var map;
 
     function initialize() {
-        var position = new google.maps.LatLng(-8.05, -34.89);
+        var position = new google.maps.LatLng(21.016801, 105.784221);
 
         directionsService = new google.maps.DirectionsService();
         directionsRenderer = new google.maps.DirectionsRenderer();
@@ -318,7 +318,27 @@
                                 <div id="map">
 
                                 </div>
-                                
+                                <a id="cretrip" class="btn btn-app">
+                                    <i class="fa fa-plus"></i> Create Trip
+                                </a>
+                                <div id="listwp">
+
+                                    {{--
+                                    <table id="datatable" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>lat</th>
+                                                <th>lng</th>
+                                                <th>address</th>
+                                            </tr>
+                                        </thead>
+
+
+                                        <tbody>
+
+                                        </tbody>
+                                    </table> --}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -329,4 +349,60 @@
 </div>
 </div>
 </div>
+@endsection
+
+@section('js')
+<script type="text/javascript">
+    $(document).ready(function() {
+        var listaddress = [];
+        $("#cretrip").click(function() {
+            //var table = ;
+
+
+            //$("#listwp").append('<div class="module_holder"><div class="module_item"><img src="images/i-5.png" alt="Sweep Stakes"><br>sendSMS</div></div>');
+
+            var i = 0;
+            while (i < markers.length) {
+                var geocoderr = new google.maps.Geocoder;
+                //var infowindow = new google.maps.InfoWindow;
+                results = null;
+                geocoderr.geocode({
+                    'location': markers[i].position
+                }, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        // var table = $("#datatable").DataTable();
+                        // table.row.add([
+                        //     results[0].geometry.location.lat(),
+                        //     results[0].geometry.location.lng(),
+                        //     results[0].formatted_address,
+                        // ]).draw();
+                        var address = results[0].formatted_address;
+                        $('#listwp').append(address + "<br>");
+                        address = '';
+
+                    }
+
+                });
+                i++;
+
+
+                //infowindow.setContent("double click to delete this waypoint");
+                //infowindow.open(map, this);
+                //updateMarkerPosition(event.latLng);
+
+                //console.log(listaddress[0]);
+                //console.log(markers[i].getPosition().lat());
+                //using ajax to send to controller php
+                //console.log(listaddress[i]);
+
+
+
+
+
+            }
+
+        });
+
+    });
+</script>
 @endsection
