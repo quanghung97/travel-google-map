@@ -1,4 +1,4 @@
-@extends('player.layouts.app_user')
+@extends('user.layouts.app_user')
 @section('css')
 
 

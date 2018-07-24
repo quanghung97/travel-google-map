@@ -25,4 +25,9 @@ class UserRepository extends BaseRepository implements UserInterface
             'g_avatar_url' => $user->getAvatar(),
         ]);
     }
+
+    public function getAllPermission($id)
+    {
+        return $this->model->findOrFail($id)->getPermissionsViaRoles()->pluck('name')->unique()->toArray();
+    }
 }
