@@ -40,10 +40,8 @@ class SocialAuthController extends Controller
     public function handleProviderCallback()
     {
         $userG = Socialite::driver('google')->user();
-        //dd($userG);
-
         $authUser = UserRepository::findOrCreateUser($userG);
         Auth::login($authUser, true);
-        return redirect('/home');
+        return redirect(route('dashboard'));
     }
 }
