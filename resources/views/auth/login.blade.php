@@ -35,7 +35,7 @@
                 <input id="email" type="email" placeholder="Email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
                 @if ($errors->has('email'))
                     <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('name') }}</strong>
+                        <strong>{{ $errors->first('email') }}</strong>
                     </span>
                 @endif
               </div>

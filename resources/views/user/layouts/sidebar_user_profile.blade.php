@@ -7,7 +7,7 @@
         
         <li><a href="{{ url('dashboard') }}"><i class="fa fa-home"></i> Home </a></li>
   
-        <li><a href="{{url('user/profile/'.Auth::user()->id)}}"><i class="fa fa-bar-chart-o"></i>Cập nhật hồ sơ thông tin cá nhân</a></li>
+        <li><a href="{{url('user/userProfile/profile/'.Auth::user()->id)}}"><i class="fa fa-bar-chart-o"></i>Cập nhật hồ sơ thông tin cá nhân</a></li>
         
         <li><a href="#"><i class="fa fa-bar-chart-o"></i>Những chuyến đi của tôi</a></li>
         
