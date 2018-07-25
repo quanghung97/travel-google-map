@@ -108,8 +108,12 @@
 
 
                 google.maps.event.addListener(marker, 'dblclick', function() {
-                    appendWayPoint(markers[0].position);
+                    if (marker.arrayIndex == markers.length - 1) {
+                        appendWayPoint(markers[0].position);
+                    }
                 });
+
+
 
 
                 google.maps.event.addListener(marker, 'rightclick', function() {
@@ -362,7 +366,7 @@
             //$("#listwp").append('<div class="module_holder"><div class="module_item"><img src="images/i-5.png" alt="Sweep Stakes"><br>sendSMS</div></div>');
 
             var i = 0;
-            while (i < markers.length) {
+            while(i<markers.length){
                 var geocoderr = new google.maps.Geocoder;
                 //var infowindow = new google.maps.InfoWindow;
                 results = null;
@@ -384,22 +388,26 @@
 
                 });
                 i++;
-
-
-                //infowindow.setContent("double click to delete this waypoint");
-                //infowindow.open(map, this);
-                //updateMarkerPosition(event.latLng);
-
-                //console.log(listaddress[0]);
-                //console.log(markers[i].getPosition().lat());
-                //using ajax to send to controller php
-                //console.log(listaddress[i]);
-
-
-
-
-
             }
+
+
+
+
+
+            //infowindow.setContent("double click to delete this waypoint");
+            //infowindow.open(map, this);
+            //updateMarkerPosition(event.latLng);
+
+            //console.log(listaddress[0]);
+            //console.log(markers[i].getPosition().lat());
+            //using ajax to send to controller php
+            //console.log(listaddress[i]);
+
+
+
+
+
+
 
         });
 
