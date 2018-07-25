@@ -25,8 +25,24 @@ Route::get('/auth/google/callback', 'SocialAuthController@handleProviderCallback
 
 Route::group(['prefix'=>'user', 'middleware'=>'auth'], function () {
     Route::group(['prefix'=>'userProfile'], function () {
-        Route::resource('profile', 'User\ProfileController')->only(['show']);
-        Route::post('profile/{id}', 'User\ProfileController@checkChangeProfile');
+        Route::resource('profile', 'User\ProfileController')->only(['show', 'update']);
+    });
+    Route::group(['prefix'=>'trip'], function () {
+        //@show Trip in TripController filter follow, owner, join, verify
+        //@update Trip in TripController filter follow, owner, join, verify
+        Route::resource('/', 'User\TripController');
+
+        Route::group(['prefix'=>'follow'], function () {
+            Route::get('/', 'User\TripFollowController@index');
+        });
+        Route::group(['prefix'=>'join'], function () {
+            Route::get('/', 'User\TripFollowController@index');
+        });
+    });
+    Route::group(['prefix'=>'home'], function () {
+        Route::get('newest', 'User\Home\ListController@newest');
+        Route::get('hotest', 'User\Home\ListController@hotest');
+        Route::get('newestmem', 'User\Home\ListController@newestmem');
     });
 });
 
@@ -39,5 +55,3 @@ Route::group(['prefix'=>'admin'], function () {
     Route::group(['prefix'=>'sub-admin', 'middleware'=>['role:sub_admin', 'auth']], function () {
     });
 });
-
-Route::resource('user/trip', 'User\TripController');

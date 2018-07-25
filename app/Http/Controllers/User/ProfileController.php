@@ -5,19 +5,9 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Facades\UserRepository;
-use File;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-    }
-
     /**
      * Display the specified resource.
      *
@@ -27,18 +17,7 @@ class ProfileController extends Controller
     public function show($id)
     {
         $user = UserRepository::findOrFail($id);
-        return view('user.profile.index', ['user'=>$user]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return view('user.profile.index', compact('user'));
     }
 
     /**
@@ -50,22 +29,7 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    public function checkChangeProfile(Request $request, $id)
-    {
-        // dd($request);
+        //dd($request);
         $this->validate(
             $request,
             [

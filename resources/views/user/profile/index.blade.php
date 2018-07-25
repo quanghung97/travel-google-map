@@ -366,7 +366,13 @@
                     @endif
                     <div class="clearfix"></div>
                     <div class="row">
-                        <form action="{{url('user/userProfile/profile/'.$user->id)}}" enctype="multipart/form-data" method="post">
+
+                            {!! Form::model($user, [
+                                'method' => 'PATCH',
+                                'url' => ['user/userProfile/profile/'.$user->id],
+                                'class' => 'form-horizontal',
+                                'files' => true
+                            ]) !!}
                             {{ csrf_field() }}
                             <div class="col-md-4">
 
@@ -479,8 +485,8 @@
                                     <br>
                                     <button type="submit" class="btn btn-primary">Update
                                     </button>
-
-                        </form>
+                                {!! Form::close() !!}
+                        
                         </div>
 
                         </div>

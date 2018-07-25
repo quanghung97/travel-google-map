@@ -325,12 +325,13 @@
                                 <a id="cretrip" class="btn btn-app">
                                     <i class="fa fa-plus"></i> Create Trip
                                 </a>
-                                <div id="listwp">
+                                <div >
 
-                                    {{--
-                                    <table id="datatable" class="table table-striped table-bordered">
+
+                                    <table id="listwp" class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
+                                                <th>#</th>
                                                 <th>lat</th>
                                                 <th>lng</th>
                                                 <th>address</th>
@@ -341,7 +342,7 @@
                                         <tbody>
 
                                         </tbody>
-                                    </table> --}}
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -366,33 +367,45 @@
             //$("#listwp").append('<div class="module_holder"><div class="module_item"><img src="images/i-5.png" alt="Sweep Stakes"><br>sendSMS</div></div>');
 
             var i = 0;
-            while(i<markers.length){
-                var geocoderr = new google.maps.Geocoder;
-                //var infowindow = new google.maps.InfoWindow;
-                results = null;
-                geocoderr.geocode({
-                    'location': markers[i].position
-                }, function(results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        // var table = $("#datatable").DataTable();
-                        // table.row.add([
-                        //     results[0].geometry.location.lat(),
-                        //     results[0].geometry.location.lng(),
-                        //     results[0].formatted_address,
-                        // ]).draw();
-                        var address = results[0].formatted_address;
-                        $('#listwp').append(address + "<br>");
-                        address = '';
+            while (i < markers.length) {
 
-                    }
+                (function(i) {
+                    setTimeout(function() {
+                        var geocoderr = new google.maps.Geocoder;
+                        results = null;
+                        geocoderr.geocode({
+                            'location': markers[i].position
+                        }, function(results, status) {
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                // var table = $("#datatable").DataTable();
+                                // table.row.add([
+                                //     results[0].geometry.location.lat(),
+                                //     results[0].geometry.location.lng(),
+                                //     results[0].formatted_address,
+                                // ]).draw();
+                                // var address = results[0].formatted_address;
+                                // $('#listwp').append(address + "<br>");
+                                // address = '';
+                                $('#listwp > tbody:last-child').append(
+                                    '<tr>' // need to change closing tag to an opening `<tr>` tag.
+                                     +
+                                     '<td name="ordernum'+i+'">' + (i+1) + '</td>' +
+                                    '<td name="lat'+i+'">' + results[0].geometry.location.lat() + '</td>' +
+                                    '<td name="lng'+i+'">' + results[0].geometry.location.lng() + '</td>' +
+                                    '<td name="address'+i+'">' + results[0].formatted_address + '</td>'
+                                     +
+                                    '</tr>');
 
-                });
+                            } else {
+                                console.log('query limited');
+                            }
+
+                        });
+                    }, 3000 * i);
+                })(i);
+
                 i++;
             }
-
-
-
-
 
             //infowindow.setContent("double click to delete this waypoint");
             //infowindow.open(map, this);
@@ -402,11 +415,6 @@
             //console.log(markers[i].getPosition().lat());
             //using ajax to send to controller php
             //console.log(listaddress[i]);
-
-
-
-
-
 
 
         });

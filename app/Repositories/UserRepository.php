@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\Repositories\Contracts\UserInterface;
+use File;
 
 class UserRepository extends BaseRepository implements UserInterface
 {
