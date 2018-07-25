@@ -7,7 +7,6 @@ use App\Repositories\Contracts\BaseInterface;
 
 abstract class BaseRepository implements BaseInterface
 {
-
     protected $model;
     public static $singletonModel = null;
 

@@ -23,11 +23,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/auth/google', 'SocialAuthController@redirectToProvider')->name('loginWithGoogle');
 Route::get('/auth/google/callback', 'SocialAuthController@handleProviderCallback');
 
-Route::group(['prefix'=>'user', 'middleware'=>'auth'], function(){ 
-    Route::group(['prefix'=>'userProfile'], function(){
-           Route::resource('profile','User\ProfileController')->only(['show']);
-           Route::post('profile/{id}','User\ProfileController@checkChangeProfile');
-    });  
+Route::group(['prefix'=>'user', 'middleware'=>'auth'], function () {
+    Route::group(['prefix'=>'userProfile'], function () {
+        Route::resource('profile', 'User\ProfileController')->only(['show']);
+        Route::post('profile/{id}', 'User\ProfileController@checkChangeProfile');
+    });
 });
 
 Route::group(['prefix'=>'admin'], function () {
