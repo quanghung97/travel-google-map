@@ -4,10 +4,31 @@
     #map {
         height: 500px;
     }
+
+    .context_menu{
+	    background-color:white;
+	    border:1px solid gray;
+    }
+    .context_menu_item{
+	    padding:3px 6px;
+    }
+    .context_menu_item:hover{
+	    background-color:#CCCCCC;
+    }
+    .context_menu_separator{
+	    background-color:gray;
+	    height:1px;
+	    margin:0;
+	    padding:0;
+    }
+    th {
+        text-align: center;
+    }
 </style>
 @endsection
 @section('mapjs')
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyiIshpnLak_30s9Z954mltbs97Iu4EpI" type="text/javascript"></script>
+<script src="{{asset('js/ContextMenu.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
     var directionsService;
     var directionsRenderer;
@@ -30,7 +51,64 @@
         google.maps.event.addListener(map, 'click', function(event) {
             addWayPointToRoute(event.latLng);
         });
-
+        
+        var contextMenuOptions={};
+	    contextMenuOptions.classNames={menu:'context_menu', menuSeparator:'context_menu_separator'};
+	
+	    //	create an array of ContextMenuItem objects
+	    //	an 'id' is defined for each of the four directions related items
+	    var menuItems = [];
+			//	a menuItem with no properties will be rendered as a separator
+			menuItems.push({
+				className: 'context_menu_item',
+				eventName: 'end_plan',
+				label: 'End plan'
+			});
+			menuItems.push({});
+			menuItems.push({
+				className: 'context_menu_item',
+				eventName: 'zoom_in_click',
+				label: 'Zoom in'
+			});
+			menuItems.push({
+				className: 'context_menu_item',
+				eventName: 'zoom_out_click',
+				label: 'Zoom out'
+			});
+			menuItems.push({});
+			menuItems.push({
+				className: 'context_menu_item',
+				eventName: 'center_map_click',
+				label: 'Center map here'
+			});
+	    contextMenuOptions.menuItems=menuItems;
+	
+	    var contextMenu=new ContextMenu(map, contextMenuOptions);
+	
+	    google.maps.event.addListener(map, 'rightclick', function(mouseEvent){
+		    contextMenu.show(mouseEvent.latLng);
+	    });
+        
+        google.maps.event.addListener(contextMenu, 'menu_item_selected', function (latLng, eventName) {
+				//	latLng is the position of the ContextMenu
+				//	eventName is the eventName defined for the clicked ContextMenuItem in the ContextMenuOptions
+				switch (eventName) {
+					case 'zoom_in_click':
+						map.setZoom(map.getZoom() + 1);
+						break;
+					case 'zoom_out_click':
+						map.setZoom(map.getZoom() - 1);
+						break;
+					case 'center_map_click':
+						map.panTo(latLng);
+						break;
+					case 'end_plan':
+                        addWayPointToRoute(markers[0].position);
+                        createTable();
+						break;
+				}
+			});
+        
 
     }
 
@@ -83,11 +161,23 @@
 
         directionsService.route(request, function(response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
-                var marker = new google.maps.Marker({
-                    position: response.routes[0].legs[0].end_location,
-                    map: map,
-                    draggable: true,
-                });
+                if (location == markers[0].position) {
+						var marker = new google.maps.Marker({
+							position: response.routes[0].legs[0].end_location,
+							map: map,
+							draggable: false,
+							icon: new google.maps.MarkerImage(
+								'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+							)
+						});
+                        
+				} else {
+						var marker = new google.maps.Marker({
+							position: response.routes[0].legs[0].end_location,
+							map: map,
+							draggable: true,
+					});
+				}
                 markers.push(marker);
                 showInfo(marker);
                 marker.arrayIndex = markers.length - 1;
@@ -104,17 +194,6 @@
                 }
                 polyline.setMap(map);
                 polylines.push(polyline);
-
-
-
-                google.maps.event.addListener(marker, 'dblclick', function() {
-                    if (marker.arrayIndex == markers.length - 1) {
-                        appendWayPoint(markers[0].position);
-                    }
-                });
-
-
-
 
                 google.maps.event.addListener(marker, 'rightclick', function() {
                     deleteMarker(marker);
@@ -290,9 +369,7 @@
 
         <div class="col-md-12">
             <div class="card">
-
                 <div class="card-body">
-
                     <br/>
                     <br/>
                     <div class="clearfix"></div>
@@ -306,11 +383,11 @@
                                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                         </li>
                                         <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
                                             <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">Settings 1</a>
+                                                <li><a href="">Settings 1</a>
                                                 </li>
-                                                <li><a href="#">Settings 2</a>
+                                                <li><a href="">Settings 2</a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -319,31 +396,45 @@
                                     </ul>
                                     <div class="clearfix"></div>
                                 </div>
-                                <div id="map">
+                                <form action="{{url('user/trip')}}" enctype="multipart/form-data" method="POST">
+                                    {{ csrf_field() }}
+                                    <div class="row"> 
+                                        <div class="col-md-6">
+                                                <h3>Nhập tên chuyến đi</h3>
+                                                <input type="text" class="form-control" name="name">
+                                                <br>
+                                        </div>
+                                        <div class="col-md-6">
+                                                <h3>Chọn ảnh cover của chuyến đi</h3>
+                                                <input type="file" class="form-control" name="file">
+                                                <br>    
+                                        </div>
 
+                                        <div id="map" class="col-md-6">
+                                        </div>
+                                   
+                                    {{-- <a id="cretrip" class="btn btn-app">
+                                        <i class="fa fa-plus"></i> Create Trip
+                                    </a> --}}
+                                    <div class="col-md-6">
+                                        <table id="listwp" class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>lat</th>
+                                                    <th>lng</th>
+                                                    <th>address</th>
+                                                </tr>
+                                            </thead>
+    
+                                            <tbody>
+    
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                                <a id="cretrip" class="btn btn-app">
-                                    <i class="fa fa-plus"></i> Create Trip
-                                </a>
-                                <div >
-
-
-                                    <table id="listwp" class="table table-striped table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>lat</th>
-                                                <th>lng</th>
-                                                <th>address</th>
-                                            </tr>
-                                        </thead>
-
-
-                                        <tbody>
-
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <button type="submit" id="submit" disabled="disabled" class="btn btn-danger" style="float:right">Tạo kế hoạch</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -358,54 +449,54 @@
 
 @section('js')
 <script type="text/javascript">
-    $(document).ready(function() {
-        var listaddress = [];
-        $("#cretrip").click(function() {
-            //var table = ;
+    // $(document).ready(function() {
+    //     var listaddress = [];
+    //     $("#cretrip").click(function() {
+    //         //var table = ;
 
 
-            //$("#listwp").append('<div class="module_holder"><div class="module_item"><img src="images/i-5.png" alt="Sweep Stakes"><br>sendSMS</div></div>');
+    //         //$("#listwp").append('<div class="module_holder"><div class="module_item"><img src="images/i-5.png" alt="Sweep Stakes"><br>sendSMS</div></div>');
 
-            var i = 0;
-            while (i < markers.length) {
+    //         var i = 0;
+    //         while (i < markers.length) {
 
-                (function(i) {
-                    setTimeout(function() {
-                        var geocoderr = new google.maps.Geocoder;
-                        results = null;
-                        geocoderr.geocode({
-                            'location': markers[i].position
-                        }, function(results, status) {
-                            if (status == google.maps.GeocoderStatus.OK) {
-                                // var table = $("#datatable").DataTable();
-                                // table.row.add([
-                                //     results[0].geometry.location.lat(),
-                                //     results[0].geometry.location.lng(),
-                                //     results[0].formatted_address,
-                                // ]).draw();
-                                // var address = results[0].formatted_address;
-                                // $('#listwp').append(address + "<br>");
-                                // address = '';
-                                $('#listwp > tbody:last-child').append(
-                                    '<tr>' // need to change closing tag to an opening `<tr>` tag.
-                                     +
-                                     '<td name="ordernum'+i+'">' + (i+1) + '</td>' +
-                                    '<td name="lat'+i+'">' + results[0].geometry.location.lat() + '</td>' +
-                                    '<td name="lng'+i+'">' + results[0].geometry.location.lng() + '</td>' +
-                                    '<td name="address'+i+'">' + results[0].formatted_address + '</td>'
-                                     +
-                                    '</tr>');
+    //             (function(i) {
+    //                 setTimeout(function() {
+    //                     var geocoderr = new google.maps.Geocoder;
+    //                     results = null;
+    //                     geocoderr.geocode({
+    //                         'location': markers[i].position
+    //                     }, function(results, status) {
+    //                         if (status == google.maps.GeocoderStatus.OK) {
+    //                             // var table = $("#datatable").DataTable();
+    //                             // table.row.add([
+    //                             //     results[0].geometry.location.lat(),
+    //                             //     results[0].geometry.location.lng(),
+    //                             //     results[0].formatted_address,
+    //                             // ]).draw();
+    //                             // var address = results[0].formatted_address;
+    //                             // $('#listwp').append(address + "<br>");
+    //                             // address = '';
+    //                             $('#listwp > tbody:last-child').append(
+    //                                 '<tr>' // need to change closing tag to an opening `<tr>` tag.
+    //                                  +
+    //                                  '<td name="ordernum'+i+'">' + (i+1) + '</td>' +
+    //                                 '<td name="lat'+i+'">' + results[0].geometry.location.lat() + '</td>' +
+    //                                 '<td name="lng'+i+'">' + results[0].geometry.location.lng() + '</td>' +
+    //                                 '<td name="address'+i+'">' + results[0].formatted_address + '</td>'
+    //                                  +
+    //                                 '</tr>');
 
-                            } else {
-                                console.log('query limited');
-                            }
+    //                         } else {
+    //                             console.log('query limited');
+    //                         }
 
-                        });
-                    }, 3000 * i);
-                })(i);
+    //                     });
+    //                 }, 3000 * i);
+    //             })(i);
 
-                i++;
-            }
+    //             i++;
+    //         }
 
             //infowindow.setContent("double click to delete this waypoint");
             //infowindow.open(map, this);
@@ -417,8 +508,43 @@
             //console.log(listaddress[i]);
 
 
-        });
+    //     });
 
-    });
+    // });
+
+    function createTable(){
+            var i = 0;
+            while (i < markers.length) {
+
+                (function(i) {
+                    setTimeout(function() {
+                        var geocoderr = new google.maps.Geocoder;
+                        results = null;
+                        geocoderr.geocode({
+                            'location': markers[i].position
+                        }, function(results, status) {
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                $('#listwp > tbody:last-child').append(
+                                    '<tr>' +// need to change closing tag to an opening `<tr>` tag.
+                                    '<td name="ordernum'+i+'">' + (i+1) +'<input type="hidden" name="ordernum'+i+'" value="'+(i+1)+'">' + '</td>' +
+                                    '<td>'+ results[0].geometry.location.lat()+'<input type="hidden" name="lat'+i+'" value="'+results[0].geometry.location.lat()+'">'+ '</td>' +
+                                    '<td name="lng'+i+'">' + results[0].geometry.location.lng() + '<input type="hidden" name="lng'+i+'" value="'+results[0].geometry.location.lng()+'">'+'</td>' +
+                                    '<td name="address'+i+'">' + results[0].formatted_address + '<input type="hidden" name="address'+i+'" value="'+results[0].formatted_address+'">'+'</td>' +
+                                    '</tr>');
+                            } else {
+                                console.log('query limited');
+                            }
+                        });
+                    }, 3000 * i);
+                })(i);
+                i++;
+                
+            }
+            setTimeout(function(){
+                $("#submit").removeAttr("disabled");
+            },3000*i);
+           
+               
+    }
 </script>
 @endsection
