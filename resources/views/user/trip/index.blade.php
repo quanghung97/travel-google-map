@@ -22,7 +22,7 @@
                         <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                         <div class="x_title">
-                          <h2>Show Table Team <small>Sessions</small></h2>
+                          <h2>Show Trip Team <small>Sessions</small></h2>
                           <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
@@ -44,21 +44,21 @@
                             <table id="datatable" class="table table-borderless">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Name</th><th>Email</th><th>Balance</th><th>Actions</th>
+                                        <th>#</th><th>Name</th><th>People Number</th><th>Status</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($trip as $item)
                                     <tr>
                                         <td>{{ $loop->iteration or $item->id }}</td>
-                                        <td>{{ $item->name }}</td><td>{{ $item->email }}</td>
-                                        <td>{{ $item->lat }}</td>
+                                        <td>{{ $item->name }}</td><td>{{ $item->people_number }}</td>
+                                        <td>{{ $item->status }}</td>
                                         <td>
-                                            <a href="{{ url('/admin/admin/user/' . $item->id) }}" title="View user"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/admin/admin/user/' . $item->id . '/edit') }}" title="Edit user"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                                            <a href="{{ url('/user/trip/' . $item->id) }}" title="View trip"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                            <a href="{{ url('/user/trip/' . $item->id . '/edit') }}" title="Edit trip"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
                                             {!! Form::open([
                                                 'method'=>'DELETE',
-                                                'url' => ['/admin/admin/user', $item->id],
+                                                'url' => ['/user/trip/', $item->id],
                                                 'style' => 'display:inline'
                                             ]) !!}
                                                 {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', [

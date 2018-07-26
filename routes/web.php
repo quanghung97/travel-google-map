@@ -27,11 +27,10 @@ Route::group(['prefix'=>'user', 'middleware'=>'auth'], function () {
     Route::group(['prefix'=>'userProfile'], function () {
         Route::resource('profile', 'User\ProfileController')->only(['show', 'update']);
     });
+    //@show Trip in TripController filter follow, owner, join, verify
+    //@update Trip in TripController filter follow, owner, join, verify
+    Route::resource('trip', 'User\TripController');
     Route::group(['prefix'=>'trip'], function () {
-        //@show Trip in TripController filter follow, owner, join, verify
-        //@update Trip in TripController filter follow, owner, join, verify
-        Route::resource('/', 'User\TripController');
-
         Route::group(['prefix'=>'follow'], function () {
             Route::get('/', 'User\TripFollowController@index');
         });

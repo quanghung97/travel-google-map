@@ -32,6 +32,11 @@ class Trip extends Model
         return $this->belongsToMany('App\Models\User', 'user_trip', 'trip_id', 'user_id');
     }
 
+    public function owner()
+    {
+        return $this->belongsTo('App\Models\User', 'id', 'owner_id');
+    }
+
     public function usersFollow()
     {
         return $this->belongsToMany('App\Models\User', 'user_trip', 'trip_id', 'user_id')

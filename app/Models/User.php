@@ -44,6 +44,11 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Trip', 'user_trip', 'user_id', 'trip_id');
     }
 
+    public function tripsOwner()
+    {
+        return $this->hasMany('App\Models\Trip', 'owner_id', 'id');
+    }
+
     public function tripsFollow()
     {
         return $this->belongsToMany('App\Models\Trip', 'user_trip', 'user_id', 'trip_id')

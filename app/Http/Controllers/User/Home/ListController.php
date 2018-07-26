@@ -27,7 +27,8 @@ class ListController extends Controller
 
     public function newestmem()
     {
-        $user = UserRepository::orderBy('created_at', 'desc')->where('id','<>',1)->where('id','<>',Auth::user()->id)->limit(10)->get();
+        $user = UserRepository::orderBy('created_at', 'desc')
+        ->where('id', '<>', 1)->where('id', '<>', Auth::user()->id)->limit(10)->get();
         return view('user.home.member.index', compact('user'));
     }
 }

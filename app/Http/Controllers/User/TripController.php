@@ -18,7 +18,8 @@ class TripController extends Controller
      */
     public function index()
     {
-        $trip = TripRepository::all();
+        $userid = Auth::user()->id;
+        $trip = TripRepository::with('wayPoints')->where('owner_id', $userid)->get();
 
         return view('user.trip.index', compact('trip'));
     }
@@ -77,7 +78,9 @@ class TripController extends Controller
      */
     public function show($id)
     {
-        //
+        //eager loading wayPoints
+        $trip = TripRepository::with('wayPoints')->findOrFail($id);
+        return view('user.trip.show', compact('trip'));
     }
 
     /**
@@ -88,7 +91,10 @@ class TripController extends Controller
      */
     public function edit($id)
     {
-        //
+        $trip = TripRepository::with('wayPoints')->findOrFail($id);
+        if (Auth::user()->id == $trip->owner_id) {
+            return view('user.trip.edit', compact('trip'));
+        }
     }
 
     /**
