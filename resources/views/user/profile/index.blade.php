@@ -483,10 +483,12 @@
                                             disabled="" />
                                     </div>
                                     <br>
+                                @can('updateProfile', $user)
                                     <button type="submit" class="btn btn-primary">Update
                                     </button>
+                                @endcan
                                 {!! Form::close() !!}
-                        
+
                         </div>
 
                         </div>

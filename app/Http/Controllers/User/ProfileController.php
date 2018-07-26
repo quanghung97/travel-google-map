@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Controllers\Controller;
 use App\Repositories\Facades\UserRepository;
 
@@ -27,18 +27,8 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProfileRequest $request, $id)
     {
-        //dd($request);
-        $this->validate(
-            $request,
-            [
-                'name' => 'required',
-            ],
-            [
-                'name.required' => 'Bạn chưa nhập Tên!',
-            ]
-        );
         if ($request->has('password')) {
             $this->validate(
                 $request,
