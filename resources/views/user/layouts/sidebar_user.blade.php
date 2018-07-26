@@ -9,7 +9,7 @@
 
       <li><a><i class="fa fa-bar-chart-o"></i> Top 10 kế hoạch hot nhất</a>
       </li>
-      <li><a><i class="fa fa-bar-chart-o"></i> 10 kế hoạch mới</a>
+      <li><a href="{{url('user/home/newest')}}"><i class="fa fa-bar-chart-o"></i> 10 kế hoạch mới</a>
       </li>
       <li><a href="{{url('user/home/newestmem')}}"><i class="fa fa-bar-chart-o"></i> 10 thành viên mới</a>
       </li>

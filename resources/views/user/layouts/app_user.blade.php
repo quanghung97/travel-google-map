@@ -5,4 +5,9 @@
     @include('user.layouts.sidebar_user')
   @endsection
 
+  @section('js') 
+  <script>
+        $('#listwp').DataTable();
+  </script>
+@endsection
 @endif

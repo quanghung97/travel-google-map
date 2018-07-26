@@ -12,15 +12,14 @@ class ListController extends Controller
 {
     public function newest()
     {
-        $trip = TripRepository::orderBy('created_at', 'desc')->get();
-        //dd($trip);
+        $trip = TripRepository::orderBy('created_at', 'desc')->limit(10)->get();
         return view('user.home.new.index', compact('trip'));
     }
 
     public function hotest()
     {
         $listFollowJoinUser = TripRepository::getAllTripHotest();
-        dd($listFollowJoinUser);
+        // dd($listFollowJoinUser);
         //dd($listFollowJoinUser[0]->usersJoin_count);
         return view('user.home.hot.index', compact('trip'));
     }
