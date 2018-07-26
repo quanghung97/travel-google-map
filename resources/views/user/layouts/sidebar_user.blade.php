@@ -11,7 +11,7 @@
       </li>
       <li><a><i class="fa fa-bar-chart-o"></i> 10 kế hoạch mới</a>
       </li>
-      <li><a><i class="fa fa-bar-chart-o"></i> 10 thành viên mới</a>
+      <li><a href="{{url('user/home/newestmem')}}"><i class="fa fa-bar-chart-o"></i> 10 thành viên mới</a>
       </li>
 
     </ul>

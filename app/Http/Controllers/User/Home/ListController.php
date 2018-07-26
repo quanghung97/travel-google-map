@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Facades\UserRepository;
 use App\Repositories\Facades\TripRepository;
+use Auth;
 
 class ListController extends Controller
 {
@@ -26,9 +27,7 @@ class ListController extends Controller
 
     public function newestmem()
     {
-        $user = UserRepository::orderBy('created_at', 'desc')->get();
-        dd($user);
-
-        return view('user.home.member.index', compact('trip'));
+        $user = UserRepository::orderBy('created_at', 'desc')->where('id','<>',1)->where('id','<>',Auth::user()->id)->limit(10)->get();
+        return view('user.home.member.index', compact('user'));
     }
 }

@@ -2,7 +2,7 @@
 @section('css')
 <style type="text/css">
     #map {
-        height: 500px;
+        height: 330px;
     }
 
     .context_menu{
@@ -406,25 +406,25 @@
                                 </div>
                                 <form action="{{url('user/trip')}}" enctype="multipart/form-data" method="POST">
                                     {{ csrf_field() }}
-                                    <div class="row">
-                                        <div class="col-md-6">
+                                    <div class="row"> 
+                                        <div class="col-md-6 col-sm-12">
                                                 <h3>Nhập tên chuyến đi</h3>
                                                 <input type="text" class="form-control" name="name">
                                                 <br>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 col-sm-12">
                                                 <h3>Chọn ảnh cover của chuyến đi</h3>
                                                 <input type="file" class="form-control" name="file">
                                                 <br>
                                         </div>
 
-                                        <div id="map" class="col-md-6">
+                                        <div id="map" class="col-md-6 col-sm-12">
                                         </div>
 
                                     {{-- <a id="cretrip" class="btn btn-app">
                                         <i class="fa fa-plus"></i> Create Trip
                                     </a> --}}
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 col-sm-12">
                                         <table id="listwp" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
