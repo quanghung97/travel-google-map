@@ -9,4 +9,10 @@ interface TripInterface
      * @return  mixed
      */
     public function getAllTripHotest();
+
+    /**
+     * store image Trip
+     * @return  mixed
+     */
+    public function updateImage($id, $img_file);
 }

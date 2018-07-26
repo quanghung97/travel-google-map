@@ -51,10 +51,10 @@
         google.maps.event.addListener(map, 'click', function(event) {
             addWayPointToRoute(event.latLng);
         });
-        
+
         var contextMenuOptions={};
 	    contextMenuOptions.classNames={menu:'context_menu', menuSeparator:'context_menu_separator'};
-	
+
 	    //	create an array of ContextMenuItem objects
 	    //	an 'id' is defined for each of the four directions related items
 	    var menuItems = [];
@@ -82,13 +82,13 @@
 				label: 'Center map here'
 			});
 	    contextMenuOptions.menuItems=menuItems;
-	
+
 	    var contextMenu=new ContextMenu(map, contextMenuOptions);
-	
+
 	    google.maps.event.addListener(map, 'rightclick', function(mouseEvent){
 		    contextMenu.show(mouseEvent.latLng);
 	    });
-        
+
         google.maps.event.addListener(contextMenu, 'menu_item_selected', function (latLng, eventName) {
 				//	latLng is the position of the ContextMenu
 				//	eventName is the eventName defined for the clicked ContextMenuItem in the ContextMenuOptions
@@ -108,7 +108,7 @@
 						break;
 				}
 			});
-        
+
 
     }
 
@@ -170,7 +170,7 @@
 								'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
 							)
 						});
-                        
+
 				} else {
 						var marker = new google.maps.Marker({
 							position: response.routes[0].legs[0].end_location,
@@ -372,6 +372,14 @@
                 <div class="card-body">
                     <br/>
                     <br/>
+                    @if ($errors->any())
+                        <ul class="alert alert-danger">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+                    
                     <div class="clearfix"></div>
 
                     <div class="row">
@@ -398,7 +406,7 @@
                                 </div>
                                 <form action="{{url('user/trip')}}" enctype="multipart/form-data" method="POST">
                                     {{ csrf_field() }}
-                                    <div class="row"> 
+                                    <div class="row">
                                         <div class="col-md-6">
                                                 <h3>Nhập tên chuyến đi</h3>
                                                 <input type="text" class="form-control" name="name">
@@ -407,12 +415,12 @@
                                         <div class="col-md-6">
                                                 <h3>Chọn ảnh cover của chuyến đi</h3>
                                                 <input type="file" class="form-control" name="file">
-                                                <br>    
+                                                <br>
                                         </div>
 
                                         <div id="map" class="col-md-6">
                                         </div>
-                                   
+
                                     {{-- <a id="cretrip" class="btn btn-app">
                                         <i class="fa fa-plus"></i> Create Trip
                                     </a> --}}
@@ -426,9 +434,9 @@
                                                     <th>address</th>
                                                 </tr>
                                             </thead>
-    
+
                                             <tbody>
-    
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -526,7 +534,7 @@
                             if (status == google.maps.GeocoderStatus.OK) {
                                 $('#listwp > tbody:last-child').append(
                                     '<tr>' +// need to change closing tag to an opening `<tr>` tag.
-                                    '<td name="ordernum'+i+'">' + (i+1) +'<input type="hidden" name="ordernum'+i+'" value="'+(i+1)+'">' + '</td>' +
+                                    '<td name="order_num'+i+'">' + (i+1) +'<input type="hidden" name="order_num'+i+'" value="'+i+'">' + '</td>' +
                                     '<td>'+ results[0].geometry.location.lat()+'<input type="hidden" name="lat'+i+'" value="'+results[0].geometry.location.lat()+'">'+ '</td>' +
                                     '<td name="lng'+i+'">' + results[0].geometry.location.lng() + '<input type="hidden" name="lng'+i+'" value="'+results[0].geometry.location.lng()+'">'+'</td>' +
                                     '<td name="address'+i+'">' + results[0].formatted_address + '<input type="hidden" name="address'+i+'" value="'+results[0].formatted_address+'">'+'</td>' +
@@ -538,13 +546,13 @@
                     }, 3000 * i);
                 })(i);
                 i++;
-                
+
             }
             setTimeout(function(){
                 $("#submit").removeAttr("disabled");
-            },3000*i);
-           
-               
+            },3000*markers.length);
+
+
     }
 </script>
 @endsection

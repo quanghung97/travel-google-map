@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\User;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreTripRequest;
 use App\Http\Controllers\Controller;
 use App\Repositories\Facades\TripRepository;
+use App\Repositories\Facades\WayPointRepository;
+use Auth;
+use Redirect;
 
 class TripController extends Controller
 {
@@ -36,9 +39,34 @@ class TripController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTripRequest $request)
     {
-        dd($request);
+        $userid = Auth::user()->id;
+        $requestData = $request->except('name', 'file', '_token');
+        if ($request->hasFile('file')) {
+            $img_file = $request->file('file');
+            $img_file_extension = $img_file->getClientOriginalExtension();
+            if ($img_file_extension != 'PNG' && $img_file_extension != 'jpg' && $img_file_extension != 'jpeg' && $img_file_extension != 'png') {
+                return Redirect::back()->withErrors(
+                    [ 'errors' => 'Định dạng hình ảnh không hợp lệ (chỉ hỗ trợ các định dạng: png, jpg, jpeg)!' ]
+                );
+            }
+            $trip = TripRepository::create([
+                'name' => $request->name,
+                'owner_id' => $userid,
+            ]);
+
+            WayPointRepository::createMultiWayPoint($requestData, $trip->id);
+
+            TripRepository::updateImage($trip->id, $img_file);
+        } else {
+            $trip = TripRepository::create([
+                'name' => $request->name,
+                'owner_id' => $userid,
+            ]);
+
+            WayPointRepository::createMultiWayPoint($requestData, $trip->id);
+        }
     }
 
     /**

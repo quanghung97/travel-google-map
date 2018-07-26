@@ -359,10 +359,6 @@
                         <strong>{{ $err }}</strong>
                         <br/> @endforeach
                     </div>
-                    @endif @if(session('message'))
-                    <div class="alert alert-success">
-                        <strong>{{ session('message') }}</strong>
-                    </div>
                     @endif
                     <div class="clearfix"></div>
                     <div class="row">

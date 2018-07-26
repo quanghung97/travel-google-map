@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\User;
 use App\Repositories\Contracts\UserInterface;
 use File;
+use Redirect;
 
 class UserRepository extends BaseRepository implements UserInterface
 {
@@ -38,7 +39,9 @@ class UserRepository extends BaseRepository implements UserInterface
         $img_file_extension = $image->getClientOriginalExtension(); // Lấy đuôi của file hình ảnh
 
         if ($img_file_extension != 'PNG' && $img_file_extension != 'jpg' && $img_file_extension != 'jpeg' && $img_file_extension != 'png') {
-            return redirect()->back()->with('error', 'Định dạng hình ảnh không hợp lệ (chỉ hỗ trợ các định dạng: png, jpg, jpeg)!');
+            return Redirect::back()->withErrors(
+                [ 'errors' => 'Định dạng hình ảnh không hợp lệ (chỉ hỗ trợ các định dạng: png, jpg, jpeg)!' ]
+            );
         } else {
             $img_file_name = $image->getClientOriginalName(); // Lấy tên của file hình ảnh
 
