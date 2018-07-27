@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Repositories\Facades\UserRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -51,7 +51,17 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6',
+            'password_confirm' => 'required|same:password'
+        ], [
+            'name.required'=>'Bạn chưa nhập tên',
+            'email.required'=>'Bạn chưa nhập email',
+            'email.email'=>'Định dạng email không đúng',
+            'email.unique'=>'Email này đã tồn tại',
+            'password.required'=>'Bạn chưa nhập password',
+            'password.min'=>'Độ dài mật khẩu tối thiểu 6 kí tự',
+            'password_confirm.required'=>'Vui lòng nhập lại mật khẩu',
+            'password_confirm.same'=>'Mật khẩu xác nhận không đúng',
         ]);
     }
 
@@ -63,10 +73,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        return UserRepository::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    /**
+     * Override the form Registration
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
     }
 }
