@@ -116,9 +116,11 @@
                         end_plan = true;
 						break;
                     case 'continute_plan' :
-                    end_plan = false;
-                    $("#submit").attr("disabled","disabled");
-                    deleteMarker(markers[markers.length-1]);
+                    if(end_plan){
+                        end_plan = false;
+                        $("#submit").attr("disabled","disabled");
+                        deleteMarker(markers[markers.length-1]);
+                    }
 				}
 			});
 
@@ -551,11 +553,14 @@
     }
 
     function deleteMarker_id(id){
-        for( var i = 1; i < markers.length ; i++){
+        if(!end_plan){
+            for( var i = 1; i < markers.length ; i++){
             if(markers[i].arrayIndex == id){
                 deleteMarker(markers[i]);
             }
         }
+        }
+        
     }
 </script>
 @endsection
