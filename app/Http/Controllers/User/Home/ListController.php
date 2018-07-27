@@ -12,7 +12,7 @@ class ListController extends Controller
 {
     public function newest()
     {
-        $trip = TripRepository::orderBy('created_at', 'desc')->limit(10)->get();
+        $trip = TripRepository::with('owner')->orderBy('created_at', 'desc')->limit(10)->get();
         return view('user.home.new.index', compact('trip'));
     }
 

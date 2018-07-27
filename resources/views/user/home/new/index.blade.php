@@ -57,7 +57,7 @@
                                             <tr>
                                                 <td>{{$loop->iteration}}</td>
                                                 <td> {{$t->name}} </td>
-                                                <td><a href="{{url('user/userProfile/profile/'.$t->owner_id)}}">{{$t->owner_id}}</a></td>
+                                                <td><a href="{{url('user/userProfile/profile/'.$t->owner_id)}}">{{$t->owner->name}}</a></td>
                                                 <td> {{ date("d-m-Y", strtotime($t->created_at)) }}</td>
                                                 <td>{{$t->people_number}}</td>
                                                 <td>{{$t->status}}</td>
