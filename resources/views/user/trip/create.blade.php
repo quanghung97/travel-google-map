@@ -33,6 +33,7 @@
     var directionsService;
     var directionsRenderer;
     var map;
+    var end_plan = false;
 
     function initialize() {
         var position = new google.maps.LatLng(21.016801, 105.784221);
@@ -49,7 +50,9 @@
         directionsRenderer.setMap(map);
 
         google.maps.event.addListener(map, 'click', function(event) {
-            addWayPointToRoute(event.latLng);
+            if(!end_plan){
+                addWayPointToRoute(event.latLng);
+            }
         });
 
         var contextMenuOptions={};
@@ -63,6 +66,11 @@
 				className: 'context_menu_item',
 				eventName: 'end_plan',
 				label: 'End plan'
+			});
+            menuItems.push({
+				className: 'context_menu_item',
+				eventName: 'continute_plan',
+				label: 'Continute'
 			});
 			menuItems.push({});
 			menuItems.push({
@@ -104,8 +112,13 @@
 						break;
 					case 'end_plan':
                         addWayPointToRoute(markers[0].position);
-                        createTable();
+                        $("#submit").removeAttr("disabled");
+                        end_plan = true;
 						break;
+                    case 'continute_plan' :
+                    end_plan = false;
+                    $("#submit").attr("disabled","disabled");
+                    deleteMarker(markers[markers.length-1]);
 				}
 			});
 
@@ -145,8 +158,10 @@
                 marker.arrayIndex = 0;
                 markers.push(marker);
                 showInfo(marker);
+                appendTable(marker);
                 google.maps.event.addListener(marker, 'dragend', function() {
                     recalculateRoute(marker);
+                    updateRow(marker);
                 });
             }
         });
@@ -177,13 +192,17 @@
 							map: map,
 							draggable: true,
 					});
+                    appendTable(marker);
 				}
+                // appendTable(marker);
                 markers.push(marker);
                 showInfo(marker);
                 marker.arrayIndex = markers.length - 1;
 
                 google.maps.event.addListener(marker, 'dragend', function() {
-                    recalculateRoute(marker);
+                        recalculateRoute(marker);
+                        // createTable();
+                        updateRow(marker);
                 });
 
 
@@ -196,9 +215,15 @@
                 polylines.push(polyline);
 
                 google.maps.event.addListener(marker, 'rightclick', function() {
-                    deleteMarker(marker);
+                    if(!end_plan){
+                        // deleteRow(marker);
+                        deleteMarker(marker);
+                    }
                 });
-
+                
+                google.maps.event.addListener(marker, 'mouseover', function() {
+                    console.log(marker.arrayIndex);
+                });
             }
         });
 
@@ -207,8 +232,8 @@
     function deleteMarker(marker) {
 
         marker.setMap(null);
-
-        if (marker.arrayIndex == markers.length - 1) {
+        deleteRow(marker);
+            if (marker.arrayIndex == markers.length - 1) {
             polylines[marker.arrayIndex - 1].setMap(null);
             polylines.length--;
             markers.length--;
@@ -252,7 +277,7 @@
         for (var i = marker.arrayIndex; i < polylines.length - 1; i++) {
             polylines[i].setMap(map);
         }
-
+          
     }
 
     function recalculateRoute(marker) { //recalculate the polyline to fit the new position of the dragged marker
@@ -434,9 +459,10 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>lat</th>
-                                                    <th>lng</th>
-                                                    <th>address</th>
+                                                    {{-- <th>lat</th> --}}
+                                                    {{-- <th>lng</th> --}}
+                                                    <th>Địa chỉ</th>
+                                                    <th>Chức năng</th>
                                                 </tr>
                                             </thead>
 
@@ -462,102 +488,74 @@
 
 @section('js')
 <script type="text/javascript">
-    // $(document).ready(function() {
-    //     var listaddress = [];
-    //     $("#cretrip").click(function() {
-    //         //var table = ;
-
-
-    //         //$("#listwp").append('<div class="module_holder"><div class="module_item"><img src="images/i-5.png" alt="Sweep Stakes"><br>sendSMS</div></div>');
-
-    //         var i = 0;
-    //         while (i < markers.length) {
-
-    //             (function(i) {
-    //                 setTimeout(function() {
-    //                     var geocoderr = new google.maps.Geocoder;
-    //                     results = null;
-    //                     geocoderr.geocode({
-    //                         'location': markers[i].position
-    //                     }, function(results, status) {
-    //                         if (status == google.maps.GeocoderStatus.OK) {
-    //                             // var table = $("#datatable").DataTable();
-    //                             // table.row.add([
-    //                             //     results[0].geometry.location.lat(),
-    //                             //     results[0].geometry.location.lng(),
-    //                             //     results[0].formatted_address,
-    //                             // ]).draw();
-    //                             // var address = results[0].formatted_address;
-    //                             // $('#listwp').append(address + "<br>");
-    //                             // address = '';
-    //                             $('#listwp > tbody:last-child').append(
-    //                                 '<tr>' // need to change closing tag to an opening `<tr>` tag.
-    //                                  +
-    //                                  '<td name="ordernum'+i+'">' + (i+1) + '</td>' +
-    //                                 '<td name="lat'+i+'">' + results[0].geometry.location.lat() + '</td>' +
-    //                                 '<td name="lng'+i+'">' + results[0].geometry.location.lng() + '</td>' +
-    //                                 '<td name="address'+i+'">' + results[0].formatted_address + '</td>'
-    //                                  +
-    //                                 '</tr>');
-
-    //                         } else {
-    //                             console.log('query limited');
-    //                         }
-
-    //                     });
-    //                 }, 3000 * i);
-    //             })(i);
-
-    //             i++;
-    //         }
-
-            //infowindow.setContent("double click to delete this waypoint");
-            //infowindow.open(map, this);
-            //updateMarkerPosition(event.latLng);
-
-            //console.log(listaddress[0]);
-            //console.log(markers[i].getPosition().lat());
-            //using ajax to send to controller php
-            //console.log(listaddress[i]);
-
-
-    //     });
-
-    // });
-
-    function createTable(){
-            var i = 0;
-            while (i < markers.length) {
-
-                (function(i) {
-                    setTimeout(function() {
-                        var geocoderr = new google.maps.Geocoder;
+  
+    function appendTable(marker){
+        var geocoderr = new google.maps.Geocoder;
                         results = null;
                         geocoderr.geocode({
-                            'location': markers[i].position
+                            'location': marker.getPosition()
                         }, function(results, status) {
                             if (status == google.maps.GeocoderStatus.OK) {
                                 $('#listwp > tbody:last-child').append(
-                                    '<tr>' +// need to change closing tag to an opening `<tr>` tag.
-                                    '<td name="order_num'+i+'">' + (i+1) +'<input type="hidden" name="order_num'+i+'" value="'+i+'">' + '</td>' +
-                                    '<td>'+ results[0].geometry.location.lat()+'<input type="hidden" name="lat'+i+'" value="'+results[0].geometry.location.lat()+'">'+ '</td>' +
-                                    '<td name="lng'+i+'">' + results[0].geometry.location.lng() + '<input type="hidden" name="lng'+i+'" value="'+results[0].geometry.location.lng()+'">'+'</td>' +
-                                    '<td name="address'+i+'">' + results[0].formatted_address + '<input type="hidden" name="address'+i+'" value="'+results[0].formatted_address+'">'+'</td>' +
+                                    '<tr id="'+marker.arrayIndex+'">' +// need to change closing tag to an opening `<tr>` tag.
+                                    '<td id="td_order_num'+marker.arrayIndex+'">' + (marker.arrayIndex+1) + '</td>' +
+                                    // '<td id="td_lat'+marker.arrayIndex+'">'+ results[0].geometry.location.lat()+'</td>' +
+                                    // '<td id="td_lng'+marker.arrayIndex+'">' + results[0].geometry.location.lng() + '</td>' +
+                                    '<td id="td_address'+marker.arrayIndex+'">' + results[0].formatted_address +'</td>' +
+                                    '<td align="center"><input type="button" class="btn btn-danger" onclick="deleteMarker_id('+marker.arrayIndex+')" value="Xóa" /></td>'+
+                                    '<input type="hidden" id="order_num'+marker.arrayIndex+'" name="order_num'+marker.arrayIndex+'" value="'+marker.arrayIndex+'">' +
+                                    '<input type="hidden" id="lat'+marker.arrayIndex+'" name="lat'+marker.arrayIndex+'" value="'+results[0].geometry.location.lat()+'">'+ 
+                                    '<input id="lng'+marker.arrayIndex+'" type="hidden" name="lng'+marker.arrayIndex+'" value="'+results[0].geometry.location.lng()+'">'+
+                                    '<input  id="address'+marker.arrayIndex+'" type="hidden" name="address'+marker.arrayIndex+'" value="'+results[0].formatted_address+'">'+
                                     '</tr>');
                             } else {
                                 console.log('query limited');
                             }
                         });
-                    }, 3000 * i);
-                })(i);
-                i++;
+    }
 
+    function updateRow(marker){
+
+        var geocoderr = new google.maps.Geocoder;
+                        results = null;
+                        geocoderr.geocode({
+                            'location': marker.getPosition()
+                        }, function(results, status) {
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                $("#order_num"+marker.arrayIndex).attr('value',marker.arrayIndex);
+                                $("#lng"+marker.arrayIndex).attr('value',results[0].geometry.location.lng());
+                                // $("#td_lng"+marker.arrayIndex).text(results[0].geometry.location.lng());
+                                $("#lat"+marker.arrayIndex).attr('value',results[0].geometry.location.lat());
+                                // $("#td_lat"+marker.arrayIndex).text(results[0].geometry.location.lat());
+                                $("#address"+marker.arrayIndex).attr('value',results[0].formatted_address);
+                                $("#td_address"+marker.arrayIndex).text(results[0].formatted_address);
+                            } else {
+                                console.log('query limited');
+                            }
+                        });
+    }
+
+    function deleteRow(marker){
+            for (var i = marker.arrayIndex; i < markers.length; i++) {
+                // $("#td_order_num"+i).attr('id', 'td_order_num');
+                updateRow(markers[i]);
             }
-            setTimeout(function(){
-                $("#submit").removeAttr("disabled");
-            },3000*markers.length);
+            // $("#td_order_num"+markers.length-1).remove();
+            // $("#order_num"+markers.length-1).remove();
+            // $("#lng"+markers.length-1).remove();
+            // $("#td_lng"+markers.length-1).remove();
+            // $("#lat"+markers.length-1).remove(); 
+            // $("#td_lat"+markers.length-1).remove();
+            // $("#address"+markers.length-1).remove();
+             $("#"+(markers.length-1)).remove();
+    }
 
-
+    function deleteMarker_id(id){
+        for( var i = 1; i < markers.length ; i++){
+            if(markers[i].arrayIndex == id){
+                deleteMarker(markers[i]);
+            }
+        }
     }
 </script>
 @endsection
