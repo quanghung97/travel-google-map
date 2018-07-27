@@ -34,7 +34,7 @@ class Trip extends Model
 
     public function owner()
     {
-        return $this->belongsTo('App\Models\User', 'id', 'owner_id');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function usersFollow()
