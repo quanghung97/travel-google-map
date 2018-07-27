@@ -62,6 +62,7 @@
         @foreach($trip->wayPoints as $item)
         [{{ $item->id }}, {{$item->lat}}, {{$item->lng}}],
         @endforeach
+        [{{ $item->id }}, {{$trip->wayPoints[0]->lat}}, {{$trip->wayPoints[0]->lng}}]
     ];
     var markers = [];
     var polylines = [];
@@ -305,7 +306,7 @@
                                         <h3>Ảnh cover của chuyến đi</h3>
 
                                             <img src="{{asset($trip->image_url)}}" style="width:100%" alt="Ảnh Cover">
-                                        
+
                                         <br>
                                     </div>
 

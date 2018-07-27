@@ -92,7 +92,7 @@
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                       @if(Auth::user()->g_avatar_url)
                         <img src="{{asset(Auth::user()->g_avatar_url)}}" alt="">
-                      @else 
+                      @else
                       <img src="{{asset('avatar/defaut_avt.jpg')}}" alt="">
                       @endif
                       {{ Auth::user()->name }} <span class=" fa fa-angle-down"></span>
@@ -187,6 +187,7 @@
       <script src="{{ URL::asset('gentelella_master/vendors/moment/min/moment.min.js') }}"></script>
       <script src="{{ URL::asset('gentelella_master/vendors/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
       <script src="{{ URL::asset('gentelella_master/vendors/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
+      <script src="{{ URL::asset('gentelella_master/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 
       <!-- Custom Theme Scripts -->
       <script src="{{ URL::asset('gentelella_master/build/js/custom.min.js') }}"></script>
