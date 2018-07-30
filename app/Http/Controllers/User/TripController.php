@@ -6,6 +6,7 @@ use App\Http\Requests\StoreTripRequest;
 use App\Http\Controllers\Controller;
 use App\Repositories\Facades\TripRepository;
 use App\Repositories\Facades\WayPointRepository;
+use Illuminate\Http\Request;
 use Auth;
 use Redirect;
 
@@ -107,7 +108,7 @@ class TripController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request);
     }
 
     /**

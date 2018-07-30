@@ -311,11 +311,11 @@
                                     <h3 class="col-md-4">Ảnh cover: </h3>
                                     <h3 class="col-md-8">Map: </h3>
                                     <div class="col-md-4 col-sm-12">
-                                            
+
                                             @if($trip->image_url)
                                             <img src="{{asset($trip->image_url)}}" id="logo-img" onclick="document.getElementById('add-new-logo').click();" style="width:100%; height:300px;"> @else
                                             <img src="{{asset('avatar/defaut_avt.jpg')}}" id="logo-img" onclick="document.getElementById('add-new-logo').click();" style="width:100%; height:300px;"> @endif
-                                            
+
                                             <input class="form-control" type="file" style="display: none" id="add-new-logo" name="file" accept="image/*" onchange="addNewLogo(this)" />
 
                                             <br>
@@ -333,7 +333,7 @@
                                     <div class="col-md-12">
                                         <br>
                                         <br>
-                                        
+
                                     </div>
 
                                     <div class="col-md-12 col-sm-12">
@@ -358,7 +358,7 @@
                                                             <td>
                                                                 <div class='input-group date datetimepicker'>
 
-                                                                    <input name="leave_time" value="{{ $trip->wayPoints[$i]->leave_time }}" type='text' class="form-control" />
+                                                                    <input name="leave_time{{$i}}" value="{{ $trip->wayPoints[$i]->leave_time }}" type='text' class="form-control" />
 
                                                                     <span class="input-group-addon">
                                                                         <span class="glyphicon glyphicon-calendar"></span>
@@ -369,7 +369,7 @@
                                                             <td>
                                                                 <div class='input-group date datetimepicker'>
 
-                                                                    <input name="arrival_time" value="{{ $trip->wayPoints[$i+1]->arrival_time }}" type='text' class="form-control" />
+                                                                    <input name="arrival_time{{$i+1}}" value="{{ $trip->wayPoints[$i+1]->arrival_time }}" type='text' class="form-control" />
 
                                                                     <span class="input-group-addon">
                                                                         <span class="glyphicon glyphicon-calendar"></span>
@@ -379,7 +379,7 @@
 
                                                             <td>{{ $trip->wayPoints[$i]->vehicle }}</td>
                                                             <td>
-                                                                <select name="action" class="selectpicker action" data-width="fit">
+                                                                <select name="action{{$i}}" class="selectpicker action" data-width="fit">
                                                                         <option value="moving" selected="selected">moving</option>
                                                                         <option value="activity">activity</option>
                                                                 </select>
@@ -394,7 +394,7 @@
                                                             <td>-</td>
                                                             <td>-</td>
                                                             <td>
-                                                                <select name="action" class="selectpicker action" data-width="fit">
+                                                                <select name="action{{$i}}" class="selectpicker action" data-width="fit">
                                                                     <option value="moving">moving</option>
                                                                     <option value="activity" selected="selected">activity</option>
 
@@ -407,7 +407,7 @@
                                                             <td>
                                                                 <div class='input-group date datetimepicker'>
 
-                                                                    <input name="leave_time" value="{{ $trip->wayPoints[$i]->leave_time }}" type='text' class="form-control" />
+                                                                    <input name="leave_time{{$i}}" value="{{ $trip->wayPoints[$i]->leave_time }}" type='text' class="form-control" />
 
                                                                     <span class="input-group-addon">
                                                                         <span class="glyphicon glyphicon-calendar"></span>
@@ -418,7 +418,7 @@
                                                             <td>
                                                                 <div class='input-group date datetimepicker'>
 
-                                                                    <input name="leave_time" value="{{ $trip->wayPoints[$i+1]->arrival_time }}" type='text' class="form-control" />
+                                                                    <input name="arrival_time{{$i+1}}" value="{{ $trip->wayPoints[$i+1]->arrival_time }}" type='text' class="form-control" />
 
                                                                     <span class="input-group-addon">
                                                                         <span class="glyphicon glyphicon-calendar"></span>
@@ -428,7 +428,7 @@
 
                                                             <td>{{ $trip->wayPoints[$i]->vehicle }}</td>
                                                             <td>
-                                                                <select name="action" class="selectpicker action" data-width="fit" disabled>
+                                                                <select class="selectpicker action" data-width="fit" disabled>
                                                                         <option value="moving" selected="selected">moving</option>
                                                                         <option value="activity">activity</option>
                                                                 </select>
@@ -443,7 +443,7 @@
                                                     <td>
                                                         <div class='input-group date datetimepicker'>
 
-                                                            <input name="leave_time" value="{{ $trip->wayPoints[count($trip->wayPoints)-1]->leave_time }}" type='text' class="form-control" />
+                                                            <input name="leave_time{{count($trip->wayPoints)-1}}" value="{{ $trip->wayPoints[count($trip->wayPoints)-1]->leave_time }}" type='text' class="form-control" />
 
                                                             <span class="input-group-addon">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -454,7 +454,7 @@
                                                     <td>
                                                         <div class='input-group date datetimepicker'>
 
-                                                            <input name="leave_time" value="{{ $trip->wayPoints[0]->arrival_time }}" type='text' class="form-control" />
+                                                            <input name="arrival_time{{0}}" value="{{ $trip->wayPoints[0]->arrival_time }}" type='text' class="form-control" />
 
                                                             <span class="input-group-addon">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -464,7 +464,7 @@
 
                                                     <td>{{ $trip->wayPoints[count($trip->wayPoints)-1]->vehicle }}</td>
                                                     <td>
-                                                        <select id="action" name="action" class="selectpicker action" data-width="fit">
+                                                        <select name="action{{count($trip->wayPoints)-1}}" class="selectpicker action" data-width="fit">
 
                                                                 <option value="moving" selected="selected">moving</option>
                                                                 <option value="activity">activity</option>
@@ -482,7 +482,7 @@
                                                     <td>-</td>
                                                     <td>-</td>
                                                     <td>
-                                                        <select name="action" class="selectpicker action" data-width="fit">
+                                                        <select name="action{{count($trip->wayPoints)-1}}" class="selectpicker action" data-width="fit">
                                                             <option value="moving">moving</option>
                                                             <option value="activity" selected="selected">activity</option>
 
@@ -495,7 +495,7 @@
                                                     <td>
                                                         <div class='input-group date datetimepicker'>
 
-                                                            <input name="leave_time" value="{{ $trip->wayPoints[count($trip->wayPoints)-1]->leave_time }}" type='text' class="form-control" />
+                                                            <input name="leave_time{{count($trip->wayPoints)-1}}" value="{{ $trip->wayPoints[count($trip->wayPoints)-1]->leave_time }}" type='text' class="form-control" />
 
                                                             <span class="input-group-addon">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -506,7 +506,7 @@
                                                     <td>
                                                         <div class='input-group date datetimepicker'>
 
-                                                            <input name="leave_time" value="{{ $trip->wayPoints[0]->arrival_time }}" type='text' class="form-control" />
+                                                            <input name="arrival_time{{0}}" value="{{ $trip->wayPoints[0]->arrival_time }}" type='text' class="form-control" />
 
                                                             <span class="input-group-addon">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -515,7 +515,7 @@
                                                     </td>
                                                     <td>{{ $trip->wayPoints[count($trip->wayPoints)-1]->vehicle }}</td>
                                                     <td>
-                                                        <select id="action" name="action" class="selectpicker action" data-width="fit" disabled>
+                                                        <select class="selectpicker action" data-width="fit" disabled>
 
 
                                                                 <option value="moving">moving</option>
@@ -673,7 +673,7 @@
                     $(this).closest("tr").find("td:eq(4)").text('-');
                     $(this).closest("tr").after(
                         function() {
-                            return '<tr><td>'+address1+'</td><td>'+leave_time+'</td><td>'+address2+'</td><td>'+arrival_time+'</td><td>'+vehicle+'</td><td><select name="action" class="selectpicker action" data-width="fit" disabled><option value="moving" selected="selected">moving</option><option value="activity">activity</option></select></td></tr>';
+                            return '<tr><td>'+address1+'</td><td>'+leave_time+'</td><td>'+address2+'</td><td>'+arrival_time+'</td><td>'+vehicle+'</td><td><select class="selectpicker action" data-width="fit" disabled><option value="moving" selected="selected">moving</option><option value="activity">activity</option></select></td></tr>';
                         }
                     );
 
