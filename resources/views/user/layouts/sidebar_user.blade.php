@@ -31,17 +31,17 @@
         </li> -->
   
         <li>
-          <a href="">
+          <a href="{{url('user/trip')}}">
             <i class="fa fa-bar-chart-o"></i>Những chuyến đi của tôi</a>
         </li>
   
         <li>
-          <a href="">
+          <a href="#">
             <i class="fa fa-bar-chart-o"></i>Những chuyến đi tôi tham gia</a>
         </li>
   
         <li>
-          <a href="">
+          <a href="#">
             <i class="fa fa-bar-chart-o"></i>Những chuyến đi tôi theo dõi</a>
         </li>
 
