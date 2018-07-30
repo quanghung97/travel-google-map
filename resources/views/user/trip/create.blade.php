@@ -439,17 +439,21 @@
                                 <form action="{{url('user/trip')}}" enctype="multipart/form-data" method="POST">
                                     {{ csrf_field() }}
                                     <div class="row"> 
-                                        <div class="col-md-6 col-sm-12">
+                                        <div class="col-md-12 col-sm-12">
                                                 <h3>Nhập tên chuyến đi</h3>
                                                 <input type="text" class="form-control" name="name">
                                                 <br>
                                         </div>
-                                        <div class="col-md-6 col-sm-12">
-                                                <h3>Chọn ảnh cover của chuyến đi</h3>
-                                                <input type="file" class="form-control" name="file">
-                                                <br>
-                                        </div>
+                                        <h3 class="col-md-12">Ảnh cover: </h3>
+                                        
+                                        <div class="col-md-12 col-sm-12">
+                                            <img src="{{asset('avatar/defaut_avt.jpg')}}" id="logo-img" onclick="document.getElementById('add-new-logo').click();" style="width:100%; height:300px;">
+                                            
+                                            <input class="form-control" type="file" style="display: none" id="add-new-logo" name="file" accept="image/*" onchange="addNewLogo(this)" />
 
+                                            <br>
+                                        </div>
+                                        <h3 class="col-md-12">Map:</h3>
                                         <div id="map" class="col-md-6 col-sm-12">
                                         </div>
 
@@ -561,6 +565,19 @@
         }
         }
         
+    }
+</script>
+
+<script type="text/javascript">
+    var addNewLogo = function (input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                //Hiển thị ảnh vừa mới upload lên
+                $('#logo-img').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
     }
 </script>
 @endsection
