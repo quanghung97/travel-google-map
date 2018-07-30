@@ -444,8 +444,38 @@
                                                 <input type="text" class="form-control" name="name">
                                                 <br>
                                         </div>
-                                        <h3 class="col-md-12">Ảnh cover: </h3>
                                         
+
+                                        <div class="col-md-6">
+
+                                            <label >Thời gian bắt đầu</label>
+
+                                            <div class='input-group date datetimepicker'>
+
+                                                <input name="leave_time0" type='text' class="form-control" />
+
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        
+                                        </div>
+                                        <div class="col-md-6">
+                                            
+                                                <label >Thời gian kết thúc</label>
+
+                                                <div class='input-group date datetimepicker'>
+    
+                                                    <input name="arrival_time0" type='text' class="form-control" />
+    
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            
+
+                                        </div>
+                                        <h3 class="col-md-12">Ảnh cover: </h3>  
                                         <div class="col-md-12 col-sm-12">
                                             <img src="{{asset('avatar/defaut_avt.jpg')}}" id="logo-img" onclick="document.getElementById('add-new-logo').click();" style="width:100%; height:300px;">
                                             
@@ -579,5 +609,12 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+</script>
+<script>
+    $(document).on('click', '.datetimepicker', function() {
+             $(this).datetimepicker({
+                format: "YYYY/MM/DD h:m:s"
+             });
+        });
 </script>
 @endsection

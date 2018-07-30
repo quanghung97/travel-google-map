@@ -30,6 +30,7 @@
     }
     .table td{
         position:relative;
+        text-align: center;
     }
 </style>
 @endsection
@@ -394,11 +395,7 @@
 
                                                             <td>{{ $trip->wayPoints[$i]->vehicle }}</td>
                                                             <td>
-                                                                <select name="action" class="selectpicker action" data-width="fit">
-                                                                        <option value="moving" selected="selected">moving</option>
-                                                                        <option value="activity">activity</option>
-                                                                </select>
-
+                                                                Di chuyển
                                                             </td>
                                                         </tr>
                                                     @else
@@ -409,11 +406,7 @@
                                                             <td>-</td>
                                                             <td>-</td>
                                                             <td>
-                                                                <select name="action" class="selectpicker action" data-width="fit">
-                                                                    <option value="moving">moving</option>
-                                                                    <option value="activity" selected="selected">activity</option>
-
-                                                                </select>
+                                                                Vui chơi
 
                                                             </td>
                                                         </tr>
@@ -443,11 +436,7 @@
 
                                                             <td>{{ $trip->wayPoints[$i]->vehicle }}</td>
                                                             <td>
-                                                                <select name="action" class="selectpicker action" data-width="fit" disabled>
-                                                                        <option value="moving" selected="selected">moving</option>
-                                                                        <option value="activity">activity</option>
-                                                                </select>
-
+                                                                Di chuyển
                                                             </td>
                                                         </tr>
                                                     @endif
@@ -480,14 +469,7 @@
 
                                                     <td>{{ $trip->wayPoints[count($trip->wayPoints)-1]->vehicle }}</td>
                                                     <td>
-                                                        <select id="action" name="action" class="selectpicker action" data-width="fit">
-
-                                                                <option value="moving" selected="selected">moving</option>
-                                                                <option value="activity">activity</option>
-
-
-                                                        </select>
-
+                                                        Di chuyển
                                                     </td>
                                                 </tr>
                                             @else
@@ -498,11 +480,7 @@
                                                     <td>-</td>
                                                     <td>-</td>
                                                     <td>
-                                                        <select name="action" class="selectpicker action" data-width="fit">
-                                                            <option value="moving">moving</option>
-                                                            <option value="activity" selected="selected">activity</option>
-
-                                                        </select>
+                                                       Vui chơi
 
                                                     </td>
                                                 </tr>
@@ -531,14 +509,7 @@
                                                     </td>
                                                     <td>{{ $trip->wayPoints[count($trip->wayPoints)-1]->vehicle }}</td>
                                                     <td>
-                                                        <select id="action" name="action" class="selectpicker action" data-width="fit" disabled>
-
-
-                                                                <option value="moving">moving</option>
-                                                                <option value="activity" selected="selected">activity</option>
-
-                                                        </select>
-
+                                                        Di chuyển
                                                     </td>
                                                 </tr>
                                             @endif

@@ -10,12 +10,13 @@
                 <div class="card">
 
                     <div class="card-body">
-                        <a href="{{ url('/admin/admin/user/create') }}" class="btn btn-success btn-sm" title="Add New user">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                        </a>
-
                         <br/>
                         <br/>
+                        @if(session('message'))
+                        <div class="alert alert-success">
+                            <strong>{{session('message')}}</strong>
+                        </div>
+                        @endif
                         <div class="clearfix"></div>
 
                         <div class="row">

@@ -9,6 +9,7 @@ use App\Repositories\Facades\WayPointRepository;
 use Illuminate\Http\Request;
 use Auth;
 use Redirect;
+use App\Models\WayPoint;
 
 class TripController extends Controller
 {
@@ -43,32 +44,29 @@ class TripController extends Controller
      */
     public function store(StoreTripRequest $request)
     {
+        // dd($request);
         $userid = Auth::user()->id;
-        $requestData = $request->except('name', 'file', '_token');
+        $requestData = $request->except('name', 'file', '_token', 'leave_time0', 'arrival_time0');
+        // dd($requestData);
+        $trip = TripRepository::create([
+            'name' => $request->name,
+            'owner_id' => $userid,
+        ]);
         if ($request->hasFile('file')) {
             $img_file = $request->file('file');
             $img_file_extension = $img_file->getClientOriginalExtension();
             if ($img_file_extension != 'PNG' && $img_file_extension != 'jpg' && $img_file_extension != 'jpeg' && $img_file_extension != 'png') {
+                
+                $trip->delete();
                 return Redirect::back()->withErrors(
                     [ 'errors' => 'Định dạng hình ảnh không hợp lệ (chỉ hỗ trợ các định dạng: png, jpg, jpeg)!' ]
                 );
             }
-            $trip = TripRepository::create([
-                'name' => $request->name,
-                'owner_id' => $userid,
-            ]);
-
-            WayPointRepository::createMultiWayPoint($requestData, $trip->id);
-
             TripRepository::updateImage($trip->id, $img_file);
-        } else {
-            $trip = TripRepository::create([
-                'name' => $request->name,
-                'owner_id' => $userid,
-            ]);
+        } 
+        WayPointRepository::createMultiWayPoint($requestData, $trip->id);
+        WayPointRepository::createLeaveArrivalTime($request->leave_time0, $request->arrival_time0, $trip->id);
 
-            WayPointRepository::createMultiWayPoint($requestData, $trip->id);
-        }
         return Redirect('user/trip/'.$trip->id.'/edit');
     }
 
@@ -108,7 +106,18 @@ class TripController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request);
+        $trip = TripRepository::findOrFail($id);
+        $waypoint = WayPoint::where('trip_id',$id)->get();
+        for( $i = 0; $i < count($waypoint); $i++){
+            $action = 'action'.$i;
+            $leave_time = 'leave_time'.$i;
+            $arrival_time = 'arrival_time'.$i;
+            $waypoint[$i]->action = $request->$action;
+            $waypoint[$i]->leave_time = $request->$leave_time;
+            $waypoint[$i]->arrival_time = $request->$arrival_time;
+            $waypoint[$i]->save();
+        }
+        return Redirect::route('trip.index')->with('message','Cập nhật thành công!!');
     }
 
     /**
@@ -119,6 +128,6 @@ class TripController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $trip = TripReponsitory::findOrFail($id);
     }
 }

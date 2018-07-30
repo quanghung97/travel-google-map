@@ -389,10 +389,10 @@
                                                     @else
                                                         <tr>
                                                             <td>{{ $trip->wayPoints[$i]->address }}</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
-                                                            <td>-</td>
+                                                            <td> ---------- </td>
+                                                            <td> ---------- </td>
+                                                            <td> ---------- </td>
+                                                            <td> ---------- </td>
                                                             <td>
                                                                 <select name="action{{$i}}" class="selectpicker action" data-width="fit">
                                                                     <option value="moving">moving</option>
@@ -477,10 +477,10 @@
                                             @else
                                                 <tr>
                                                     <td>{{ $trip->wayPoints[count($trip->wayPoints)-1]->address }}</td>
-                                                    <td>-</td>
-                                                    <td>-</td>
-                                                    <td>-</td>
-                                                    <td>-</td>
+                                                    <td> ---------- </td>
+                                                    <td> ---------- </td>
+                                                    <td> ---------- </td>
+                                                    <td> ---------- </td>
                                                     <td>
                                                         <select name="action{{count($trip->wayPoints)-1}}" class="selectpicker action" data-width="fit">
                                                             <option value="moving">moving</option>
@@ -530,7 +530,11 @@
                                         </table>
                                     </div>
                                 </div>
-                                <button style="float:right" class="btn btn-danger" type="submit">Ghi nhận</button>
+                                @if($trip->status == "planning")
+                                    <button style="float:right" class="btn btn-danger" type="submit">Hủy chuyến đi</button>
+                                @endif
+                                <button style="float:right" class="btn btn-success" type="submit">Ghi nhận</button>
+                               
                                 {!! Form::close() !!}
                             </div>
                         </div>
@@ -648,7 +652,9 @@
 <script type="text/javascript">
     $( document ).ready(function() {
         $(document).on('click', '.datetimepicker', function() {
-             $(this).datetimepicker();
+             $(this).datetimepicker({
+                format: "YYYY/MM/DD h:m:s"
+             });
         });
         $(document).on('change', '.action', function() {
 

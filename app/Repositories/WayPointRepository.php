@@ -28,4 +28,13 @@ class WayPointRepository extends BaseRepository implements WayPointInterface
             }
         }
     }
+
+    public function createLeaveArrivalTime($leave, $arrival, $tripId)
+    {
+        $wp = WayPoint::where('trip_id', $tripId)->where('order_num', 0)->first();
+        $wp->update([
+            'leave_time' => $leave,
+            'arrival_time' => $arrival
+            ]);
+    }
 }
