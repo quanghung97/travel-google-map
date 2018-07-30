@@ -41,7 +41,7 @@ class User extends Authenticatable
 
     public function trips()
     {
-        return $this->belongsToMany('App\Models\Trip', 'user_trip', 'user_id', 'trip_id');
+        return $this->belongsToMany('App\Models\Trip', 'user_trip', 'user_id', 'trip_id')->withPivot('status');
     }
 
     public function tripsOwner()

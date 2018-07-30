@@ -62,7 +62,7 @@
                                                 <td>{{$t->people_number}}</td>
                                                 <td>{{$t->status}}</td>
                                                 <td><a href=""><button class="btn btn-info btn-sm"><i class="fa fa-eye"></i> View</button></a>
-                                                    <a href=""><button class="btn btn-warning btn-sm"><i class="fa fa-star"></i> Flow</button></a>
+                                                    <a href="{{url('user/trip/follow/follow/'.$t->id)}}"><button class="btn btn-warning btn-sm"><i class="fa fa-star"></i> Flow</button></a>
                                                     <a href=""><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Join</button></a>
                                                 </td>
                                             </tr>
