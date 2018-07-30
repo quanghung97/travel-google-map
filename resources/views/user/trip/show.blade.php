@@ -372,25 +372,11 @@
                                                         <tr>
                                                             <td>{{ $trip->wayPoints[$i]->address }}</td>
                                                             <td>
-                                                                <div class='input-group date datetimepicker'>
-
-                                                                    <input name="leave_time" value="{{ $trip->wayPoints[$i]->leave_time }}" type='text' class="form-control" />
-
-                                                                    <span class="input-group-addon">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </span>
-                                                                </div>
+                                                                  {{  date('d-m-Y H:i:s',strtotime($trip->wayPoints[$i]->leave_time))  }}  
                                                             </td>
                                                             <td>{{ $trip->wayPoints[$i+1]->address }}</td>
                                                             <td>
-                                                                <div class='input-group date datetimepicker'>
-
-                                                                    <input name="arrival_time" value="{{ $trip->wayPoints[$i+1]->arrival_time }}" type='text' class="form-control" />
-
-                                                                    <span class="input-group-addon">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </span>
-                                                                </div>
+                                                                    {{  date('d-m-Y H:i:s',strtotime( $trip->wayPoints[$i+1]->arrival_time ))  }} 
                                                             </td>
 
                                                             <td>{{ $trip->wayPoints[$i]->vehicle }}</td>
@@ -413,25 +399,11 @@
                                                         <tr>
                                                             <td>{{ $trip->wayPoints[$i]->address }}</td>
                                                             <td>
-                                                                <div class='input-group date datetimepicker'>
-
-                                                                    <input name="leave_time" value="{{ $trip->wayPoints[$i]->leave_time }}" type='text' class="form-control" />
-
-                                                                    <span class="input-group-addon">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </span>
-                                                                </div>
+                                                                    {{  date('d-m-Y H:i:s',strtotime($trip->wayPoints[$i]->leave_time))  }}
                                                             </td>
                                                             <td>{{ $trip->wayPoints[$i+1]->address }}</td>
                                                             <td>
-                                                                <div class='input-group date datetimepicker'>
-
-                                                                    <input name="leave_time" value="{{ $trip->wayPoints[$i+1]->arrival_time }}" type='text' class="form-control" />
-
-                                                                    <span class="input-group-addon">
-                                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                                    </span>
-                                                                </div>
+                                                                    {{  date('d-m-Y H:i:s',strtotime( $trip->wayPoints[$i+1]->arrival_time ))  }} 
                                                             </td>
 
                                                             <td>{{ $trip->wayPoints[$i]->vehicle }}</td>
@@ -446,25 +418,11 @@
                                                 <tr>
                                                     <td>{{ $trip->wayPoints[count($trip->wayPoints)-1]->address }}</td>
                                                     <td>
-                                                        <div class='input-group date datetimepicker'>
-
-                                                            <input name="leave_time" value="{{ $trip->wayPoints[count($trip->wayPoints)-1]->leave_time }}" type='text' class="form-control" />
-
-                                                            <span class="input-group-addon">
-                                                                <span class="glyphicon glyphicon-calendar"></span>
-                                                            </span>
-                                                        </div>
+                                                            {{  date('d-m-Y H:i:s',strtotime($trip->wayPoints[count($trip->wayPoints)-1]->leave_time ))  }} 
                                                     </td>
                                                     <td>{{ $trip->wayPoints[0]->address }}</td>
                                                     <td>
-                                                        <div class='input-group date datetimepicker'>
-
-                                                            <input name="leave_time" value="{{ $trip->wayPoints[0]->arrival_time }}" type='text' class="form-control" />
-
-                                                            <span class="input-group-addon">
-                                                                <span class="glyphicon glyphicon-calendar"></span>
-                                                            </span>
-                                                        </div>
+                                                            {{  date('d-m-Y H:i:s',strtotime(  $trip->wayPoints[0]->arrival_time ))  }}   
                                                     </td>
 
                                                     <td>{{ $trip->wayPoints[count($trip->wayPoints)-1]->vehicle }}</td>
@@ -487,25 +445,11 @@
                                                 <tr>
                                                     <td>{{ $trip->wayPoints[count($trip->wayPoints)-1]->address }}</td>
                                                     <td>
-                                                        <div class='input-group date datetimepicker'>
-
-                                                            <input name="leave_time" value="{{ $trip->wayPoints[count($trip->wayPoints)-1]->leave_time }}" type='text' class="form-control" />
-
-                                                            <span class="input-group-addon">
-                                                                <span class="glyphicon glyphicon-calendar"></span>
-                                                            </span>
-                                                        </div>
+                                                            {{  date('d-m-Y H:i:s',strtotime(  $trip->wayPoints[count($trip->wayPoints)-1]->leave_time  ))  }}     
                                                     </td>
                                                     <td>{{ $trip->wayPoints[0]->address }}</td>
                                                     <td>
-                                                        <div class='input-group date datetimepicker'>
-
-                                                            <input name="leave_time" value="{{ $trip->wayPoints[0]->arrival_time }}" type='text' class="form-control" />
-
-                                                            <span class="input-group-addon">
-                                                                <span class="glyphicon glyphicon-calendar"></span>
-                                                            </span>
-                                                        </div>
+                                                            {{  date('d-m-Y H:i:s',strtotime(   $trip->wayPoints[0]->arrival_time   ))  }}    
                                                     </td>
                                                     <td>{{ $trip->wayPoints[count($trip->wayPoints)-1]->vehicle }}</td>
                                                     <td>

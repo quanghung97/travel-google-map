@@ -399,13 +399,13 @@
                 <div class="card-body">
                     <br/>
                     <br/>
-                    @if ($errors->any())
-                        <ul class="alert alert-danger">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    @endif
+                    @if(count($errors) > 0)
+                    <div class="alert alert-danger">
+                        @foreach($errors->all() as $err)
+                            <strong>{{$err}}</strong><br>
+                        @endforeach
+                    </div>
+                @endif
                     @if(session('message'))
                         <div class="alert alert-success">
                             <strong>{{session('message')}}</strong>
@@ -613,7 +613,7 @@
 <script>
     $(document).on('click', '.datetimepicker', function() {
              $(this).datetimepicker({
-                format: "YYYY/MM/DD h:m:s"
+                format: "YYYY/MM/DD HH:mm:ss",
              });
         });
 </script>

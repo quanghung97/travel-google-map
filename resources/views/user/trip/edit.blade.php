@@ -531,7 +531,7 @@
                                     </div>
                                 </div>
                                 @if($trip->status == "planning")
-                                    <button style="float:right" class="btn btn-danger" type="submit">Hủy chuyến đi</button>
+                                    <a href="{{url('trip/destroy/'.$trip->id)}}"><input type="button" style="float:right" class="btn btn-danger" value="Hủy chuyến đi"></a>
                                 @endif
                                 <button style="float:right" class="btn btn-success" type="submit">Ghi nhận</button>
                                
@@ -653,7 +653,7 @@
     $( document ).ready(function() {
         $(document).on('click', '.datetimepicker', function() {
              $(this).datetimepicker({
-                format: "YYYY/MM/DD h:m:s"
+                format: "YYYY/MM/DD HH:mm:ss"
              });
         });
         $(document).on('change', '.action', function() {

@@ -48,6 +48,10 @@ class TripController extends Controller
         $userid = Auth::user()->id;
         $requestData = $request->except('name', 'file', '_token', 'leave_time0', 'arrival_time0');
         // dd($requestData);
+          
+        if( $request->leave_time0 >  $request->arrival_time0) {
+            return Redirect::back()->withErrors(['errors' => 'Thời gian kết thúc phải sau thời gian ban đầu']);
+        }
         $trip = TripRepository::create([
             'name' => $request->name,
             'owner_id' => $userid,
@@ -108,6 +112,31 @@ class TripController extends Controller
     {
         $trip = TripRepository::findOrFail($id);
         $waypoint = WayPoint::where('trip_id',$id)->get();
+        $le_ti = 'leave_time'.count($waypoint);    
+
+        if($request->leave_time0 >= $request->arrival_time0){
+                return Redirect::back()->withErrors(['errors'=>'Thời gian kết thúc chuyến đi không thể nhỏ hơn thời gian chuyến đi bắt đầu']);
+        }
+
+
+        for( $i = 1; $i < count($waypoint); $i++)  {
+            $leave_time_1 = 'leave_time'.($i-1);
+            $arrival_time_1 = 'arrival_time'.($i-1);
+            $leave_time_2 = 'leave_time'.($i);
+            $arrival_time_2 = 'arrival_time'.($i);
+
+            if($request->$leave_time_1 >= $request->$arrival_time_2){
+                return Redirect::back()->withErrors(['errors'=>'Thời gian đến điểm '.($i+1).' tiếp theo nhỏ hơn thời gian rời điểm trước đó']);
+            }
+            if($request->$leave_time_2 <= $request->$arrival_time_2){
+                return Redirect::back()->withErrors(['errors'=>'Thời gian rời điểm '.($i+1).' không thể nhỏ hơn thời gian đến điểm đó']);
+            }
+        }
+        
+        if($request->$le_ti >= $request->arrival_time0){
+            return Redirect::back()->withErrors(['errors'=>'Thời gian rời điểm không thể lớn hơn thời gian chuyến đi kết thúc']);
+        }
+
         for( $i = 0; $i < count($waypoint); $i++){
             $action = 'action'.$i;
             $leave_time = 'leave_time'.$i;
@@ -129,5 +158,11 @@ class TripController extends Controller
     public function destroy($id)
     {
         $trip = TripReponsitory::findOrFail($id);
+        if($trip->status == 'planning'){
+            $trip->wayPoints->delete();
+            $trip->delete();
+            return Redirect::back()->with('message','Xóa thành công');
+        }
+        else return Redirect::back()->withErrors(['errors'=>'Không thể xóa chuyến đi này']);
     }
 }
