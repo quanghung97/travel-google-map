@@ -68,7 +68,7 @@ class TripController extends Controller
 
             WayPointRepository::createMultiWayPoint($requestData, $trip->id);
         }
-        return Redirect::back()->with('message','Tạo thành công chuyến đi');
+        return Redirect('user/trip/'.$trip->id.'/edit');
     }
 
     /**
