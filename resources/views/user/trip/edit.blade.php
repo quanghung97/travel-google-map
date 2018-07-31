@@ -295,6 +295,7 @@
                                     </ul>
                                     <div class="clearfix"></div>
                                 </div>
+                                <div class="x_content">
                                 {!! Form::model($trip, [
                                     'method' => 'PATCH',
                                     'url' => ['user/trip/'.$trip->id],
@@ -536,6 +537,7 @@
                                 <button style="float:right" class="btn btn-success" type="submit">Ghi nhận</button>
                                
                                 {!! Form::close() !!}
+                                </div>
                             </div>
                         </div>
                     </div>

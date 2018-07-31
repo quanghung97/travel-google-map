@@ -436,6 +436,10 @@
                                     </ul>
                                     <div class="clearfix"></div>
                                 </div>
+                                
+                                <div class="x_content">
+
+                               
                                 <form action="{{url('user/trip')}}" enctype="multipart/form-data" method="POST">
                                     {{ csrf_field() }}
                                     <div class="row"> 
@@ -510,6 +514,7 @@
                                 </div>
                                 <button type="submit" id="submit" disabled="disabled" class="btn btn-danger" style="float:right">Tạo kế hoạch</button>
                                 </form>
+                            </div>
                             </div>
                         </div>
                     </div>

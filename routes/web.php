@@ -37,7 +37,10 @@ Route::group(['prefix'=>'user', 'middleware'=>'auth'], function () {
             Route::get('/unfollow/{id}','User\TripFollowController@unflow');
         });
         Route::group(['prefix'=>'join'], function () {
-            Route::get('/', 'User\TripFollowController@index');
+            Route::get('/index/{id}', 'User\TripJoinController@index');
+            Route::get('/join/{id}','User\TripJoinController@join');
+            Route::get('/unjoin/{id}','User\TripJoinController@unjoin');
+            
         });
     });
     Route::group(['prefix'=>'home'], function () {

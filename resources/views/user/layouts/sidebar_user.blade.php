@@ -36,7 +36,7 @@
         </li>
   
         <li>
-          <a href="#">
+          <a href="{{url('user/trip/join/index/'. Auth::user()->id) }}">
             <i class="fa fa-bar-chart-o"></i>Những chuyến đi tôi tham gia</a>
         </li>
   

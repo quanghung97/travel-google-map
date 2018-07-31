@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
 use App\Models\User;
-use App\Models\Trip;
 use Redirect;
 
 
@@ -26,7 +25,7 @@ class TripFollowController extends Controller
 
     public function unflow($trip_id){
         $user = Auth::user();
-        $user->trips()->detach($trip_id);
+        $user->trips()->wherePivot('status','follow')->detach($trip_id);
         return Redirect::back()->with('message','Bỏ theo dõi chuyến đi thành công');;
     }
 }

@@ -40,6 +40,7 @@
                           </ul>
                           <div class="clearfix"></div>
                         </div>
+                        <div class="x_content">
                         <div class="table-responsive">
                             <table id="datatable" class="table table-borderless">
                                 <thead>
@@ -72,6 +73,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        </div> 
                       </div>
                       </div>
                       </div>

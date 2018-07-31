@@ -40,6 +40,7 @@
                                     </ul>
                                     <div class="clearfix"></div>
                                 </div>
+                                <div class="x_content">
                                 <table id="listwp" class="table table-striped table-bordered">
                                     <thead>
                                             <th>#</th>
@@ -64,7 +65,7 @@
                                             @endforeach
                                     </tbody>
                                 </table>
-                               
+                                </div>
                             </div>
                         </div>
                     </div>

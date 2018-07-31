@@ -50,6 +50,7 @@
                                     </ul>
                                     <div class="clearfix"></div>
                                 </div>
+                                <div class="x_content">
                                 <table id="listwp" class="table table-striped table-bordered">
                                     <thead>
                                             <th>#</th>
@@ -78,14 +79,28 @@
                                                         @else
                                                         <a href="{{url('user/trip/follow/unfollow/'.$t->id)}}"><button class="btn btn-warning btn-sm"><i class="fa fa-star"></i> Unfollow</button></a>
                                                         @endif
-                                                        <a href=""><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Join</button></a>
+                                                        <a href="{{url('user/trip/join/join/'.$t->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Join</button></a>
+                                                    @else 
+                                                    <a href="{{ url('/user/trip/' . $t->id . '/edit') }}" title="Edit trip"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                                                    {!! Form::open([
+                                                        'method'=>'DELETE',
+                                                        'url' => ['/user/trip', $t->id],
+                                                        'style' => 'display:inline'
+                                                    ]) !!}
+                                                        {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', [
+                                                                'type' => 'submit',
+                                                                'class' => 'btn btn-danger btn-sm',
+                                                                'title' => 'Delete user',
+                                                                'onclick'=>'return confirm("Confirm delete?")'
+                                                        ]) !!}
+                                                    {!! Form::close() !!}
                                                     @endif
                                                 </td>
                                             </tr>
                                             @endforeach
                                     </tbody>
                                 </table>
-                               
+                                </div>
                             </div>
                         </div>
                     </div>
