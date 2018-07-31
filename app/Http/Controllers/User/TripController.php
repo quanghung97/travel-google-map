@@ -104,14 +104,14 @@ class TripController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $trip = TripRepository::findOrFail($id);
-        $waypoint = WayPoint::where('trip_id', $id)->get();
-        $le_ti = 'leave_time'.count($waypoint);
-
+        //eager loading
+        $trip = TripRepository::with('wayPoints')->findOrFail($id);
+        $waypoint = $trip->wayPoints;
+        $le_ti = 'leave_time'.(count($waypoint)-1);
+        //dd(count($waypoint));
         if ($request->leave_time0 >= $request->arrival_time0) {
             return Redirect::back()->withErrors(['errors'=>'Thời gian kết thúc chuyến đi không thể nhỏ hơn thời gian chuyến đi bắt đầu']);
         }
-
 
         for ($i = 1; $i < count($waypoint); $i++) {
             $leave_time_1 = 'leave_time'.($i-1);
@@ -130,16 +130,7 @@ class TripController extends Controller
         if ($request->$le_ti >= $request->arrival_time0) {
             return Redirect::back()->withErrors(['errors'=>'Thời gian rời điểm không thể lớn hơn thời gian chuyến đi kết thúc']);
         }
-
-        for ($i = 0; $i < count($waypoint); $i++) {
-            $action = 'action'.$i;
-            $leave_time = 'leave_time'.$i;
-            $arrival_time = 'arrival_time'.$i;
-            $waypoint[$i]->action = $request->$action;
-            $waypoint[$i]->leave_time = $request->$leave_time;
-            $waypoint[$i]->arrival_time = $request->$arrival_time;
-            $waypoint[$i]->save();
-        }
+        TripRepository::storeMultiTime($waypoint, $request);
         return Redirect::route('trip.index')->with('message', 'Cập nhật thành công!!');
     }
 

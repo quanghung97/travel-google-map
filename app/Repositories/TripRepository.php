@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Trip;
 use App\Repositories\Contracts\TripInterface;
+use Redirect;
 
 class TripRepository extends BaseRepository implements TripInterface
 {
@@ -38,6 +39,19 @@ class TripRepository extends BaseRepository implements TripInterface
         } else {
             $image_url->delete();
             return false;
+        }
+    }
+
+    public function storeMultiTime($waypoint, $request)
+    {
+        for ($i = 0; $i < count($waypoint); $i++) {
+            $action = 'action'.$i;
+            $leave_time = 'leave_time'.$i;
+            $arrival_time = 'arrival_time'.$i;
+            $waypoint[$i]->action = $request->$action;
+            $waypoint[$i]->leave_time = $request->$leave_time;
+            $waypoint[$i]->arrival_time = $request->$arrival_time;
+            $waypoint[$i]->save();
         }
     }
 }
