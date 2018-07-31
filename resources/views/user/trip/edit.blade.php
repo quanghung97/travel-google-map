@@ -518,8 +518,8 @@
                                                         <select class="selectpicker action" data-width="fit" disabled>
 
 
-                                                                <option value="moving">moving</option>
-                                                                <option value="activity" selected="selected">activity</option>
+                                                                <option value="moving" selected="selected">moving</option>
+                                                                <option value="activity">activity</option>
 
                                                         </select>
 
@@ -534,7 +534,7 @@
                                     <a href="{{url('trip/destroy/'.$trip->id)}}"><input type="button" style="float:right" class="btn btn-danger" value="Hủy chuyến đi"></a>
                                 @endif
                                 <button style="float:right" class="btn btn-success" type="submit">Ghi nhận</button>
-                               
+
                                 {!! Form::close() !!}
                             </div>
                         </div>
@@ -661,6 +661,8 @@
                 if($(this).val() == 'moving') {
 
                     $(this).closest("tr").next("tr").find("td:eq(5) select").removeAttr('disabled');
+                    var name = $(this).closest("tr").find("td:eq(5) select").attr('name');
+                    $(this).closest("tr").next("tr").find("td:eq(5) select").attr("name", name);
                     $(this).closest("tr").next("tr").find('.selectpicker').selectpicker('refresh');
 
                     $(this).closest("tr").remove();
@@ -673,10 +675,10 @@
                     var address2 = $(this).closest("tr").find("td:eq(2)").text();
                     var arrival_time = $(this).closest("tr").find("td:eq(3)").html();
                     var vehicle = $(this).closest("tr").find("td:eq(4)").text();
-                    $(this).closest("tr").find("td:eq(1)").text('-');
-                    $(this).closest("tr").find("td:eq(2)").text('-');
-                    $(this).closest("tr").find("td:eq(3)").text('-');
-                    $(this).closest("tr").find("td:eq(4)").text('-');
+                    $(this).closest("tr").find("td:eq(1)").text('----------');
+                    $(this).closest("tr").find("td:eq(2)").text('----------');
+                    $(this).closest("tr").find("td:eq(3)").text('----------');
+                    $(this).closest("tr").find("td:eq(4)").text('----------');
                     $(this).closest("tr").after(
                         function() {
                             return '<tr><td>'+address1+'</td><td>'+leave_time+'</td><td>'+address2+'</td><td>'+arrival_time+'</td><td>'+vehicle+'</td><td><select class="selectpicker action" data-width="fit" disabled><option value="moving" selected="selected">moving</option><option value="activity">activity</option></select></td></tr>';

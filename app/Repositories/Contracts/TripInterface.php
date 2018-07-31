@@ -15,4 +15,10 @@ interface TripInterface
      * @return  bool
      */
     public function updateImage($id, $image);
+
+    /**
+     * store multiple time in trip
+     * @return  mixed
+     */
+    public function storeMultiTime($waypoint, $request);
 }
