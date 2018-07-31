@@ -4,7 +4,8 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Repositories\Facades\UserRepository;
+use App\Repositories\Facades\TripRepository;
 use Auth;
 use Redirect;
 
@@ -12,7 +13,7 @@ class TripJoinController extends Controller
 {
     public function index($id)
     {
-        $data = User::find($id)->tripsJoin;
+        $data = UserRepository::findOrFail($id)->tripsJoin;
         return view('user.trip.join.index', compact('data'));
     }
 
@@ -34,9 +35,10 @@ class TripJoinController extends Controller
         return Redirect::back()->with('message', 'Hủy tham gia chuyến đi thành công');
     }
 
-    public function out($user_id,$trip_id){
-        $user = User::find($user_id);
-        $user->trips()->wherePivot('status','join')->detach($trip_id);
-        return Redirect::back()->with('message','Kích thành viên thành công');
+    public function out($user_id, $trip_id)
+    {
+        $user = UserRepository::findOrFail($user_id);
+        $user->trips()->wherePivot('status', 'join')->detach($trip_id);
+        return Redirect::back()->with('message', 'Kích thành viên thành công');
     }
 }

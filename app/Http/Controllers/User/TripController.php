@@ -80,7 +80,7 @@ class TripController extends Controller
         $trip = TripRepository::with('wayPoints')->findOrFail($id);
         $verify = $trip->usersVerify()->get();
         $join = $trip->usersJoin()->get();
-        return view('user.trip.show', compact('trip','join','verify'));
+        return view('user.trip.show', compact('trip', 'join', 'verify'));
     }
 
     /**
