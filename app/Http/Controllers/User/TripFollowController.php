@@ -19,6 +19,8 @@ class TripFollowController extends Controller
 
     public function flow($trip_id)
     {
+        $trip = TripRepository::findOrFail($trip_id);
+        $this->authorize('cantUpdateTrip', $trip);
         $user = Auth::user();
         $user->trips()->attach($trip_id, ['status'=>'follow']);
         return Redirect::back()->with('message', 'Theo dõi chuyến đi thành công');
@@ -26,8 +28,10 @@ class TripFollowController extends Controller
 
     public function unflow($trip_id)
     {
+        $trip = TripRepository::findOrFail($trip_id);
+        $this->authorize('cantUpdateTrip', $trip);
         $user = Auth::user();
-        $user->trips()->wherePivot('status','follow')->detach($trip_id);
+        $user->tripsFollow()->detach($trip_id);
         return Redirect::back()->with('message', 'Bỏ theo dõi chuyến đi thành công');
         ;
     }

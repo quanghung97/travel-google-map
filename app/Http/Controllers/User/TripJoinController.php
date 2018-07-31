@@ -13,18 +13,24 @@ class TripJoinController extends Controller
     public function index($id)
     {
         $data = User::find($id)->tripsJoin;
-        return view('user.trip.join.index',compact('data'));
+        return view('user.trip.join.index', compact('data'));
     }
 
-    public function join($trip_id){
+    public function join($trip_id)
+    {
+        $trip = TripRepository::findOrFail($trip_id);
+        $this->authorize('cantUpdateTrip', $trip);
         $user = Auth::user();
-        $user->trips()->attach($trip_id,['status'=>'join']);
-        return Redirect::back()->with('message','Thư xin tham gia của bạn đã được gửi đến leader. Vui lòng chờ leader duyệt đơn của bạn');
+        $user->trips()->attach($trip_id, ['status'=>'join']);
+        return Redirect::back()->with('message', 'Thư xin tham gia của bạn đã được gửi đến leader. Vui lòng chờ leader duyệt đơn của bạn');
     }
 
-    public function unjoin($trip_id){
+    public function unjoin($trip_id)
+    {
+        $trip = TripRepository::findOrFail($trip_id);
+        $this->authorize('cantUpdateTrip', $trip);
         $user = Auth::user();
-        $user->trips()->wherePivot('status','join')->detach($trip_id);
-        return Redirect::back()->with('message','Hủy tham gia chuyến đi thành công');;
+        $user->tripsJoin()->detach($trip_id);
+        return Redirect::back()->with('message', 'Hủy tham gia chuyến đi thành công');
     }
 }

@@ -90,9 +90,9 @@ class TripController extends Controller
     public function edit($id)
     {
         $trip = TripRepository::with('wayPoints')->findOrFail($id);
-        if (Auth::user()->id == $trip->owner_id) {
-            return view('user.trip.edit', compact('trip'));
-        }
+        $this->authorize('updateTrip', $trip);
+
+        return view('user.trip.edit', compact('trip'));
     }
 
     /**

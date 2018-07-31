@@ -67,11 +67,12 @@ class User extends Authenticatable
         ->wherePivot('status', 'join');
     }
 
-    public function checkFollow($id_user, $id_trip){
+    public function checkFollow($id_user, $id_trip)
+    {
         $user = User::find($id_user);
         $data = $user->tripsFollow()->get();
-        foreach($data as $d){
-            if($d->id ==  $id_trip) {
+        foreach ($data as $d) {
+            if ($d->id ==  $id_trip) {
                 return false;
             }
         }

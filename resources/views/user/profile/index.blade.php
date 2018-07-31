@@ -379,7 +379,7 @@
                                         @if($user->g_avatar_url)
                                         <img src="{{asset($user->g_avatar_url)}}" id="logo-img" onclick="document.getElementById('add-new-logo').click();"> @else
                                         <img src="{{asset('avatar/defaut_avt.jpg')}}" id="logo-img" onclick="document.getElementById('add-new-logo').click();"> @endif
-                                        
+
                                         <input class="form-control" type="file" style="display: none" id="add-new-logo" name="file" accept="image/*" onchange="addNewLogo(this)" />
 
                                         <!-- Tên của bạn -->

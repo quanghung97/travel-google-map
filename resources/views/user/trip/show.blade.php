@@ -314,7 +314,7 @@
                                         <h3>Map: </h3>
                                     </div>
                                     <div class="col-md-4 col-sm-12">
-                                    
+
 
                                             <img src="{{asset($trip->image_url)}}" style="width:100%" alt="Ảnh Cover">
 
@@ -348,11 +348,11 @@
                                                         <tr>
                                                             <td>{{ $trip->wayPoints[$i]->address }}</td>
                                                             <td>
-                                                                  {{  date('d-m-Y H:i:s',strtotime($trip->wayPoints[$i]->leave_time))  }}  
+                                                                  {{  date('d-m-Y H:i:s',strtotime($trip->wayPoints[$i]->leave_time))  }}
                                                             </td>
                                                             <td>{{ $trip->wayPoints[$i+1]->address }}</td>
                                                             <td>
-                                                                    {{  date('d-m-Y H:i:s',strtotime( $trip->wayPoints[$i+1]->arrival_time ))  }} 
+                                                                    {{  date('d-m-Y H:i:s',strtotime( $trip->wayPoints[$i+1]->arrival_time ))  }}
                                                             </td>
 
                                                             <td>{{ $trip->wayPoints[$i]->vehicle }}</td>
@@ -379,7 +379,7 @@
                                                             </td>
                                                             <td>{{ $trip->wayPoints[$i+1]->address }}</td>
                                                             <td>
-                                                                    {{  date('d-m-Y H:i:s',strtotime( $trip->wayPoints[$i+1]->arrival_time ))  }} 
+                                                                    {{  date('d-m-Y H:i:s',strtotime( $trip->wayPoints[$i+1]->arrival_time ))  }}
                                                             </td>
 
                                                             <td>{{ $trip->wayPoints[$i]->vehicle }}</td>
@@ -394,11 +394,11 @@
                                                 <tr>
                                                     <td>{{ $trip->wayPoints[count($trip->wayPoints)-1]->address }}</td>
                                                     <td>
-                                                            {{  date('d-m-Y H:i:s',strtotime($trip->wayPoints[count($trip->wayPoints)-1]->leave_time ))  }} 
+                                                            {{  date('d-m-Y H:i:s',strtotime($trip->wayPoints[count($trip->wayPoints)-1]->leave_time ))  }}
                                                     </td>
                                                     <td>{{ $trip->wayPoints[0]->address }}</td>
                                                     <td>
-                                                            {{  date('d-m-Y H:i:s',strtotime(  $trip->wayPoints[0]->arrival_time ))  }}   
+                                                            {{  date('d-m-Y H:i:s',strtotime(  $trip->wayPoints[0]->arrival_time ))  }}
                                                     </td>
 
                                                     <td>{{ $trip->wayPoints[count($trip->wayPoints)-1]->vehicle }}</td>
@@ -421,11 +421,11 @@
                                                 <tr>
                                                     <td>{{ $trip->wayPoints[count($trip->wayPoints)-1]->address }}</td>
                                                     <td>
-                                                            {{  date('d-m-Y H:i:s',strtotime(  $trip->wayPoints[count($trip->wayPoints)-1]->leave_time  ))  }}     
+                                                            {{  date('d-m-Y H:i:s',strtotime(  $trip->wayPoints[count($trip->wayPoints)-1]->leave_time  ))  }}
                                                     </td>
                                                     <td>{{ $trip->wayPoints[0]->address }}</td>
                                                     <td>
-                                                            {{  date('d-m-Y H:i:s',strtotime(   $trip->wayPoints[0]->arrival_time   ))  }}    
+                                                            {{  date('d-m-Y H:i:s',strtotime(   $trip->wayPoints[0]->arrival_time   ))  }}
                                                     </td>
                                                     <td>{{ $trip->wayPoints[count($trip->wayPoints)-1]->vehicle }}</td>
                                                     <td>
@@ -436,6 +436,18 @@
                                         </tbody>
                                         </table>
                                     </div>
+                                </div>
+                                <div class="col-md-12">
+                                  @cannot('updateTrip', $trip)
+                                    <a style="float:right" href=""><button class="btn btn-danger btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Join</button></a>
+                                    @can('follow', $trip)
+                                      <a style="float:right" href="{{ url('/user/trip/follow/unfollow/' . $trip->id) }}"><button class="btn btn-warning btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Unfollow</button></a>
+                                    @else
+                                      <a style="float:right" href="{{ url('/user/trip/follow/follow/' . $trip->id) }}"><button class="btn btn-success btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Follow</button></a>
+                                    @endcan
+
+                                  @endcannot
+
                                 </div>
                                 </div>
                                     </div>
