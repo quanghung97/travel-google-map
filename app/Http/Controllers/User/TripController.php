@@ -78,7 +78,9 @@ class TripController extends Controller
     {
         //eager loading wayPoints
         $trip = TripRepository::with('wayPoints')->findOrFail($id);
-        return view('user.trip.show', compact('trip'));
+        $verify = $trip->usersVerify()->get();
+        $join = $trip->usersJoin()->get();
+        return view('user.trip.show', compact('trip','join','verify'));
     }
 
     /**

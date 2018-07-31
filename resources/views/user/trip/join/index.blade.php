@@ -66,7 +66,13 @@
                                             <a href="{{ url('/user/trip/follow/unfollow/' . $item->id) }}"><button class="btn btn-warning btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Unfollow</button></a>
                                             @endif
                                             
-                                            <a href=""><button class="btn btn-danger btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Join</button></a>
+                                            @if(Auth::user()->checkVerify(Auth::user()->id, $item->id) && Auth::user()->checkJoin(Auth::user()->id, $item->id))
+                                            <a href="{{url('user/trip/verify/verify/'.$item->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Verify</button></a>
+                                            @elseif(!Auth::user()->checkVerify(Auth::user()->id, $item->id) && Auth::user()->checkJoin(Auth::user()->id, $item->id)) 
+                                            <a href="{{url('user/trip/verify/unverify/'.$item->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Unverify</button></a>
+                                            @elseif(!Auth::user()->checkJoin(Auth::user()->id, $item->id))
+                                            <a href="{{url('user/trip/join/unjoin/'.$item->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Unjoin</button></a>
+                                        @endif     
                                         </td>
                                     </tr>
                                 @endforeach

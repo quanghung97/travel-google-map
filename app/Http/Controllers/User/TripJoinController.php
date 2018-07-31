@@ -25,6 +25,12 @@ class TripJoinController extends Controller
     public function unjoin($trip_id){
         $user = Auth::user();
         $user->trips()->wherePivot('status','join')->detach($trip_id);
-        return Redirect::back()->with('message','Hủy tham gia chuyến đi thành công');;
+        return Redirect::back()->with('message','Hủy tham gia chuyến đi thành công');
+    }
+
+    public function out($user_id,$trip_id){
+        $user = User::find($user_id);
+        $user->trips()->wherePivot('status','join')->detach($trip_id);
+        return Redirect::back()->with('message','Kích thành viên thành công');
     }
 }
