@@ -79,7 +79,14 @@
                                                         @else
                                                         <a href="{{url('user/trip/follow/unfollow/'.$t->id)}}"><button class="btn btn-warning btn-sm"><i class="fa fa-star"></i> Unfollow</button></a>
                                                         @endif
-                                                        <a href="{{url('user/trip/join/join/'.$t->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Join</button></a>
+
+                                                        @if(Auth::user()->checkVerify(Auth::user()->id, $t->id) && Auth::user()->checkJoin(Auth::user()->id, $t->id))
+                                                            <a href="{{url('user/trip/verify/verify/'.$t->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Verify</button></a>
+                                                        @elseif(!Auth::user()->checkVerify(Auth::user()->id, $t->id) && Auth::user()->checkJoin(Auth::user()->id, $t->id)) 
+                                                            <a href="{{url('user/trip/verify/unverify/'.$t->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Unverify</button></a>
+                                                        @elseif(!Auth::user()->checkJoin(Auth::user()->id, $t->id))
+                                                            <a href="{{url('user/trip/join/unjoin/'.$t->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Unjoin</button></a>
+                                                        @endif     
                                                     @else 
                                                     <a href="{{ url('/user/trip/' . $t->id . '/edit') }}" title="Edit trip"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
                                                     {!! Form::open([

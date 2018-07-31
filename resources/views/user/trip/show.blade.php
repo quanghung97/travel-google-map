@@ -275,6 +275,11 @@
                         @endforeach
                     </ul>
                     @endif
+                    @if(session('message'))
+                        <div class="alert alert-success">
+                            <strong>{{session('message')}}</strong>
+                        </div>
+                    @endif
 
                     <div class="clearfix"></div>
 
@@ -457,11 +462,122 @@
                     </div>
                 </div>
             </div>
+
+            
+            <div class="clearfix"></div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Show List Joiner <small>Sessions</small></h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="">Settings 1</a>
+                                        </li>
+                                        <li><a href="">Settings 2</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                                <table id="listwp" class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Tên</th>
+                                                    <th>Chức năng</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    @foreach($join as $u)
+                                                        <tr>
+                                                                <td>{{ $loop->iteration or $item->id }}</td>
+                                                                <td><a href="{{url('user/userProfile/profile/'.$u->id)}}"> {{ $u->name}}</a></td>
+                                                                <td>
+                                                                <a href="{{url('user/userProfile/profile/'.$u->id)}}"> <input type="button" class="btn btn-info" value="Xem trang cá nhân"></a>
+                                                                @if(Auth::user()->id == $trip->owner->id)
+                                                                <a href="{{url('user/trip/join/out/'.$u->id.'/'.$trip->id)}}"><input type="button" class="btn btn-danger" value="Kích thành viên này"></a>
+                                                                @endif
+                                                                
+                                                                </td>
+                                                        </tr>
+                                                    @endforeach
+                                            </tbody>
+                                </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="clearfix"></div>
+
+            @if(Auth::user()->id == $trip->owner->id)
+               
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Show List waiting request <small>Sessions</small></h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="">Settings 1</a>
+                                        </li>
+                                        <li><a href="">Settings 2</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                                <table id="listwp" class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Tên</th>
+                                                    <th>Chức năng</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    @foreach($verify as $u)
+                                                        <tr>
+                                                                <td>{{ $loop->iteration or $item->id }}</td>
+                                                                <td><a href="{{url('user/userProfile/profile/'.$u->id)}}"> {{ $u->name}}</a></td>
+                                                                <td>
+                                                                    <a href="{{url('user/userProfile/profile/'.$u->id)}}"> <input type="button" class="btn btn-info" value="Xem trang cá nhân"></a>
+                                                                    
+                                                                    <a href="{{url('user/trip/verify/accept/'.$u->id.'/'.$trip->id)}}"> <input type="button" class="btn btn-success" value="Chấp thuận"></a>
+                                                                    <a href="{{url('user/trip/verify/deny/'.$u->id.'/'.$trip->id)}}"> <input type="button" class="btn btn-danger" value="Loại bỏ"></a>
+                                                                   
+                                                                </td>
+                                                        </tr>
+                                                    @endforeach
+                                            </tbody>
+                                </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+            
+        
         </div>
-    </div>
-</div>
-</div>
-</div>
+
 @endsection
 
 @section('js')

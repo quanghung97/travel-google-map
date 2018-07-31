@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +40,13 @@ Route::group(['prefix'=>'user', 'middleware'=>'auth'], function () {
             Route::get('/index/{id}', 'User\TripJoinController@index');
             Route::get('/join/{id}','User\TripJoinController@join');
             Route::get('/unjoin/{id}','User\TripJoinController@unjoin');
-            
+            Route::get('/out/{a}/{b}','User\TripJoinController@out');
+        });
+        Route::group(['prefix'=>'verify'], function () {
+            Route::get('/verify/{id}','User\TripVerifyController@verify');
+            Route::get('/unverify/{id}','User\TripVerifyController@unverify');
+            Route::get('/deny/{a}/{b}','User\TripVerifyController@deny');
+            Route::get('/accept/{a}/{b}','User\TripVerifyController@accept');
         });
     });
     Route::group(['prefix'=>'home'], function () {
