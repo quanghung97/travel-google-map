@@ -42,6 +42,6 @@ class SocialAuthController extends Controller
         $userG = Socialite::driver('google')->user();
         $authUser = UserRepository::findOrCreateUser($userG);
         Auth::login($authUser, true);
-        return redirect(route('dashboard'));
+        return redirect(url('user/home/newest'));
     }
 }

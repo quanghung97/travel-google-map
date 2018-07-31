@@ -41,7 +41,7 @@ class User extends Authenticatable
 
     public function trips()
     {
-        return $this->belongsToMany('App\Models\Trip', 'user_trip', 'user_id', 'trip_id');
+        return $this->belongsToMany('App\Models\Trip', 'user_trip', 'user_id', 'trip_id')->withPivot('status');
     }
 
     public function tripsOwner()
@@ -65,5 +65,16 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Trip', 'user_trip', 'user_id', 'trip_id')
         ->wherePivot('status', 'join');
+    }
+
+    public function checkFollow($id_user, $id_trip){
+        $user = User::find($id_user);
+        $data = $user->tripsFollow()->get();
+        foreach($data as $d){
+            if($d->id ==  $id_trip) {
+                return false;
+            }
+        }
+        return true;
     }
 }

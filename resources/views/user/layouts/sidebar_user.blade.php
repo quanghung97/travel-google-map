@@ -41,7 +41,7 @@
         </li>
   
         <li>
-          <a href="#">
+          <a href="{{url('user/trip/follow/index/'. Auth::user()->id) }}">
             <i class="fa fa-bar-chart-o"></i>Những chuyến đi tôi theo dõi</a>
         </li>
 

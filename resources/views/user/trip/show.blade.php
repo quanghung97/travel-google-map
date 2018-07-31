@@ -323,31 +323,6 @@
                                     <div id="map" class="col-md-8 col-sm-12">
                                     </div>
 
-                                    {{-- <a id="cretrip" class="btn btn-app">
-                                        <i class="fa fa-plus"></i> Create Trip
-                                    </a> --}}
-                                    {{--<div class="col-md-6 col-sm-12">
-                                       <table id="listwp" class="table table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>lat</th>
-                                                    <th>lng</th>
-                                                    <th>address</th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-                                                @foreach($trip->wayPoints as $item)
-                                                    <tr>
-                                                        <td>{{ $loop->iteration or $item->id }}</td>
-                                                        <td>{{ $item->lat }}</td>
-                                                        <td>{{ $item->lng }}</td>
-                                                        <td>{{ $item->address }}</td>
-                                                    </tr>
-                                                    @endforeach
-                                            </tbody>
-                                        </table> --}}
                                         <div class="col-md-12">
                                             <br>
                                             <br>
@@ -460,6 +435,7 @@
                                         </tbody>
                                         </table>
                                     </div>
+
                                 </div>
                                     </div>
                                 </div>
