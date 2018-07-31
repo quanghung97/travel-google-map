@@ -24,11 +24,10 @@ class StoreTripRequest extends FormRequest
      */
     public function rules()
     {
-      
         return [
             'name' => 'required',
             'leave_time0' => 'required',
-            'arrival_time0' => 'required' 
+            'arrival_time0' => 'required'
         ];
     }
 

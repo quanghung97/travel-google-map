@@ -33,20 +33,20 @@ Route::group(['prefix'=>'user', 'middleware'=>'auth'], function () {
     Route::group(['prefix'=>'trip'], function () {
         Route::group(['prefix'=>'follow'], function () {
             Route::get('/index/{id}', 'User\TripFollowController@index');
-            Route::get('/follow/{id}','User\TripFollowController@flow');
-            Route::get('/unfollow/{id}','User\TripFollowController@unflow');
+            Route::get('/follow/{id}', 'User\TripFollowController@flow');
+            Route::get('/unfollow/{id}', 'User\TripFollowController@unflow');
         });
         Route::group(['prefix'=>'join'], function () {
             Route::get('/index/{id}', 'User\TripJoinController@index');
-            Route::get('/join/{id}','User\TripJoinController@join');
-            Route::get('/unjoin/{id}','User\TripJoinController@unjoin');
-            Route::get('/out/{a}/{b}','User\TripJoinController@out');
+            Route::get('/join/{id}', 'User\TripJoinController@join');
+            Route::get('/unjoin/{id}', 'User\TripJoinController@unjoin');
+            Route::get('/out/{a}/{b}', 'User\TripJoinController@out');
         });
         Route::group(['prefix'=>'verify'], function () {
-            Route::get('/verify/{id}','User\TripVerifyController@verify');
-            Route::get('/unverify/{id}','User\TripVerifyController@unverify');
-            Route::get('/deny/{a}/{b}','User\TripVerifyController@deny');
-            Route::get('/accept/{a}/{b}','User\TripVerifyController@accept');
+            Route::get('/verify/{id}', 'User\TripVerifyController@verify');
+            Route::get('/unverify/{id}', 'User\TripVerifyController@unverify');
+            Route::get('/deny/{a}/{b}', 'User\TripVerifyController@deny');
+            Route::get('/accept/{a}/{b}', 'User\TripVerifyController@accept');
         });
     });
     Route::group(['prefix'=>'home'], function () {
