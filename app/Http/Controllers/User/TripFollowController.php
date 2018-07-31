@@ -27,13 +27,8 @@ class TripFollowController extends Controller
     public function unflow($trip_id)
     {
         $user = Auth::user();
-<<<<<<< HEAD
         $user->trips()->wherePivot('status','follow')->detach($trip_id);
-        return Redirect::back()->with('message','Bỏ theo dõi chuyến đi thành công');;
-=======
-        $user->trips()->detach($trip_id);
         return Redirect::back()->with('message', 'Bỏ theo dõi chuyến đi thành công');
         ;
->>>>>>> 81073beed812322a5a4bb3f37c799fd7bbc290ce
     }
 }
