@@ -12,7 +12,7 @@ interface TripInterface
 
     /**
      * store image Trip
-     * @return  mixed
+     * @return  bool
      */
-    public function updateImage($id, $img_file);
+    public function updateImage($id, $image);
 }

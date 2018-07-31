@@ -59,7 +59,7 @@
                                             <a href="{{ url('/user/trip/' . $item->id . '/edit') }}" title="Edit trip"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
                                             {!! Form::open([
                                                 'method'=>'DELETE',
-                                                'url' => ['/user/trip/', $item->id],
+                                                'url' => ['/user/trip', $item->id],
                                                 'style' => 'display:inline'
                                             ]) !!}
                                                 {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', [

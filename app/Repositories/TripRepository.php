@@ -23,11 +23,7 @@ class TripRepository extends BaseRepository implements TripInterface
         $image_url = $this->model->findOrFail($id);
         $img_file_extension = $image->getClientOriginalExtension(); // Lấy đuôi của file hình ảnh
 
-        if ($img_file_extension != 'PNG' && $img_file_extension != 'jpg' && $img_file_extension != 'jpeg' && $img_file_extension != 'png') {
-            return Redirect::back()->withErrors(
-                [ 'errors' => 'Định dạng hình ảnh không hợp lệ (chỉ hỗ trợ các định dạng: png, jpg, jpeg)!' ]
-            );
-        } else {
+        if ($img_file_extension == 'PNG' && $img_file_extension == 'jpg' && $img_file_extension == 'jpeg' && $img_file_extension == 'png') {
             $img_file_name = $image->getClientOriginalName(); // Lấy tên của file hình ảnh
 
             $random_file_name = str_random(4).'_'.$img_file_name; // Random tên file để tránh trường hợp trùng với tên hình ảnh khác trong CSDL
@@ -38,6 +34,10 @@ class TripRepository extends BaseRepository implements TripInterface
             $image->move('image/trip/', $random_file_name); // file hình được upload sẽ chuyển vào thư mục có đường dẫn như trên
             $image_url->image_url = 'image/trip/'.$random_file_name;
             $image_url->save();
+            return true;
+        } else {
+            $image_url->delete();
+            return false;
         }
     }
 }
