@@ -19,9 +19,19 @@
                     <div class="clearfix"></div>
 
                     <div class="row">
+                            @if(session('message'))
+                            <div class="alert alert-success">
+                                <strong>{{session('message')}}</strong>
+                            </div>
+                            @endif
+                            <br/>
                         <div class="col-md-12 col-sm-12 col-xs-12">
+                              
                             <div class="x_panel">
+                                   
                                 <div class="x_title">
+                                        
+
                                     <h2> Newest Trips <small>Sessions</small></h2>
                                     <ul class="nav navbar-right panel_toolbox">
                                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -61,9 +71,15 @@
                                                 <td> {{ date("d-m-Y", strtotime($t->created_at)) }}</td>
                                                 <td>{{$t->people_number}}</td>
                                                 <td>{{$t->status}}</td>
-                                                <td><a href=""><button class="btn btn-info btn-sm"><i class="fa fa-eye"></i> View</button></a>
-                                                    <a href="{{url('user/trip/follow/follow/'.$t->id)}}"><button class="btn btn-warning btn-sm"><i class="fa fa-star"></i> Flow</button></a>
-                                                    <a href=""><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Join</button></a>
+                                                <td><a href="{{url('user/trip/'.$t->id)}}"><button class="btn btn-info btn-sm"><i class="fa fa-eye"></i> View</button></a>
+                                                    @if(Auth::user()->id <> $t->owner_id)
+                                                        @if( Auth::user()->checkFollow(Auth::user()->id, $t->id) )
+                                                        <a href="{{url('user/trip/follow/follow/'.$t->id)}}"><button class="btn btn-success btn-sm"><i class="fa fa-star"></i> Flow</button></a>
+                                                        @else
+                                                        <a href="{{url('user/trip/follow/unfollow/'.$t->id)}}"><button class="btn btn-warning btn-sm"><i class="fa fa-star"></i> Unfollow</button></a>
+                                                        @endif
+                                                        <a href=""><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Join</button></a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                             @endforeach

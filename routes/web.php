@@ -32,8 +32,9 @@ Route::group(['prefix'=>'user', 'middleware'=>'auth'], function () {
     Route::resource('trip', 'User\TripController');
     Route::group(['prefix'=>'trip'], function () {
         Route::group(['prefix'=>'follow'], function () {
-            Route::get('/', 'User\TripFollowController@index');
+            Route::get('/index/{id}', 'User\TripFollowController@index');
             Route::get('/follow/{id}','User\TripFollowController@flow');
+            Route::get('/unfollow/{id}','User\TripFollowController@unflow');
         });
         Route::group(['prefix'=>'join'], function () {
             Route::get('/', 'User\TripFollowController@index');
