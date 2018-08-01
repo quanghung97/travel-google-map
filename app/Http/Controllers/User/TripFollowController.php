@@ -21,6 +21,7 @@ class TripFollowController extends Controller
     {
         $trip = TripRepository::findOrFail($trip_id);
         $this->authorize('cantUpdateTrip', $trip);
+        $this->authorize('ablePlan', $trip);
         $user = Auth::user();
         $user->trips()->attach($trip_id, ['status'=>'follow']);
         return Redirect::back()->with('message', 'Theo dõi chuyến đi thành công');
@@ -30,6 +31,7 @@ class TripFollowController extends Controller
     {
         $trip = TripRepository::findOrFail($trip_id);
         $this->authorize('cantUpdateTrip', $trip);
+        $this->authorize('ablePlan', $trip);
         $user = Auth::user();
         $user->tripsFollow()->detach($trip_id);
         return Redirect::back()->with('message', 'Bỏ theo dõi chuyến đi thành công');

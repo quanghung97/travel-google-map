@@ -67,4 +67,27 @@ class TripPolicy
         }
         return false;
     }
+
+    public function joinAble(User $user, Trip $trip)
+    {
+        foreach ($user->tripsVerify as $tripVerify) {
+            if ($tripVerify->id === $trip->id) {
+                return false;
+            }
+        }
+        foreach ($user->tripsJoin as $tripJoin) {
+            if ($tripJoin->id === $trip->id) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public function ablePlan(User $user, Trip $trip)
+    {
+        if ($trip->status == 'planning') {
+            return true;
+        }
+        return false;
+    }
 }

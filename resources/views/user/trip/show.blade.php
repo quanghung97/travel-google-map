@@ -443,16 +443,25 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
+                                    @can('ablePlan', $trip)
                                   @cannot('updateTrip', $trip)
-                                    <a style="float:right" href=""><button class="btn btn-danger btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Join</button></a>
+
                                     @can('follow', $trip)
                                       <a style="float:right" href="{{ url('/user/trip/follow/unfollow/' . $trip->id) }}"><button class="btn btn-warning btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Unfollow</button></a>
                                     @else
                                       <a style="float:right" href="{{ url('/user/trip/follow/follow/' . $trip->id) }}"><button class="btn btn-success btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Follow</button></a>
                                     @endcan
-
+                                    @can('joinAble', $trip)
+                                      <a style="float:right" href="{{url('user/trip/verify/verify/'.$trip->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Join</button></a>
+                                    @endcan
+                                    @can('join', $trip)
+                                      <a style="float:right" href="{{url('user/trip/join/unjoin/'.$trip->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Unjoin</button></a>
+                                    @endcan
+                                    @can('verify', $trip)
+                                      <a style="float:right" href="{{url('user/trip/verify/unverify/'.$trip->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Unverify</button></a>
+                                    @endcan
                                   @endcannot
-
+                              @endcan
                                 </div>
                                 </div>
                                     </div>
@@ -463,7 +472,7 @@
                 </div>
             </div>
 
-            
+
             <div class="clearfix"></div>
 
             <div class="row">
@@ -504,10 +513,10 @@
                                                                 <td><a href="{{url('user/userProfile/profile/'.$u->id)}}"> {{ $u->name}}</a></td>
                                                                 <td>
                                                                 <a href="{{url('user/userProfile/profile/'.$u->id)}}"> <input type="button" class="btn btn-info" value="Xem trang cá nhân"></a>
-                                                                @if(Auth::user()->id == $trip->owner->id)
+                                                                @can('updateTrip', $trip)
                                                                 <a href="{{url('user/trip/join/out/'.$u->id.'/'.$trip->id)}}"><input type="button" class="btn btn-danger" value="Kích thành viên này"></a>
-                                                                @endif
-                                                                
+                                                            @endcan
+
                                                                 </td>
                                                         </tr>
                                                     @endforeach
@@ -517,83 +526,11 @@
                     </div>
                 </div>
             </div>
-        
+
             <div class="clearfix"></div>
+            @can('ablePlan', $trip)
+            @can('updateTrip', $trip)
 
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>Comment <small>Sessions</small></h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="">Settings 1</a>
-                                        </li>
-                                        <li><a href="">Settings 2</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content">
-                            <form id="comment-form" method="post" action="" >
-                                    {{ csrf_field() }}
-                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}" >
-                                <div class="row" style="padding: 10px;">
-                                    <div class="form-group">
-                                        <input type="text" style="background-color:#eff1f3; border-radius: 15px" class="form-control" name="comment" placeholder="Viết bình luận............">
-                                    </div>
-                                </div>
-                            <div class="row" style="padding: 0 10px 0 10px;">
-                                <div class="form-group">
-                                    <input type="submit" class="btn btn-primary" style="width: 100%;" value="Gửi bình luận">
-                                </div>
-                            </div>
-                            </form>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <a href="{{url('user/userProfile/profile/'.Auth::user()->id)}}">
-                                    <img style="border-radius: 50%; width:50px; height:50px;" src="{{asset(Auth::user()->g_avatar_url)}}" alt="Avatar"></a>
-                                </div>
-                                
-                               
-                                <div class="col-md-11">
-                                    
-                                    
-                                    <div style="border: 1px solid; width:90%; padding:11px; border-radius: 15px; background-color:#eff1f3">
-                                        <a href="{{url('user/userProfile/profile/'.Auth::user()->id)}}"><strong>{{Auth::user()->name}}</strong></a> asggasgdg ssdgggdh hgdgsgdgsh hhfdhfh jfhjdhj  gggggggggggggggggggggggddc bcbcbcbcb cbcbc bccbcb bcbcbc bcbcbcb bcbcbc
-                                        sdsdsdsd sdsds dsdsaaaaaaaaaaaaaaaaaaaaaaaaaaadddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-                                    </div> 
-                                    
-                                    <div>
-                                        <input type="button" style="background-color:white; border:none;" onclick="addReply()" value="Reply">
-                                    </div>
-                                    
-                                        <div id="reply">
-                                    
-                                        </div>
-                                </div>
-                                
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-             <div class="clearfix"></div>
-
-            @if(Auth::user()->id == $trip->owner->id)
-               
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
@@ -632,10 +569,10 @@
                                                                 <td><a href="{{url('user/userProfile/profile/'.$u->id)}}"> {{ $u->name}}</a></td>
                                                                 <td>
                                                                     <a href="{{url('user/userProfile/profile/'.$u->id)}}"> <input type="button" class="btn btn-info" value="Xem trang cá nhân"></a>
-                                                                    
+
                                                                     <a href="{{url('user/trip/verify/accept/'.$u->id.'/'.$trip->id)}}"> <input type="button" class="btn btn-success" value="Chấp thuận"></a>
                                                                     <a href="{{url('user/trip/verify/deny/'.$u->id.'/'.$trip->id)}}"> <input type="button" class="btn btn-danger" value="Loại bỏ"></a>
-                                                                   
+
                                                                 </td>
                                                         </tr>
                                                     @endforeach
@@ -645,9 +582,9 @@
                     </div>
                 </div>
             </div>
-            @endif
-            
-        
+          @endcan
+      @endcan
+
         </div>
 
 @endsection

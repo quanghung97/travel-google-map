@@ -66,39 +66,4 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Trip', 'user_trip', 'user_id', 'trip_id')
         ->wherePivot('status', 'join');
     }
-
-    public function checkFollow($id_user, $id_trip)
-    {
-        $user = User::find($id_user);
-        $data = $user->tripsFollow()->get();
-        foreach ($data as $d) {
-            if ($d->id ==  $id_trip) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public function checkVerify($id_user, $id_trip)
-    {
-        $user = User::find($id_user);
-        $data = $user->tripsVerify()->get();
-        foreach ($data as $d) {
-            if ($d->id ==  $id_trip) {
-                return false;
-            }
-        }
-        return true;
-    }
-    public function checkJoin($id_user, $id_trip)
-    {
-        $user = User::find($id_user);
-        $data = $user->tripsJoin()->get();
-        foreach ($data as $d) {
-            if ($d->id ==  $id_trip) {
-                return false;
-            }
-        }
-        return true;
-    }
 }
