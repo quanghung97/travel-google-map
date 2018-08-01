@@ -57,6 +57,7 @@
                                         <td>{{ $item->status }}</td>
                                         <td>
                                             <a href="{{ url('/user/trip/' . $item->id) }}" title="View trip"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                            @can('ablePlan', $item)
                                             <a href="{{ url('/user/trip/' . $item->id . '/edit') }}" title="Edit trip"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
                                             {!! Form::open([
                                                 'method'=>'DELETE',
@@ -70,6 +71,7 @@
                                                         'onclick'=>'return confirm("Confirm delete?")'
                                                 ]) !!}
                                             {!! Form::close() !!}
+                                        @endcan
                                         </td>
                                     </tr>
                                 @endforeach

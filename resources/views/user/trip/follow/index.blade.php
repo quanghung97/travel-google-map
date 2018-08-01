@@ -60,26 +60,32 @@
                                         <td>{{ $item->status }}</td>
                                         <td>
                                             <a href="{{ url('/user/trip/' . $item->id) }}" title="View trip"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            @if(Auth::user()->checkFollow(Auth::user()->id, $item->id))
-                                            <a href="{{ url('/user/trip/follow/follow/' . $item->id) }}"><button class="btn btn-success btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Follow</button></a>
-                                            @else 
-                                            <a href="{{ url('/user/trip/follow/unfollow/' . $item->id) }}"><button class="btn btn-warning btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Unfollow</button></a>
-                                            @endif
-                                            
-                                            @if(Auth::user()->checkVerify(Auth::user()->id, $item->id) && Auth::user()->checkJoin(Auth::user()->id, $item->id))
-                                            <a href="{{url('user/trip/verify/verify/'.$item->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Verify</button></a>
-                                        @elseif(!Auth::user()->checkVerify(Auth::user()->id, $item->id) && Auth::user()->checkJoin(Auth::user()->id, $item->id)) 
-                                            <a href="{{url('user/trip/verify/unverify/'.$item->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Unverify</button></a>
-                                        @elseif(!Auth::user()->checkJoin(Auth::user()->id, $item->id))
-                                            <a href="{{url('user/trip/join/unjoin/'.$item->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Unjoin</button></a>
-                                        @endif     
+                                            @can('ablePlan', $item)
+                                            @cannot('updateTrip', $item)
+
+                                              @can('follow', $item)
+                                                <a href="{{ url('/user/trip/follow/unfollow/' . $item->id) }}"><button class="btn btn-warning btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Unfollow</button></a>
+                                              @else
+                                                <a href="{{ url('/user/trip/follow/follow/' . $item->id) }}"><button class="btn btn-success btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Follow</button></a>
+                                              @endcan
+                                              @can('joinAble', $item)
+                                                <a href="{{url('user/trip/verify/verify/'.$item->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Join</button></a>
+                                              @endcan
+                                              @can('join', $item)
+                                                <a href="{{url('user/trip/join/unjoin/'.$item->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Unjoin</button></a>
+                                              @endcan
+                                              @can('verify', $item)
+                                                <a href="{{url('user/trip/verify/unverify/'.$item->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Unverify</button></a>
+                                              @endcan
+                                            @endcannot
+                                        @endcan
                                         </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
                         </div>
-                        </div> 
+                        </div>
                       </div>
                       </div>
                       </div>

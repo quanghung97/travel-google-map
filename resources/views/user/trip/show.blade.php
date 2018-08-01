@@ -443,16 +443,25 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
+                                    @can('ablePlan', $trip)
                                   @cannot('updateTrip', $trip)
-                                    <a style="float:right" href=""><button class="btn btn-danger btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Join</button></a>
+
                                     @can('follow', $trip)
                                       <a style="float:right" href="{{ url('/user/trip/follow/unfollow/' . $trip->id) }}"><button class="btn btn-warning btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Unfollow</button></a>
                                     @else
                                       <a style="float:right" href="{{ url('/user/trip/follow/follow/' . $trip->id) }}"><button class="btn btn-success btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Follow</button></a>
                                     @endcan
-
+                                    @can('joinAble', $trip)
+                                      <a style="float:right" href="{{url('user/trip/verify/verify/'.$trip->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Join</button></a>
+                                    @endcan
+                                    @can('join', $trip)
+                                      <a style="float:right" href="{{url('user/trip/join/unjoin/'.$trip->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Unjoin</button></a>
+                                    @endcan
+                                    @can('verify', $trip)
+                                      <a style="float:right" href="{{url('user/trip/verify/unverify/'.$trip->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Unverify</button></a>
+                                    @endcan
                                   @endcannot
-
+                              @endcan
                                 </div>
                                 </div>
                                     </div>
@@ -463,7 +472,7 @@
                 </div>
             </div>
 
-            
+
             <div class="clearfix"></div>
 
             <div class="row">
@@ -504,10 +513,10 @@
                                                                 <td><a href="{{url('user/userProfile/profile/'.$u->id)}}"> {{ $u->name}}</a></td>
                                                                 <td>
                                                                 <a href="{{url('user/userProfile/profile/'.$u->id)}}"> <input type="button" class="btn btn-info" value="Xem trang cá nhân"></a>
-                                                                @if(Auth::user()->id == $trip->owner->id)
+                                                                @can('updateTrip', $trip)
                                                                 <a href="{{url('user/trip/join/out/'.$u->id.'/'.$trip->id)}}"><input type="button" class="btn btn-danger" value="Kích thành viên này"></a>
-                                                                @endif
-                                                                
+                                                            @endcan
+
                                                                 </td>
                                                         </tr>
                                                     @endforeach
@@ -517,11 +526,11 @@
                     </div>
                 </div>
             </div>
-        
-            <div class="clearfix"></div>
 
-            @if(Auth::user()->id == $trip->owner->id)
-               
+            <div class="clearfix"></div>
+            @can('ablePlan', $trip)
+            @can('updateTrip', $trip)
+
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
@@ -560,10 +569,10 @@
                                                                 <td><a href="{{url('user/userProfile/profile/'.$u->id)}}"> {{ $u->name}}</a></td>
                                                                 <td>
                                                                     <a href="{{url('user/userProfile/profile/'.$u->id)}}"> <input type="button" class="btn btn-info" value="Xem trang cá nhân"></a>
-                                                                    
+
                                                                     <a href="{{url('user/trip/verify/accept/'.$u->id.'/'.$trip->id)}}"> <input type="button" class="btn btn-success" value="Chấp thuận"></a>
                                                                     <a href="{{url('user/trip/verify/deny/'.$u->id.'/'.$trip->id)}}"> <input type="button" class="btn btn-danger" value="Loại bỏ"></a>
-                                                                   
+
                                                                 </td>
                                                         </tr>
                                                     @endforeach
@@ -573,9 +582,9 @@
                     </div>
                 </div>
             </div>
-            @endif
-            
-        
+          @endcan
+      @endcan
+
         </div>
 
 @endsection
