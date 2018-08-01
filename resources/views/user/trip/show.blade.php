@@ -306,7 +306,7 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-                                {{ csrf_field() }}
+                                
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12">
                                         <h3>Tên chuyến đi: {{$trip->name}}</h3>
@@ -520,6 +520,78 @@
         
             <div class="clearfix"></div>
 
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Comment <small>Sessions</small></h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="">Settings 1</a>
+                                        </li>
+                                        <li><a href="">Settings 2</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <form id="comment-form" method="post" action="" >
+                                    {{ csrf_field() }}
+                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}" >
+                                <div class="row" style="padding: 10px;">
+                                    <div class="form-group">
+                                        <input type="text" style="background-color:#eff1f3; border-radius: 15px" class="form-control" name="comment" placeholder="Viết bình luận............">
+                                    </div>
+                                </div>
+                            <div class="row" style="padding: 0 10px 0 10px;">
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-primary" style="width: 100%;" value="Gửi bình luận">
+                                </div>
+                            </div>
+                            </form>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <a href="{{url('user/userProfile/profile/'.Auth::user()->id)}}">
+                                    <img style="border-radius: 50%; width:50px; height:50px;" src="{{asset(Auth::user()->g_avatar_url)}}" alt="Avatar"></a>
+                                </div>
+                                
+                               
+                                <div class="col-md-11">
+                                    
+                                    
+                                    <div style="border: 1px solid; width:90%; padding:11px; border-radius: 15px; background-color:#eff1f3">
+                                        <a href="{{url('user/userProfile/profile/'.Auth::user()->id)}}"><strong>{{Auth::user()->name}}</strong></a> asggasgdg ssdgggdh hgdgsgdgsh hhfdhfh jfhjdhj  gggggggggggggggggggggggddc bcbcbcbcb cbcbc bccbcb bcbcbc bcbcbcb bcbcbc
+                                        sdsdsdsd sdsds dsdsaaaaaaaaaaaaaaaaaaaaaaaaaaadddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+                                    </div> 
+                                    
+                                    <div>
+                                        <input type="button" style="background-color:white; border:none;" onclick="addReply()" value="Reply">
+                                    </div>
+                                    
+                                        <div id="reply">
+                                    
+                                        </div>
+                                </div>
+                                
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+             <div class="clearfix"></div>
+
             @if(Auth::user()->id == $trip->owner->id)
                
             <div class="row">
@@ -581,70 +653,8 @@
 @endsection
 
 @section('js')
+
 <script type="text/javascript">
-    // $(document).ready(function() {
-    //     var listaddress = [];
-    //     $("#cretrip").click(function() {
-    //         //var table = ;
-
-
-    //         //$("#listwp").append('<div class="module_holder"><div class="module_item"><img src="images/i-5.png" alt="Sweep Stakes"><br>sendSMS</div></div>');
-
-    //         var i = 0;
-    //         while (i < markers.length) {
-
-    //             (function(i) {
-    //                 setTimeout(function() {
-    //                     var geocoderr = new google.maps.Geocoder;
-    //                     results = null;
-    //                     geocoderr.geocode({
-    //                         'location': markers[i].position
-    //                     }, function(results, status) {
-    //                         if (status == google.maps.GeocoderStatus.OK) {
-    //                             // var table = $("#datatable").DataTable();
-    //                             // table.row.add([
-    //                             //     results[0].geometry.location.lat(),
-    //                             //     results[0].geometry.location.lng(),
-    //                             //     results[0].formatted_address,
-    //                             // ]).draw();
-    //                             // var address = results[0].formatted_address;
-    //                             // $('#listwp').append(address + "<br>");
-    //                             // address = '';
-    //                             $('#listwp > tbody:last-child').append(
-    //                                 '<tr>' // need to change closing tag to an opening `<tr>` tag.
-    //                                  +
-    //                                  '<td name="ordernum'+i+'">' + (i+1) + '</td>' +
-    //                                 '<td name="lat'+i+'">' + results[0].geometry.location.lat() + '</td>' +
-    //                                 '<td name="lng'+i+'">' + results[0].geometry.location.lng() + '</td>' +
-    //                                 '<td name="address'+i+'">' + results[0].formatted_address + '</td>'
-    //                                  +
-    //                                 '</tr>');
-
-    //                         } else {
-    //                             console.log('query limited');
-    //                         }
-
-    //                     });
-    //                 }, 3000 * i);
-    //             })(i);
-
-    //             i++;
-    //         }
-
-    //infowindow.setContent("double click to delete this waypoint");
-    //infowindow.open(map, this);
-    //updateMarkerPosition(event.latLng);
-
-    //console.log(listaddress[0]);
-    //console.log(markers[i].getPosition().lat());
-    //using ajax to send to controller php
-    //console.log(listaddress[i]);
-
-
-    //     });
-
-    // });
-
     function createTable() {
         var i = 0;
         while (i < markers.length) {
@@ -677,6 +687,28 @@
             $("#submit").removeAttr("disabled");
         }, 3000 * markers.length);
 
+
+    }
+</script>
+
+<script>
+    function addReply(){
+        $('#reply').append(
+            '<form id="comment-form" method="post" action="" >'+
+                '{{ csrf_field() }}'+
+                '<input type="hidden" name="user_id" value="{{ Auth::user()->id }}" >'+
+                '<div class="row" style="padding: 10px;">'+
+                '<div class="form-group">'+
+                '<input type="text" style="background-color:#eff1f3; border-radius: 15px" class="form-control" name="comment" placeholder="Viết bình luận............">'+
+                '</div>'+
+                '</div>'+
+                '<div class="row" style="padding: 0 10px 0 10px;">'+
+                '<div class="form-group">'+
+                '<input type="submit" class="btn btn-primary" value="Gửi reply">'+
+                '</div>'+
+                '</div>'+
+                '</form>'
+        );
 
     }
 </script>
