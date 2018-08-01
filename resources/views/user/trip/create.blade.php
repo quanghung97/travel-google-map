@@ -222,7 +222,7 @@
                         deleteMarker(marker);
                     }
                 });
-                
+
                 google.maps.event.addListener(marker, 'mouseover', function() {
                     console.log(marker.arrayIndex);
                 });
@@ -279,7 +279,7 @@
         for (var i = marker.arrayIndex; i < polylines.length - 1; i++) {
             polylines[i].setMap(map);
         }
-          
+
     }
 
     function recalculateRoute(marker) { //recalculate the polyline to fit the new position of the dragged marker
@@ -411,7 +411,7 @@
                             <strong>{{session('message')}}</strong>
                         </div>
                     @endif
-                    
+
                     <div class="clearfix"></div>
 
                     <div class="row">
@@ -436,19 +436,19 @@
                                     </ul>
                                     <div class="clearfix"></div>
                                 </div>
-                                
+
                                 <div class="x_content">
 
-                               
+
                                 <form action="{{url('user/trip')}}" enctype="multipart/form-data" method="POST">
                                     {{ csrf_field() }}
-                                    <div class="row"> 
+                                    <div class="row">
                                         <div class="col-md-12 col-sm-12">
                                                 <h3>Nhập tên chuyến đi</h3>
                                                 <input type="text" class="form-control" name="name">
                                                 <br>
                                         </div>
-                                        
+
 
                                         <div class="col-md-6">
 
@@ -462,27 +462,27 @@
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
                                             </div>
-                                        
+
                                         </div>
                                         <div class="col-md-6">
-                                            
+
                                                 <label >Thời gian kết thúc</label>
 
                                                 <div class='input-group date datetimepicker'>
-    
+
                                                     <input name="arrival_time0" type='text' class="form-control" />
-    
+
                                                     <span class="input-group-addon">
                                                         <span class="glyphicon glyphicon-calendar"></span>
                                                     </span>
                                                 </div>
-                                            
+
 
                                         </div>
-                                        <h3 class="col-md-12">Ảnh cover: </h3>  
+                                        <h3 class="col-md-12">Ảnh cover: </h3>
                                         <div class="col-md-12 col-sm-12">
                                             <img src="{{asset('avatar/defaut_avt.jpg')}}" id="logo-img" onclick="document.getElementById('add-new-logo').click();" style="width:100%; height:300px;">
-                                            
+
                                             <input class="form-control" type="file" style="display: none" id="add-new-logo" name="file" accept="image/*" onchange="addNewLogo(this)" />
 
                                             <br>
@@ -529,7 +529,7 @@
 
 @section('js')
 <script type="text/javascript">
-  
+
     function appendTable(marker){
         var geocoderr = new google.maps.Geocoder;
                         results = null;
@@ -545,7 +545,7 @@
                                     '<td id="td_address'+marker.arrayIndex+'">' + results[0].formatted_address +'</td>' +
                                     '<td align="center"><input type="button" class="btn btn-danger" onclick="deleteMarker_id('+marker.arrayIndex+')" value="Xóa" /></td>'+
                                     '<input type="hidden" id="order_num'+marker.arrayIndex+'" name="order_num'+marker.arrayIndex+'" value="'+marker.arrayIndex+'">' +
-                                    '<input type="hidden" id="lat'+marker.arrayIndex+'" name="lat'+marker.arrayIndex+'" value="'+results[0].geometry.location.lat()+'">'+ 
+                                    '<input type="hidden" id="lat'+marker.arrayIndex+'" name="lat'+marker.arrayIndex+'" value="'+results[0].geometry.location.lat()+'">'+
                                     '<input id="lng'+marker.arrayIndex+'" type="hidden" name="lng'+marker.arrayIndex+'" value="'+results[0].geometry.location.lng()+'">'+
                                     '<input  id="address'+marker.arrayIndex+'" type="hidden" name="address'+marker.arrayIndex+'" value="'+results[0].formatted_address+'">'+
                                     '</tr>');
@@ -585,7 +585,7 @@
             // $("#order_num"+markers.length-1).remove();
             // $("#lng"+markers.length-1).remove();
             // $("#td_lng"+markers.length-1).remove();
-            // $("#lat"+markers.length-1).remove(); 
+            // $("#lat"+markers.length-1).remove();
             // $("#td_lat"+markers.length-1).remove();
             // $("#address"+markers.length-1).remove();
              $("#"+(markers.length-1)).remove();
@@ -599,7 +599,7 @@
             }
         }
         }
-        
+
     }
 </script>
 
@@ -617,9 +617,12 @@
 </script>
 <script>
     $(document).on('click', '.datetimepicker', function() {
-             $(this).datetimepicker({
-                format: "YYYY/MM/DD HH:mm:ss",
-             });
+             $(this).datetimepicker({widgetPositioning:{
+                           horizontal: 'auto',
+                           vertical: 'bottom'
+                       },
+                       format:'YYYY-MM-DD HH:mm:00'
+           });
         });
 </script>
 @endsection

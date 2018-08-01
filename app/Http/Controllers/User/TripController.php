@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Redirect;
 use App\Models\WayPoint;
+use Carbon\Carbon;
 
 class TripController extends Controller
 {
@@ -44,8 +45,13 @@ class TripController extends Controller
      */
     public function store(StoreTripRequest $request)
     {
+        $current = Carbon::now();
         $userid = Auth::user()->id;
         $requestData = $request->except('name', 'file', '_token', 'leave_time0', 'arrival_time0');
+        if ($current > $request->leave_time0) {
+            return Redirect::back()->withErrors(['errors' => 'Thời gian rời điểm xuất phát phải là 1 thời gian tương lai']);
+        }
+
         if ($request->leave_time0 >  $request->arrival_time0) {
             return Redirect::back()->withErrors(['errors' => 'Thời gian kết thúc phải sau thời gian ban đầu']);
         }
@@ -112,6 +118,12 @@ class TripController extends Controller
         $waypoint = $trip->wayPoints;
         $le_ti = 'leave_time'.(count($waypoint)-1);
         //dd(count($waypoint));
+        $current = Carbon::now();
+
+        if ($current > $request->leave_time0) {
+            return Redirect::back()->withErrors(['errors' => 'Thời gian rời điểm xuất phát phải là 1 thời gian tương lai']);
+        }
+
         if ($request->leave_time0 >= $request->arrival_time0) {
             return Redirect::back()->withErrors(['errors'=>'Thời gian kết thúc chuyến đi không thể nhỏ hơn thời gian chuyến đi bắt đầu']);
         }

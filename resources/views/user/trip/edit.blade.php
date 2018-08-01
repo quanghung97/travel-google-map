@@ -654,10 +654,13 @@
 <script type="text/javascript">
     $( document ).ready(function() {
         $(document).on('click', '.datetimepicker', function() {
-             $(this).datetimepicker({
-                format: "YYYY/MM/DD HH:mm:ss"
-             });
-        });
+                 $(this).datetimepicker({widgetPositioning:{
+                               horizontal: 'auto',
+                               vertical: 'bottom'
+                           },
+                           format:'YYYY-MM-DD HH:mm:00'
+               });
+            });
         $(document).on('change', '.action', function() {
 
                 if($(this).val() == 'moving') {
