@@ -306,7 +306,7 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="x_content">
-                                
+
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12">
                                         <h3>Tên chuyến đi: {{$trip->name}}</h3>
@@ -584,7 +584,103 @@
             </div>
           @endcan
       @endcan
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Show List Comment <small>Sessions</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="">Settings 1</a>
+                            </li>
+                            <li><a href="">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="comment-list">
+                    @foreach($trip->comments as $comment)
+                        <div class="row">
+                            <div class="col-md-1">
+                                <a href="{{url('user/userProfile/profile/'.Auth::user()->id)}}">
+                                <img style="border-radius: 50%; width:50px; height:50px;" src="{{asset(Auth::user()->g_avatar_url)}}" alt="Avatar"></a>
+                            </div>
 
+
+                            <div class="col-md-11">
+
+
+                                <div style="border: 1px solid; width:90%; padding:11px; border-radius: 15px; background-color:#eff1f3">
+                                    <a href="{{url('user/userProfile/profile/'.$comment->user->id)}}"><strong>{{$comment->user->name}}</strong></a>
+                                    <p>{{$comment->content}}</p>
+                                </div>
+
+                                <div>
+                                    <input type="button" style="background-color:white; border:none;" onclick="addReply()" value="Reply">
+                                </div>
+
+                                    <div id="reply">
+
+                                    </div>
+                            </div>
+
+                        </div>
+
+
+                        {{-- reply to comment --}}
+
+                        @foreach($comment->comments as $reply)
+                            <div class="small well text-info">
+                                <p>{{$reply->content}}</p>
+                                <lead>by {{$reply->user->name}}</lead>
+                            </div>
+
+                        @endforeach
+                        <form id="reply-form" method="post" action="{{route('replycomment.store', $comment->id)}}" >
+                                      {{ csrf_field() }}
+                                  <input type="hidden" name="trip_id" value="{{ $trip->id }}" >
+                                  <div class="row" style="padding: 10px;">
+                                      <div class="form-group">
+                                          <input type="text" style="background-color:#eff1f3; border-radius: 15px" class="form-control" name="content" placeholder="reply.........">
+                                      </div>
+                                  </div>
+                              <div class="row" style="padding: 0 10px 0 10px;">
+                                  <div class="form-group">
+                                      <input type="submit" class="btn btn-primary" style="width: 100%;" value="Reply">
+                                  </div>
+                              </div>
+                              </form>
+                    @endforeach
+                </div>
+                  <form id="comment-form" method="post" action="{{route('tripcomment.store', $trip->id)}}" >
+                                {{ csrf_field() }}
+                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}" >
+                            <div class="row" style="padding: 10px;">
+                                <div class="form-group">
+                                    <input type="text" style="background-color:#eff1f3; border-radius: 15px" class="form-control" name="content" placeholder="Viết bình luận............">
+                                </div>
+                            </div>
+                        <div class="row" style="padding: 0 10px 0 10px;">
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary" style="width: 100%;" value="Gửi bình luận">
+                            </div>
+                        </div>
+                        </form>
+
+            </div>
+        </div>
+    </div>
+</div>
         </div>
 
 @endsection

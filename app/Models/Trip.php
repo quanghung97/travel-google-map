@@ -57,7 +57,7 @@ class Trip extends Model
 
     public function comments()
     {
-        return $this->hasMany('App\Models\Comment', 'trip_id', 'id');
+        return $this->morphMany('App\Models\Comment', 'commentable');
     }
 
     public function wayPoints()

@@ -30,6 +30,7 @@ Route::group(['prefix'=>'user', 'middleware'=>'auth'], function () {
     //@show Trip in TripController filter follow, owner, join, verify
     //@update Trip in TripController filter follow, owner, join, verify
     Route::resource('trip', 'User\TripController');
+    Route::resource('comment', 'CommentController', ['only'=>['update','destroy']]);
     Route::group(['prefix'=>'trip'], function () {
         Route::group(['prefix'=>'follow'], function () {
             Route::get('/index/{id}', 'User\TripFollowController@index');
@@ -48,6 +49,8 @@ Route::group(['prefix'=>'user', 'middleware'=>'auth'], function () {
             Route::get('/deny/{a}/{b}', 'User\TripVerifyController@deny');
             Route::get('/accept/{a}/{b}', 'User\TripVerifyController@accept');
         });
+        Route::post('comment/create/{trip}', 'CommentController@addTripComment')->name('tripcomment.store');
+        Route::post('reply/create/{comment}', 'CommentController@addReplyComment')->name('replycomment.store');
     });
     Route::group(['prefix'=>'home'], function () {
         Route::get('newest', 'User\Home\ListController@newest');

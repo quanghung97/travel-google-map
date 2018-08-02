@@ -3,10 +3,13 @@
 namespace App\Repositories;
 
 use App\Models\Trip;
+use App\Models\Comment;
 use App\Repositories\Contracts\TripInterface;
+use App\Repositories\Contracts\CommentInterface;
 use Redirect;
+use Auth;
 
-class TripRepository extends BaseRepository implements TripInterface
+class TripRepository extends BaseRepository implements TripInterface, CommentInterface
 {
     public function __construct(Trip $trip)
     {
@@ -53,5 +56,15 @@ class TripRepository extends BaseRepository implements TripInterface
             $waypoint[$i]->arrival_time = $request->$arrival_time;
             $waypoint[$i]->save();
         }
+    }
+
+    public function storeComment($id, $content)
+    {
+        $comment = new Comment();
+        $comment->content = $content;
+        $comment->user_id = Auth::user()->id;
+        $comment->trip_id = $id;
+
+        Trip::findOrFail($id)->comments()->save($comment);
     }
 }
