@@ -612,57 +612,77 @@
                     @foreach($trip->comments as $comment)
                         <div class="row">
                             <div class="col-md-1">
-                                <a href="{{url('user/userProfile/profile/'.Auth::user()->id)}}">
-                                <img style="border-radius: 50%; width:50px; height:50px;" src="{{asset(Auth::user()->g_avatar_url)}}" alt="Avatar"></a>
+                                <a href="{{url('user/userProfile/profile/'.$comment->user->id)}}">
+                                <img style="border-radius: 50%; width:50px; height:50px;" src="{{asset($comment->user->g_avatar_url)}}" alt="Avatar"></a>
                             </div>
 
 
                             <div class="col-md-11">
 
 
-                                <div style="border: 1px solid; width:90%; padding:11px; border-radius: 15px; background-color:#eff1f3">
+                                <div style="border: 1px solid; width:90%; padding:10px; margin:10px; border-radius: 15px; background-color:#eff1f3">
                                     <a href="{{url('user/userProfile/profile/'.$comment->user->id)}}"><strong>{{$comment->user->name}}</strong></a>
-                                    <p>{{$comment->content}}</p>
+                                    {{$comment->content}}
                                 </div>
-
-                                <div>
-                                    <input type="button" style="background-color:white; border:none;" onclick="addReply()" value="Reply">
+                                <div style="margin:10px;">
+                                    <input type="button" style="background-color:white; border:none;" onclick="addReply({{$comment->id}})" value="Reply">
                                 </div>
 
                                     <div id="reply">
 
-                                    </div>
-                            </div>
-
-                        </div>
-
-
+                                            
                         {{-- reply to comment --}}
 
                         @foreach($comment->comments as $reply)
-                            <div class="small well text-info">
-                                <p>{{$reply->content}}</p>
-                                <lead>by {{$reply->user->name}}</lead>
+                            <div class="row">
+                                <div class="col-md-1">
+                                <a href="{{url('user/userProfile/profile/'.$reply->user->id)}}">
+                                <img style="border-radius: 50%; width:50px; height:50px;" src="{{asset($reply->user->g_avatar_url)}}" alt="Avatar"></a>
+                                </div>
+                                <div class="col-md-11">
+                                    <div style="border: 1px solid; width:90%; padding:11px; border-radius: 15px; background-color:#eff1f3">
+                                    <a href="{{url('user/userProfile/profile/'.$reply->user->id)}}"><strong>{{$reply->user->name}}</strong></a> 
+                                    {{$reply->content}}
+                                </div>
+                                <br>
+                                </div>
                             </div>
 
                         @endforeach
-                        <form id="reply-form" method="post" action="{{route('replycomment.store', $comment->id)}}" >
+                        <div class="row">
+                            <div class="col-md-1">
+                            <img class="reply-form-{{$comment->id}}" style="border-radius: 50%; width:50px; height:50px; display:none" src="{{asset(Auth::user()->g_avatar_url)}}" alt="Avatar">
+                        </div>
+                        <div class="col-md-11">
+                            <form class="reply-form-{{$comment->id}}" method="post" action="{{route('replycomment.store', $comment->id)}}" style="display:none" >
                                       {{ csrf_field() }}
                                   <input type="hidden" name="trip_id" value="{{ $trip->id }}" >
                                   <div class="row" style="padding: 10px;">
                                       <div class="form-group">
-                                          <input type="text" style="background-color:#eff1f3; border-radius: 15px" class="form-control" name="content" placeholder="reply.........">
+                                        
+                                    <input type="text" style="background-color:#eff1f3; border-radius: 15px; height:50px; width:90%;" class="form-control" name="content" placeholder="reply.........">
+                                        
                                       </div>
                                   </div>
                               <div class="row" style="padding: 0 10px 0 10px;">
                                   <div class="form-group">
-                                      <input type="submit" class="btn btn-primary" style="width: 100%;" value="Reply">
+                                      <input style="display:none" type="submit" class="btn btn-primary" value="Reply">
                                   </div>
                               </div>
                               </form>
+                        </div>  
+                        </div>
+                        
+                        
+                        </div>
+                        </div>
+
+                        </div>
+
+
                     @endforeach
                 </div>
-                  <form id="comment-form" method="post" action="{{route('tripcomment.store', $trip->id)}}" >
+            <form id="comment-form-{{$trip->id}}" method="post" action="{{route('tripcomment.store', $trip->id)}}" >
                                 {{ csrf_field() }}
                             <input type="hidden" name="user_id" value="{{ Auth::user()->id }}" >
                             <div class="row" style="padding: 10px;">
@@ -672,7 +692,7 @@
                             </div>
                         <div class="row" style="padding: 0 10px 0 10px;">
                             <div class="form-group">
-                                <input type="submit" class="btn btn-primary" style="width: 100%;" value="Gửi bình luận">
+                                <input style="display:none" type="submit" class="btn btn-primary" style="width: 100%;" value="Gửi bình luận">
                             </div>
                         </div>
                         </form>
@@ -682,6 +702,9 @@
     </div>
 </div>
         </div>
+
+        <input type="button" class="btn btn-info" onclick="getCurrentPos();" value="Lay vi tri">
+        <p id="check-in"></p>
 
 @endsection
 
@@ -724,26 +747,24 @@
     }
 </script>
 
-<script>
-    function addReply(){
-        $('#reply').append(
-            '<form id="comment-form" method="post" action="" >'+
-                '{{ csrf_field() }}'+
-                '<input type="hidden" name="user_id" value="{{ Auth::user()->id }}" >'+
-                '<div class="row" style="padding: 10px;">'+
-                '<div class="form-group">'+
-                '<input type="text" style="background-color:#eff1f3; border-radius: 15px" class="form-control" name="comment" placeholder="Viết bình luận............">'+
-                '</div>'+
-                '</div>'+
-                '<div class="row" style="padding: 0 10px 0 10px;">'+
-                '<div class="form-group">'+
-                '<input type="submit" class="btn btn-primary" value="Gửi reply">'+
-                '</div>'+
-                '</div>'+
-                '</form>'
-        );
-
+<script> 
+    function addReply(id){
+        $('.reply-form-'+id).toggle();
     }
+</script>
+
+<script>
+    function getCurrentPos() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            alert(pos);
+        });
+        
+    }}
 </script>
 
 @endsection
