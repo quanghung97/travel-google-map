@@ -9,17 +9,16 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title>Dorne - Directory &amp; Travelling Template</title>
-
+    <title>Dorne - Directory &amp; Listing Template</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="{{ URL::asset('dorne/img/core-img/favicon.ico') }}">
+    <link rel="icon" href="img/core-img/favicon.ico">
 
     <!-- Core Stylesheet -->
-    <link href="{{ URL::asset('dorne/style.css') }}" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 
     <!-- Responsive CSS -->
-    <link href="{{ URL::asset('dorne/css/responsive/responsive.css') }}" rel="stylesheet">
+    <link href="css/responsive/responsive.css" rel="stylesheet">
 
 </head>
 
@@ -52,12 +51,37 @@
             <div class="row h-100">
                 <div class="col-12 h-100">
                     <nav class="h-100 navbar navbar-expand-lg">
-                        <a class="navbar-brand" href="#">Travelling</a>
+                        <a class="navbar-brand" href="index.html"><img src="img/core-img/logo.png" alt=""></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#dorneNav" aria-controls="dorneNav" aria-expanded="false" aria-label="Toggle navigation"><span class="fa fa-bars"></span></button>
                         <!-- Nav -->
                         <div class="collapse navbar-collapse" id="dorneNav">
                             <ul class="navbar-nav mr-auto" id="dorneMenu">
-
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Explore <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="index.html">Home</a>
+                                        <a class="dropdown-item" href="explore.html">Explore</a>
+                                        <a class="dropdown-item" href="listing.html">Listing</a>
+                                        <a class="dropdown-item" href="single-listing.html">Single Listing</a>
+                                        <a class="dropdown-item" href="contact.html">Contact</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Listings <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                                        <a class="dropdown-item" href="index.html">Home</a>
+                                        <a class="dropdown-item" href="explore.html">Explore</a>
+                                        <a class="dropdown-item" href="listing.html">Listing</a>
+                                        <a class="dropdown-item" href="single-listing.html">Single Listing</a>
+                                        <a class="dropdown-item" href="contact.html">Contact</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="contact.html">Contact</a>
+                                </li>
                             </ul>
                             <!-- Search btn -->
                             <div class="dorne-search-btn">
@@ -65,19 +89,12 @@
                             </div>
                             <!-- Signin btn -->
                             <div class="dorne-signin-btn">
-								@if (Route::has('login'))
-
-					                    @auth
-					                        <a href="{{ url('/home') }}">Home</a>
-					                    @else
-					                        <a href="{{ route('login') }}">Login</a>
-					                        <a href="{{ route('register') }}">Register</a>
-					                    @endauth
-
-					            @endif
-
+                                <a href="#">Sign in  or Register</a>
                             </div>
-
+                            <!-- Add listings btn -->
+                            <div class="dorne-add-listings-btn">
+                                <a href="#" class="btn dorne-btn">+ Add Listings</a>
+                            </div>
                         </div>
                     </nav>
                 </div>
@@ -92,10 +109,72 @@
             <div class="row h-100 align-items-center justify-content-center">
                 <div class="col-12 col-md-10">
                     <div class="hero-content">
-                        <h2>Discover places with google map</h2>
-                        <h4>This is the best guide of your trip</h4>
+                        <h2>Discover places near you</h2>
+                        <h4>This is the best guide of your city</h4>
                     </div>
-
+                    <!-- Hero Search Form -->
+                    <div class="hero-search-form">
+                        <!-- Tabs -->
+                        <div class="nav nav-tabs" id="heroTab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-places-tab" data-toggle="tab" href="#nav-places" role="tab" aria-controls="nav-places" aria-selected="true">Places</a>
+                            <a class="nav-item nav-link" id="nav-events-tab" data-toggle="tab" href="#nav-events" role="tab" aria-controls="nav-events" aria-selected="false">Events</a>
+                        </div>
+                        <!-- Tabs Content -->
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-places" role="tabpanel" aria-labelledby="nav-places-tab">
+                                <h6>What are you looking for?</h6>
+                                <form action="#" method="get">
+                                    <select class="custom-select">
+                                        <option selected>Your Destinations</option>
+                                        <option value="1">New York</option>
+                                        <option value="2">Latvia</option>
+                                        <option value="3">Dhaka</option>
+                                        <option value="4">Melbourne</option>
+                                        <option value="5">London</option>
+                                    </select>
+                                    <select class="custom-select">
+                                        <option selected>All Catagories</option>
+                                        <option value="1">Catagories 1</option>
+                                        <option value="2">Catagories 2</option>
+                                        <option value="3">Catagories 3</option>
+                                    </select>
+                                    <select class="custom-select">
+                                        <option selected>Price Range</option>
+                                        <option value="1">$100 - $499</option>
+                                        <option value="2">$500 - $999</option>
+                                        <option value="3">$1000 - $4999</option>
+                                    </select>
+                                    <button type="submit" class="btn dorne-btn"><i class="fa fa-search pr-2" aria-hidden="true"></i> Search</button>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="nav-events" role="tabpanel" aria-labelledby="nav-events-tab">
+                                <h6>What are you looking for?</h6>
+                                <form action="#" method="get">
+                                    <select class="custom-select">
+                                        <option selected>Your Destinations</option>
+                                        <option value="1">New York</option>
+                                        <option value="2">Latvia</option>
+                                        <option value="3">Dhaka</option>
+                                        <option value="4">Melbourne</option>
+                                        <option value="5">London</option>
+                                    </select>
+                                    <select class="custom-select">
+                                        <option selected>All Catagories</option>
+                                        <option value="1">Catagories 1</option>
+                                        <option value="2">Catagories 2</option>
+                                        <option value="3">Catagories 3</option>
+                                    </select>
+                                    <select class="custom-select">
+                                        <option selected>Price Range</option>
+                                        <option value="1">$100 - $499</option>
+                                        <option value="2">$500 - $999</option>
+                                        <option value="3">$1000 - $4999</option>
+                                    </select>
+                                    <button type="submit" class="btn dorne-btn"><i class="fa fa-search pr-2" aria-hidden="true"></i> Search</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -127,7 +206,7 @@
                             <div class="col-12 col-sm-6 col-md">
                                 <div class="single-catagory-area wow fadeInUpBig" data-wow-delay="0.2s">
                                     <div class="catagory-content">
-                                        <img src="{{ URL::asset('dorne/img/core-img/icon-1.png') }}" alt="">
+                                        <img src="img/core-img/icon-1.png" alt="">
                                         <a href="#">
                                             <h6>Hotels</h6>
                                         </a>
@@ -138,7 +217,7 @@
                             <div class="col-12 col-sm-6 col-md">
                                 <div class="single-catagory-area wow fadeInUpBig" data-wow-delay="0.4s">
                                     <div class="catagory-content">
-                                        <img src="{{ URL::asset('dorne/img/core-img/icon-2.png') }}" alt="">
+                                        <img src="img/core-img/icon-2.png" alt="">
                                         <a href="#">
                                             <h6>Restaurants</h6>
                                         </a>
@@ -149,7 +228,7 @@
                             <div class="col-12 col-sm-6 col-md">
                                 <div class="single-catagory-area wow fadeInUpBig" data-wow-delay="0.6s">
                                     <div class="catagory-content">
-                                        <img src="{{ URL::asset('dorne/img/core-img/icon-3.png') }}" alt="">
+                                        <img src="img/core-img/icon-3.png" alt="">
                                         <a href="#">
                                             <h6>Shopping</h6>
                                         </a>
@@ -160,7 +239,7 @@
                             <div class="col-12 col-sm-6 col-md">
                                 <div class="single-catagory-area wow fadeInUpBig" data-wow-delay="0.8s">
                                     <div class="catagory-content">
-                                        <img src="{{ URL::asset('dorne/img/core-img/icon-4.png') }}" alt="">
+                                        <img src="img/core-img/icon-4.png" alt="">
                                         <a href="#">
                                             <h6>Beauty &amp; Spa</h6>
                                         </a>
@@ -171,7 +250,7 @@
                             <div class="col-12 col-md">
                                 <div class="single-catagory-area wow fadeInUpBig" data-wow-delay="1s">
                                     <div class="catagory-content">
-                                        <img src="{{ URL::asset('dorne/img/core-img/icon-5.png') }}" alt="">
+                                        <img src="img/core-img/icon-5.png" alt="">
                                         <a href="#">
                                             <h6>Cinema</h6>
                                         </a>
@@ -192,8 +271,8 @@
             <div class="row">
                 <div class="col-12">
                     <div class="about-content text-center">
-                        <h2>Discover your trip with<br><span>Google Map</span></h2>
-                        <p>You must create account to Create your Trip</p>
+                        <h2>Discover your city with <br><span>Dorne</span></h2>
+                        <p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce quis tempus elit. Sed efficitur tortor neque, vitae aliquet urna varius sit amet. Ut rhoncus, nunc nec tincidunt volutpat, ex libero.</p>
                     </div>
                 </div>
             </div>
@@ -217,7 +296,7 @@
             <div class="row">
                 <div class="col-12 col-lg-6">
                     <div class="single-editors-pick-area wow fadeInUp" data-wow-delay="0.2s">
-                        <img src="{{ URL::asset('dorne/img/bg-img/editor-1.jpg') }}" alt="">
+                        <img src="img/bg-img/editor-1.jpg" alt="">
                         <div class="editors-pick-info">
                             <div class="places-total-destinations d-flex">
                                 <a href="#">New York</a>
@@ -231,7 +310,7 @@
                 </div>
                 <div class="col-12 col-lg-6">
                     <div class="single-editors-pick-area wow fadeInUp" data-wow-delay="0.4s">
-                        <img src="{{ URL::asset('dorne/img/bg-img/editor-2.jpg') }}" alt="">
+                        <img src="img/bg-img/editor-2.jpg" alt="">
                         <div class="editors-pick-info">
                             <div class="places-total-destinations d-flex">
                                 <a href="#">Barcelona</a>
@@ -243,7 +322,7 @@
                         </div>
                     </div>
                     <div class="single-editors-pick-area wow fadeInUp" data-wow-delay="0.6s">
-                        <img src="{{ URL::asset('dorne/img/bg-img/editor-3.jpg') }}" alt="">
+                        <img src="img/bg-img/editor-3.jpg" alt="">
                         <div class="editors-pick-info">
                             <div class="places-total-destinations d-flex">
                                 <a href="#">paris</a>
@@ -278,7 +357,7 @@
                     <div class="features-slides owl-carousel">
                         <!-- Single Features Area -->
                         <div class="single-features-area">
-                            <img src="{{ URL::asset('dorne/img/bg-img/feature-1.jpg') }}" alt="">
+                            <img src="img/bg-img/feature-1.jpg" alt="">
                             <!-- Price -->
                             <div class="price-start">
                                 <p>FROM $59/night</p>
@@ -295,7 +374,7 @@
                         </div>
                         <!-- Single Features Area -->
                         <div class="single-features-area">
-                            <img src="{{ URL::asset('dorne/img/bg-img/feature-2.jpg') }}" alt="">
+                            <img src="img/bg-img/feature-2.jpg" alt="">
                             <!-- Price -->
                             <div class="price-start">
                                 <p>FROM $59/night</p>
@@ -312,7 +391,7 @@
                         </div>
                         <!-- Single Features Area -->
                         <div class="single-features-area">
-                            <img src="{{ URL::asset('dorne/img/bg-img/feature-3.jpg') }}" alt="">
+                            <img src="img/bg-img/feature-3.jpg" alt="">
                             <!-- Price -->
                             <div class="price-start">
                                 <p>FROM $59/night</p>
@@ -329,7 +408,7 @@
                         </div>
                         <!-- Single Features Area -->
                         <div class="single-features-area">
-                            <img src="{{ URL::asset('dorne/img/bg-img/feature-4.jpg') }}" alt="">
+                            <img src="img/bg-img/feature-4.jpg" alt="">
                             <!-- Price -->
                             <div class="price-start">
                                 <p>FROM $59/night</p>
@@ -346,7 +425,7 @@
                         </div>
                         <!-- Single Features Area -->
                         <div class="single-features-area">
-                            <img src="{{ URL::asset('dorne/img/bg-img/feature-5.jpg') }}" alt="">
+                            <img src="img/bg-img/feature-5.jpg" alt="">
                             <!-- Price -->
                             <div class="price-start">
                                 <p>FROM $59/night</p>
@@ -386,11 +465,11 @@
                     <div class="features-slides owl-carousel">
                         <!-- Single Features Area -->
                         <div class="single-features-area">
-                            <img src="{{ URL::asset('dorne/img/bg-img/feature-6.jpg') }}" alt="">
+                            <img src="img/bg-img/feature-6.jpg" alt="">
                             <!-- Rating & Map Area -->
                             <div class="ratings-map-area d-flex">
                                 <a href="#">8.5</a>
-                                <a href="#"><img src="{{ URL::asset('dorne/img/core-img/map.png') }}" alt=""></a>
+                                <a href="#"><img src="img/core-img/map.png" alt=""></a>
                             </div>
                             <div class="feature-content d-flex align-items-center justify-content-between">
                                 <div class="feature-title">
@@ -404,11 +483,11 @@
                         </div>
                         <!-- Single Features Area -->
                         <div class="single-features-area">
-                            <img src="{{ URL::asset('dorne/img/bg-img/feature-7.jpg') }}" alt="">
+                            <img src="img/bg-img/feature-7.jpg" alt="">
                             <!-- Rating & Map Area -->
                             <div class="ratings-map-area d-flex">
                                 <a href="#">9.5</a>
-                                <a href="#"><img src="{{ URL::asset('dorne/img/core-img/map.png') }}" alt=""></a>
+                                <a href="#"><img src="img/core-img/map.png" alt=""></a>
                             </div>
                             <div class="feature-content d-flex align-items-center justify-content-between">
                                 <div class="feature-title">
@@ -422,11 +501,11 @@
                         </div>
                         <!-- Single Features Area -->
                         <div class="single-features-area">
-                            <img src="{{ URL::asset('dorne/img/bg-img/feature-8.jpg') }}" alt="">
+                            <img src="img/bg-img/feature-8.jpg" alt="">
                             <!-- Rating & Map Area -->
                             <div class="ratings-map-area d-flex">
                                 <a href="#">8.2</a>
-                                <a href="#"><img src="{{ URL::asset('dorne/img/core-img/map.png') }}" alt=""></a>
+                                <a href="#"><img src="img/core-img/map.png" alt=""></a>
                             </div>
                             <div class="feature-content d-flex align-items-center justify-content-between">
                                 <div class="feature-title">
@@ -440,11 +519,11 @@
                         </div>
                         <!-- Single Features Area -->
                         <div class="single-features-area">
-                            <img src="{{ URL::asset('dorne/img/bg-img/feature-9.jpg') }}" alt="">
+                            <img src="img/bg-img/feature-9.jpg" alt="">
                             <!-- Rating & Map Area -->
                             <div class="ratings-map-area d-flex">
                                 <a href="#">8.7</a>
-                                <a href="#"><img src="{{ URL::asset('dorne/img/core-img/map.png') }}" alt=""></a>
+                                <a href="#"><img src="img/core-img/map.png" alt=""></a>
                             </div>
                             <div class="feature-content d-flex align-items-center justify-content-between">
                                 <div class="feature-title">
@@ -458,11 +537,11 @@
                         </div>
                         <!-- Single Features Area -->
                         <div class="single-features-area">
-                            <img src="{{ URL::asset('dorne/img/bg-img/feature-10.jpg') }}" alt="">
+                            <img src="img/bg-img/feature-10.jpg" alt="">
                             <!-- Rating & Map Area -->
                             <div class="ratings-map-area d-flex">
                                 <a href="#">9.8</a>
-                                <a href="#"><img src="{{ URL::asset('dorne/img/core-img/map.png') }}" alt=""></a>
+                                <a href="#"><img src="img/core-img/map.png" alt=""></a>
                             </div>
                             <div class="feature-content d-flex align-items-center justify-content-between">
                                 <div class="feature-title">
@@ -498,10 +577,10 @@
                 <div class="col-12 col-lg-6">
                     <div class="single-feature-events-area d-sm-flex align-items-center wow fadeInUpBig" data-wow-delay="0.2s">
                         <div class="feature-events-thumb">
-                            <img src="{{ URL::asset('dorne/img/bg-img/event-1.jpg') }}" alt="">
+                            <img src="img/bg-img/event-1.jpg" alt="">
                             <div class="date-map-area d-flex">
                                 <a href="#">26 Nov</a>
-                                <a href="#"><img src="{{ URL::asset('dorne/img/core-img/map.png') }}" alt=""></a>
+                                <a href="#"><img src="img/core-img/map.png" alt=""></a>
                             </div>
                         </div>
                         <div class="feature-events-content">
@@ -517,10 +596,10 @@
                 <div class="col-12 col-lg-6">
                     <div class="single-feature-events-area d-sm-flex align-items-center wow fadeInUpBig" data-wow-delay="0.3s">
                         <div class="feature-events-thumb">
-                            <img src="{{ URL::asset('dorne/img/bg-img/event-2.jpg') }}" alt="">
+                            <img src="img/bg-img/event-2.jpg" alt="">
                             <div class="date-map-area d-flex">
                                 <a href="#">26 Nov</a>
-                                <a href="#"><img src="{{ URL::asset('dorne/img/core-img/map.png') }}" alt=""></a>
+                                <a href="#"><img src="img/core-img/map.png" alt=""></a>
                             </div>
                         </div>
                         <div class="feature-events-content">
@@ -536,10 +615,10 @@
                 <div class="col-12 col-lg-6">
                     <div class="single-feature-events-area d-sm-flex align-items-center wow fadeInUpBig" data-wow-delay="0.4s">
                         <div class="feature-events-thumb">
-                            <img src="{{ URL::asset('dorne/img/bg-img/event-3.jpg') }}" alt="">
+                            <img src="img/bg-img/event-3.jpg" alt="">
                             <div class="date-map-area d-flex">
                                 <a href="#">26 Nov</a>
-                                <a href="#"><img src="{{ URL::asset('dorne/img/core-img/map.png') }}" alt=""></a>
+                                <a href="#"><img src="img/core-img/map.png" alt=""></a>
                             </div>
                         </div>
                         <div class="feature-events-content">
@@ -555,10 +634,10 @@
                 <div class="col-12 col-lg-6">
                     <div class="single-feature-events-area d-sm-flex align-items-center wow fadeInUpBig" data-wow-delay="0.5s">
                         <div class="feature-events-thumb">
-                            <img src="{{ URL::asset('dorne/img/bg-img/event-4.jpg') }}" alt="">
+                            <img src="img/bg-img/event-4.jpg" alt="">
                             <div class="date-map-area d-flex">
                                 <a href="#">26 Nov</a>
-                                <a href="#"><img src="{{ URL::asset('dorne/img/core-img/map.png') }}" alt=""></a>
+                                <a href="#"><img src="img/core-img/map.png" alt=""></a>
                             </div>
                         </div>
                         <div class="feature-events-content">
@@ -574,10 +653,10 @@
                 <div class="col-12 col-lg-6">
                     <div class="single-feature-events-area d-sm-flex align-items-center wow fadeInUpBig" data-wow-delay="0.6s">
                         <div class="feature-events-thumb">
-                            <img src="{{ URL::asset('dorne/img/bg-img/event-5.jpg') }}" alt="">
+                            <img src="img/bg-img/event-5.jpg" alt="">
                             <div class="date-map-area d-flex">
                                 <a href="#">26 Nov</a>
-                                <a href="#"><img src="{{ URL::asset('dorne/img/core-img/map.png') }}" alt=""></a>
+                                <a href="#"><img src="img/core-img/map.png" alt=""></a>
                             </div>
                         </div>
                         <div class="feature-events-content">
@@ -593,10 +672,10 @@
                 <div class="col-12 col-lg-6">
                     <div class="single-feature-events-area d-sm-flex align-items-center wow fadeInUpBig" data-wow-delay="0.7s">
                         <div class="feature-events-thumb">
-                            <img src="{{ URL::asset('dorne/img/bg-img/event-6.jpg') }}" alt="">
+                            <img src="img/bg-img/event-6.jpg" alt="">
                             <div class="date-map-area d-flex">
                                 <a href="#">26 Nov</a>
-                                <a href="#"><img src="{{ URL::asset('dorne/img/core-img/map.png') }}" alt=""></a>
+                                <a href="#"><img src="img/core-img/map.png" alt=""></a>
                             </div>
                         </div>
                         <div class="feature-events-content">
@@ -620,11 +699,11 @@
             <div class="row">
                 <div class="col-12">
                     <div class="clients-logo d-md-flex align-items-center justify-content-around">
-                        <img src="{{ URL::asset('dorne/img/clients-img/1.png') }}" alt="">
-                        <img src="{{ URL::asset('dorne/img/clients-img/2.png') }}" alt="">
-                        <img src="{{ URL::asset('dorne/img/clients-img/3.png') }}" alt="">
-                        <img src="{{ URL::asset('dorne/img/clients-img/4.png') }}" alt="">
-                        <img src="{{ URL::asset('dorne/img/clients-img/5.png') }}" alt="">
+                        <img src="img/clients-img/1.png" alt="">
+                        <img src="img/clients-img/2.png" alt="">
+                        <img src="img/clients-img/3.png" alt="">
+                        <img src="img/clients-img/4.png" alt="">
+                        <img src="img/clients-img/5.png" alt="">
                     </div>
                 </div>
             </div>
@@ -658,15 +737,15 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <!-- ****** Footer Area End ****** -->
 
     <!-- jQuery-2.2.4 js -->
-    <script src="{{ URL::asset('dorne/js/jquery/jquery-2.2.4.min.js') }}"></script>
+    <script src="js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
-    <script src="{{ URL::asset('dorne/js/bootstrap/popper.min.js') }}"></script>
+    <script src="js/bootstrap/popper.min.js"></script>
     <!-- Bootstrap-4 js -->
-    <script src="{{ URL::asset('dorne/js/bootstrap/bootstrap.min.js') }}"></script>
+    <script src="js/bootstrap/bootstrap.min.js"></script>
     <!-- All Plugins js -->
-    <script src="{{ URL::asset('dorne/js/others/plugins.js') }}"></script>
+    <script src="js/others/plugins.js"></script>
     <!-- Active JS -->
-    <script src="{{ URL::asset('dorne/js/active.js') }}"></script>
+    <script src="js/active.js"></script>
 </body>
 
 </html>

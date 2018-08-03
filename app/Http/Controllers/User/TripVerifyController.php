@@ -47,6 +47,8 @@ class TripVerifyController extends Controller
         $trip = $user->trips()->wherePivot('trip_id', $trip_id)->first();
         $this->authorize('updateTrip', $trip);
         $this->authorize('ablePlan', $trip);
+        $trip->people_number = $trip->people_number + 1;
+        $trip->save();
         $user->tripsVerify()->updateExistingPivot($trip_id, ['status'=>'join']);
         return Redirect::back();
     }

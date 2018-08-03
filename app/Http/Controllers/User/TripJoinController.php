@@ -22,6 +22,8 @@ class TripJoinController extends Controller
         $trip = TripRepository::findOrFail($trip_id);
         $this->authorize('cantUpdateTrip', $trip);
         $this->authorize('ablePlan', $trip);
+        $trip->people_number = $trip->people_number - 1;
+        $trip->save();
         $user = Auth::user();
         $user->tripsJoin()->detach($trip_id);
         return Redirect::back()->with('message', 'Hủy tham gia chuyến đi thành công');
@@ -33,6 +35,8 @@ class TripJoinController extends Controller
         $trip = $user->trips()->wherePivot('trip_id', $trip_id)->first();
         $this->authorize('updateTrip', $trip);
         $this->authorize('ablePlan', $trip);
+        $trip->people_number = $trip->people_number - 1;
+        $trip->save();
         $user->tripsJoin()->detach($trip_id);
         return Redirect::back()->with('message', 'Kích thành viên thành công');
     }
