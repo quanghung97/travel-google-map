@@ -682,7 +682,7 @@
                                 </div>
                                 <div style="margin:10px; width:90%">
                                     <input type="button" style="background-color:white; border:none;" onclick="addReply({{$comment->id}})" value="Reply">
-                                    <span style="float:right; font-size:11px;" >{{$comment->address}}</span>
+                                    <span style="float:right;">tại  <small>{{$comment->address}}</small></span>
                                 </div>
 
                                     <div id="reply">
@@ -700,6 +700,10 @@
                                     <div style="border: 1px solid; width:90%; padding:11px; border-radius: 15px; background-color:#eff1f3">
                                     <a href="{{url('user/userProfile/profile/'.$reply->user->id)}}"><strong>{{$reply->user->name}}</strong></a>
                                     {{$reply->content}}
+                                </div>
+                                <div style="margin:10px; width:90%">
+
+                                    <span style="float:right;">tại  <small>{{$reply->address}}</small></span>
                                 </div>
                                 <br>
                                 </div>
@@ -748,10 +752,17 @@
                             <div class="row" style="padding: 10px;">
 
                                 <div class="form-group">
-                                    <span><a class="fa fa-search" data-popup-open="popup-1" href="#"> Check in</a></span>
-                                    
-                                    
-                            <input type="text" style="background-color:#eff1f3; border-radius: 15px" class="form-control" name="content" placeholder="Viết bình luận............">
+                                    <div class="col-md-9">
+                                <input type="text" style="background-color:#eff1f3; border-radius: 15px" class="form-control col-md-5" name="content" placeholder="Viết bình luận............">
+
+                                    </div>
+                                    <span class="input-group-addon">
+                                        <a class="fa fa-camera" data-popup-open="popup-1" href="#"> Check in</a>
+                                    </span>
+                                    <span class="input-group-addon">
+                                        <a class="fa fa-upload" href="#"> Up load</a>
+                                    </span>
+
                                     <br>
                             <div id="results"></div>
                             </div>
@@ -774,8 +785,8 @@
 <div class="popup" data-popup="popup-1">
 	<div class="popup-inner">
         <h2>Chụp ảnh sefie</h2>
-        
-        
+
+
         <form>
             <div id="my_camera"></div>
 		    <input type="button" value="Take Snapshot" onClick="take_snapshot()">
@@ -783,7 +794,7 @@
 		<a class="popup-close" data-popup-close="popup-1" href="#">x</a>
 	</div>
 </div>
-            
+
 
 </div>
 @endsection
@@ -873,7 +884,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		$('[data-popup="' + targeted_popup_class + '"]').fadeIn(350);
 
         e.preventDefault();
-        
+
         Webcam.set({
 			width: 480,
 			height: 480,
@@ -889,24 +900,24 @@ document.addEventListener("DOMContentLoaded", function() {
 		$('[data-popup="' + targeted_popup_class + '"]').fadeOut(350);
 
         e.preventDefault();
-      
+
 	});
 });
     </script>
-    
+
     <script type="text/javascript" src="{{asset('js/webcam.min.js')}}"></script>
 
-    
-        
+
+
     <script language="JavaScript">
 		function take_snapshot() {
 			// take snapshot and get image data
 			Webcam.snap( function(data_uri) {
                 // display results in page
-				document.getElementById('results').innerHTML =  
+				document.getElementById('results').innerHTML =
                     '<img style="width:80px; height:80px" src="'+data_uri+'"/>'+
                     '<input type="hidden" value="'+data_uri+'" name="check_in"/>'
-                
+
             } );
             // $("#my_camera").remove();
 		}
