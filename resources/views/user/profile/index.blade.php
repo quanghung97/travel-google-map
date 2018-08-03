@@ -426,7 +426,7 @@
 
                                         <!-- Tài khoản Google +-->
                                         <li>
-                                            <a href="https://plus.google.com/u/0/118260931574775251745/posts">
+                                            <a href="https://plus.google.com/u/{{$user->g_id}}/">
                                                 <img src="http://farm5.staticflickr.com/4186/34004419773_ed97040ef5_o.png">
                                             </a>
                                         </li>
@@ -445,7 +445,7 @@
 
                                     <div>
                                         <label>Tên Người Dùng</label>
-                                        <input type="text" class="form-control" name="name" aria-describedby="basic-addon1" value="{{ $user->name }}">
+                                        <input type="text" class="form-control" name="name" aria-describedby="basic-addon1" value="{{ $user->name }}" @cannot('updateProfile', $user) readonly @endcannot>
                                     </div>
                                     <br>
                                     <div>
@@ -453,6 +453,7 @@
                                         <input type="email" class="form-control" name="email" aria-describedby="basic-addon1" value="{{ $user->email }}" readonly>
                                     </div>
                                     <br>
+                                    @can('updateProfile', $user)
                                     <div class="form-group">
                                         <p>
                                             <label>Bạn có muốn thay đổi mật khẩu?</label>
@@ -479,7 +480,7 @@
                                             disabled="" />
                                     </div>
                                     <br>
-                                @can('updateProfile', $user)
+                               
                                     <button type="submit" class="btn btn-primary">Update
                                     </button>
                                 @endcan
