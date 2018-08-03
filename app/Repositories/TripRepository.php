@@ -28,7 +28,7 @@ class TripRepository extends BaseRepository implements TripInterface, CommentInt
         $image_url = $this->model->findOrFail($id);
         $img_file_extension = $image->getClientOriginalExtension(); // Lấy đuôi của file hình ảnh
 
-        if ($img_file_extension == 'PNG' && $img_file_extension == 'jpg' && $img_file_extension == 'jpeg' && $img_file_extension == 'png') {
+        if ($img_file_extension == 'PNG' || $img_file_extension == 'jpg' || $img_file_extension == 'jpeg' || $img_file_extension == 'png') {
             $img_file_name = $image->getClientOriginalName(); // Lấy tên của file hình ảnh
 
             $random_file_name = str_random(4).'_'.$img_file_name; // Random tên file để tránh trường hợp trùng với tên hình ảnh khác trong CSDL

@@ -531,11 +531,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                @if($trip->status == "planning")
-                                    <a href="{{url('trip/destroy/'.$trip->id)}}"><input type="button" style="float:right" class="btn btn-danger" value="Hủy chuyến đi"></a>
-                                @endif
                                 <button style="float:right" class="btn btn-success" type="submit">Ghi nhận</button>
-
                                 {!! Form::close() !!}
                                 </div>
                             </div>
