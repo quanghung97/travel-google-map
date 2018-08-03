@@ -32,11 +32,67 @@
         position:relative;
         text-align: center;
     }
+
+    /* Outer */
+.popup {
+	width:100%;
+	height:100%;
+	display:none;
+	position:fixed;
+	top:0px;
+	left:0px;
+	background:rgba(0,0,0,0.75);
+}
+
+/* Inner */
+.popup-inner {
+	max-width:700px;
+	width:90%;
+	padding:40px;
+	position:absolute;
+	top:50%;
+	left:50%;
+	-webkit-transform:translate(-50%, -50%);
+	transform:translate(-50%, -50%);
+	box-shadow:0px 2px 6px rgba(0,0,0,1);
+	border-radius:3px;
+	background:#fff;
+}
+
+/* Close Button */
+.popup-close {
+	width:30px;
+	height:30px;
+	padding-top:4px;
+	display:inline-block;
+	position:absolute;
+	top:0px;
+	right:0px;
+	transition:ease 0.25s all;
+	-webkit-transform:translate(50%, -50%);
+	transform:translate(50%, -50%);
+	border-radius:1000px;
+	background:rgba(0,0,0,0.8);
+	font-family:Arial, Sans-Serif;
+	font-size:20px;
+	text-align:center;
+	line-height:100%;
+	color:#fff;
+}
+
+.popup-close:hover {
+	-webkit-transform:translate(50%, -50%) rotate(180deg);
+	transform:translate(50%, -50%) rotate(180deg);
+	background:rgba(0,0,0,1);
+	text-decoration:none;
+}
 </style>
+
 @endsection
 @section('mapjs')
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyiIshpnLak_30s9Z954mltbs97Iu4EpI" type="text/javascript"></script>
 <script src="{{asset('js/ContextMenu.js')}}" type="text/javascript"></script>
+
 <script type="text/javascript">
     var directionsService;
     var directionsRenderer;
@@ -692,8 +748,13 @@
                             <div class="row" style="padding: 10px;">
 
                                 <div class="form-group">
-                                    <input type="text" style="background-color:#eff1f3; border-radius: 15px" class="form-control" name="content" placeholder="Viết bình luận............">
-                                </div>
+                                    <span><a class="fa fa-search" data-popup-open="popup-1" href="#"> Check in</a></span>
+                                    
+                                    
+                            <input type="text" style="background-color:#eff1f3; border-radius: 15px" class="form-control" name="content" placeholder="Viết bình luận............">
+                                    <br>
+                            <div id="results"></div>
+                            </div>
                             </div>
                         <div class="row" style="padding: 0 10px 0 10px;">
                             <div class="form-group">
@@ -706,7 +767,25 @@
         </div>
     </div>
 </div>
-        </div>
+
+
+
+
+<div class="popup" data-popup="popup-1">
+	<div class="popup-inner">
+        <h2>Chụp ảnh sefie</h2>
+        
+        
+        <form>
+            <div id="my_camera"></div>
+		    <input type="button" value="Take Snapshot" onClick="take_snapshot()">
+        </form>
+		<a class="popup-close" data-popup-close="popup-1" href="#">x</a>
+	</div>
+</div>
+            
+
+</div>
 @endsection
 
 @section('js')
@@ -784,5 +863,53 @@ document.addEventListener("DOMContentLoaded", function() {
         getCurrentPos();
 });
 </script>
+
+
+    <script>
+        $(function() {
+	//----- OPEN
+	$('[data-popup-open]').on('click', function(e) {
+		var targeted_popup_class = jQuery(this).attr('data-popup-open');
+		$('[data-popup="' + targeted_popup_class + '"]').fadeIn(350);
+
+        e.preventDefault();
+        
+        Webcam.set({
+			width: 480,
+			height: 480,
+			image_format: 'png',
+			jpeg_quality: 90
+		});
+		Webcam.attach( '#my_camera' );
+	});
+
+	//----- CLOSE
+	$('[data-popup-close]').on('click', function(e) {
+		var targeted_popup_class = jQuery(this).attr('data-popup-close');
+		$('[data-popup="' + targeted_popup_class + '"]').fadeOut(350);
+
+        e.preventDefault();
+      
+	});
+});
+    </script>
+    
+    <script type="text/javascript" src="{{asset('js/webcam.min.js')}}"></script>
+
+    
+        
+    <script language="JavaScript">
+		function take_snapshot() {
+			// take snapshot and get image data
+			Webcam.snap( function(data_uri) {
+                // display results in page
+				document.getElementById('results').innerHTML =  
+                    '<img style="width:80px; height:80px" src="'+data_uri+'"/>'+
+                    '<input type="hidden" value="'+data_uri+'" name="check_in"/>'
+                
+            } );
+            // $("#my_camera").remove();
+		}
+	</script>
 
 @endsection
