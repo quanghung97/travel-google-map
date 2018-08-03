@@ -16,10 +16,11 @@ class TripRepository extends BaseRepository implements TripInterface, CommentInt
         parent::__construct($trip);
     }
 
-    public function getAllTripHotest()
+    public function getTripHotest()
     {
-        $listFollowJoinUser = $this->model->withCount('usersFollow', 'usersJoin')
-        ->orderByRaw('`users_follow_count` + `users_join_count`', 'desc')->get();
+        $listFollowJoinUser = $this->model->withCount('usersFollow', 'usersJoin', 'comments')
+        ->orderBy('users_follow_count', 'DESC')->orderBy('users_join_count', 'DESC')->orderBy('comments_count', 'DESC')->limit(10)->get();
+        return $listFollowJoinUser;
     }
 
     public function updateImage($id, $image)

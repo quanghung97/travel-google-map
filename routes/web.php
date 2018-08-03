@@ -39,7 +39,6 @@ Route::group(['prefix'=>'user', 'middleware'=>'auth'], function () {
         });
         Route::group(['prefix'=>'join'], function () {
             Route::get('/index/{id}', 'User\TripJoinController@index');
-            Route::get('/join/{id}', 'User\TripJoinController@join');
             Route::get('/unjoin/{id}', 'User\TripJoinController@unjoin');
             Route::get('/out/{a}/{b}', 'User\TripJoinController@out');
         });

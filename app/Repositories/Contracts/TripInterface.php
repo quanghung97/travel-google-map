@@ -5,10 +5,10 @@ namespace App\Repositories\Contracts;
 interface TripInterface
 {
     /**
-     * get all Trips hotest with total follow and join order by desc
+     * get all Trips hotest with follow and join, comments order by desc
      * @return  mixed
      */
-    public function getAllTripHotest();
+    public function getTripHotest();
 
     /**
      * store image Trip

@@ -11,7 +11,7 @@
           </a>
           <ul class="nav child_menu">
             <li>
-              <a>
+              <a href="{{url('user/home/hotest')}}">
                 <i class="fa fa-bar-chart-o"></i> Top 10 kế hoạch hot nhất</a>
             </li>
             <li>
