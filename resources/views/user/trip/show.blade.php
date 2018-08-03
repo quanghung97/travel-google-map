@@ -624,13 +624,14 @@
                                     <a href="{{url('user/userProfile/profile/'.$comment->user->id)}}"><strong>{{$comment->user->name}}</strong></a>
                                     {{$comment->content}}
                                 </div>
-                                <div style="margin:10px;">
+                                <div style="margin:10px; width:90%">
                                     <input type="button" style="background-color:white; border:none;" onclick="addReply({{$comment->id}})" value="Reply">
+                                    <span style="float:right; font-size:11px;" >{{$comment->address}}</span>
                                 </div>
 
                                     <div id="reply">
 
-                                            
+
                         {{-- reply to comment --}}
 
                         @foreach($comment->comments as $reply)
@@ -641,7 +642,7 @@
                                 </div>
                                 <div class="col-md-11">
                                     <div style="border: 1px solid; width:90%; padding:11px; border-radius: 15px; background-color:#eff1f3">
-                                    <a href="{{url('user/userProfile/profile/'.$reply->user->id)}}"><strong>{{$reply->user->name}}</strong></a> 
+                                    <a href="{{url('user/userProfile/profile/'.$reply->user->id)}}"><strong>{{$reply->user->name}}</strong></a>
                                     {{$reply->content}}
                                 </div>
                                 <br>
@@ -657,11 +658,12 @@
                             <form class="reply-form-{{$comment->id}}" method="post" action="{{route('replycomment.store', $comment->id)}}" style="display:none" >
                                       {{ csrf_field() }}
                                   <input type="hidden" name="trip_id" value="{{ $trip->id }}" >
+                                  <input type="hidden" name="user_address" class="user_address_input">
                                   <div class="row" style="padding: 10px;">
                                       <div class="form-group">
-                                        
+
                                     <input type="text" style="background-color:#eff1f3; border-radius: 15px; height:50px; width:90%;" class="form-control" name="content" placeholder="reply.........">
-                                        
+
                                       </div>
                                   </div>
                               <div class="row" style="padding: 0 10px 0 10px;">
@@ -670,10 +672,10 @@
                                   </div>
                               </div>
                               </form>
-                        </div>  
                         </div>
-                        
-                        
+                        </div>
+
+
                         </div>
                         </div>
 
@@ -682,10 +684,13 @@
 
                     @endforeach
                 </div>
-            <form id="comment-form-{{$trip->id}}" method="post" action="{{route('tripcomment.store', $trip->id)}}" >
+            <form id="comment-form-{{$trip->id}}" method="post" action="{{route('tripcomment.store', $trip->id)}}">
                                 {{ csrf_field() }}
                             <input type="hidden" name="user_id" value="{{ Auth::user()->id }}" >
+                            <input type="hidden" name="user_address" class="user_address_input">
+                            <p id="user_address"></p>
                             <div class="row" style="padding: 10px;">
+
                                 <div class="form-group">
                                     <input type="text" style="background-color:#eff1f3; border-radius: 15px" class="form-control" name="content" placeholder="Viết bình luận............">
                                 </div>
@@ -702,10 +707,6 @@
     </div>
 </div>
         </div>
-
-        <input type="button" class="btn btn-info" onclick="getCurrentPos();" value="Lay vi tri">
-        <p id="check-in"></p>
-
 @endsection
 
 @section('js')
@@ -747,7 +748,7 @@
     }
 </script>
 
-<script> 
+<script>
     function addReply(id){
         $('.reply-form-'+id).toggle();
     }
@@ -761,10 +762,27 @@
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
-            alert(pos);
+            var p = new google.maps.LatLng(pos.lat, pos.lng);
+            var geocoderr = new google.maps.Geocoder;
+             results = null;
+             geocoderr.geocode({
+                        'location': p
+                    }, function(results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            $('.user_address_input').val(results[0].formatted_address);
+                        }
+                    });
+
         });
-        
-    }}
+    }
+
+    }
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+        getCurrentPos();
+});
 </script>
 
 @endsection

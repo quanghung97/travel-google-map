@@ -17,7 +17,7 @@ class CommentController extends Controller
             'content'=>'required'
         ]);
 
-        TripRepository::storeComment($trip_id, $request->content);
+        TripRepository::storeComment($trip_id, $request->content, $request->user_address);
 
         return Redirect::back()->with('message', 'Comment thành công');
     }
@@ -27,7 +27,7 @@ class CommentController extends Controller
         $this->validate($request, [
             'content'=>'required'
         ]);
-        CommentRepository::storeComment($comment_id, $request->content);
+        CommentRepository::storeComment($comment_id, $request->content, $request->user_address);
 
         return Redirect::back()->with('message', 'Reply thành công');
     }
