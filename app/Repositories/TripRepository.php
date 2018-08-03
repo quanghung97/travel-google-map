@@ -59,12 +59,13 @@ class TripRepository extends BaseRepository implements TripInterface, CommentInt
         }
     }
 
-    public function storeComment($id, $content)
+    public function storeComment($id, $content, $address)
     {
         $comment = new Comment();
         $comment->content = $content;
         $comment->user_id = Auth::user()->id;
         $comment->trip_id = $id;
+        $comment->address = $address;
 
         Trip::findOrFail($id)->comments()->save($comment);
     }

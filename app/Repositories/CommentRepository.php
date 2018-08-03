@@ -17,11 +17,12 @@ class CommentRepository extends BaseRepository implements CommentInterface
      * This mean replycomment
      * @return mixed
      */
-    public function storeComment($id, $content)
+    public function storeComment($id, $content, $address)
     {
         $comment = new Comment();
         $comment->content = $content;
         $comment->user_id = Auth::user()->id;
+        $comment->address = $address;
 
         Comment::findOrFail($id)->comments()->save($comment);
     }
