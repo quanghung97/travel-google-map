@@ -59,7 +59,7 @@
                                                 <td> {{$u->name}} </td>
                                                 <td> {{ date("d-m-Y", strtotime($u->created_at)) }}</td>
                                                 <td> <a href="{{url('user/userProfile/profile/'.$u->id)}}">Xem trang cá nhân</a></td>
-                                                <td><a href="">Xem chi tiết</a></td>
+                                                <td><a href="{{url('user/trip/join/index/'.$u->id)}}">Xem chi tiết</a></td>
                                                 <td><a href="{{url('user/trip/follow/index/'.$u->id)}}">Xem chi tiết</a></td>
                                             </tr>
                                             @endforeach

@@ -17,7 +17,7 @@ class CommentRepository extends BaseRepository implements CommentInterface
      * This mean replycomment
      * @return mixed
      */
-    public function storeComment($id, $content, $address)
+    public function storeComment($id, $content, $address, $checkin, $multiphoto)
     {
         $comment = new Comment();
         $comment->content = $content;

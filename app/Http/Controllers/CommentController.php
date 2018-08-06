@@ -13,12 +13,17 @@ class CommentController extends Controller
 {
     public function addTripComment(Request $request, $trip_id)
     {
+        //dd($request->multiphoto);
         $this->validate($request, [
             'content'=>'required'
         ]);
-
-        TripRepository::storeComment($trip_id, $request->content, $request->user_address);
-
+        $multiphoto = $request->file('multiphoto');
+        //dd($request);
+        //dd($multiphoto);
+        $bool = TripRepository::storeComment($trip_id, $request->content, $request->user_address, $request->check_in, $multiphoto);
+        if ($bool == false) {
+            return Redirect::back()->with('warning', 'Một số file bạn upload định dạng chưa đúng dạng hình ảnh (jpg, png....)');
+        }
         return Redirect::back()->with('message', 'Comment thành công');
     }
 
@@ -27,7 +32,7 @@ class CommentController extends Controller
         $this->validate($request, [
             'content'=>'required'
         ]);
-        CommentRepository::storeComment($comment_id, $request->content, $request->user_address);
+        CommentRepository::storeComment($comment_id, $request->content, $request->user_address, $request->check_in, $request->multiphoto);
 
         return Redirect::back()->with('message', 'Reply thành công');
     }
