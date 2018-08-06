@@ -481,7 +481,7 @@
                                         </div>
                                         <h3 class="col-md-12">Ảnh cover: </h3>
                                         <div class="col-md-12 col-sm-12">
-                                            <img src="{{asset('avatar/defaut_avt.jpg')}}" id="logo-img" onclick="document.getElementById('add-new-logo').click();" style="width:100%; height:300px;">
+                                            <img src="{{asset('image/no-image.jpg')}}" id="logo-img" onclick="document.getElementById('add-new-logo').click();" style="width:100%; height:300px;">
 
                                             <input class="form-control" type="file" style="display: none" id="add-new-logo" name="file" accept="image/*" onchange="addNewLogo(this)" />
 

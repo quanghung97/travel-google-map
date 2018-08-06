@@ -315,7 +315,7 @@
 
                                             @if($trip->image_url)
                                             <img src="{{asset($trip->image_url)}}" id="logo-img" onclick="document.getElementById('add-new-logo').click();" style="width:100%; height:300px;"> @else
-                                            <img src="{{asset('avatar/defaut_avt.jpg')}}" id="logo-img" onclick="document.getElementById('add-new-logo').click();" style="width:100%; height:300px;"> @endif
+                                            <img src="{{asset('image/no-image.jpg')}}" id="logo-img" onclick="document.getElementById('add-new-logo').click();" style="width:100%; height:300px;"> @endif
 
                                             <input class="form-control" type="file" style="display: none" id="add-new-logo" name="file" accept="image/*" onchange="addNewLogo(this)" />
 
