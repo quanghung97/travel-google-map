@@ -38,6 +38,8 @@
       <link href="{{ URL::asset('gentelella_master/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css') }}" rel="stylesheet">
       <link href="{{ URL::asset('gentelella_master/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css') }}" rel="stylesheet">
 
+      <!-- Dropzone.js -->
+      <link href="{{ URL::asset('gentelella_master/vendors/dropzone/dist/min/dropzone.min.css') }}" rel="stylesheet">
       @yield('css')
       @yield('mapjs')
     </head>
@@ -207,6 +209,9 @@
       <script src="{{ URL::asset('gentelella_master/vendors/jszip/dist/jszip.min.js') }}"></script>
       <script src="{{ URL::asset('gentelella_master/vendors/pdfmake/build/pdfmake.min.js') }}"></script>
       <script src="{{ URL::asset('gentelella_master/vendors/pdfmake/build/vfs_fonts.js') }}"></script>
+
+      <!-- Dropzone.js -->
+      <script src="{{ URL::asset('gentelella_master/vendors/dropzone/dist/min/dropzone.min.js') }}"></script>
       @yield('js')
 
     </body>

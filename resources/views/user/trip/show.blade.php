@@ -90,7 +90,7 @@
 
 @endsection
 @section('mapjs')
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyiIshpnLak_30s9Z954mltbs97Iu4EpI" type="text/javascript"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdtVaJjFLyHdn0kTk9pF8upC4nNiLlqgM" type="text/javascript"></script>
 <script src="{{asset('js/ContextMenu.js')}}" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -330,6 +330,11 @@
                         <li>{{ $error }}</li>
                         @endforeach
                     </ul>
+                    @endif
+                    @if(session('warning'))
+                        <div class="alert alert-warning">
+                            <strong>{{session('warning')}}</strong>
+                        </div>
                     @endif
                     @if(session('message'))
                         <div class="alert alert-success">
@@ -680,9 +685,14 @@
                                     <a href="{{url('user/userProfile/profile/'.$comment->user->id)}}"><strong>{{$comment->user->name}}</strong></a>
                                     {{$comment->content}}
                                 </div>
+                                @foreach ($comment->images as $key => $image)
+                                    <img src="{{asset($image->url)}}" style="width:250px; height:250px" alt="Ảnh Check In">
+                                @endforeach
                                 <div style="margin:10px; width:90%">
                                     <input type="button" style="background-color:white; border:none;" onclick="addReply({{$comment->id}})" value="Reply">
+                                    @if ($comment->address != null)
                                     <span style="float:right;">tại  <small>{{$comment->address}}</small></span>
+                                    @endif
                                 </div>
 
                                     <div id="reply">
@@ -702,8 +712,9 @@
                                     {{$reply->content}}
                                 </div>
                                 <div style="margin:10px; width:90%">
-
+                                    @if ($reply->address != null)
                                     <span style="float:right;">tại  <small>{{$reply->address}}</small></span>
+                                @endif
                                 </div>
                                 <br>
                                 </div>
@@ -744,7 +755,7 @@
 
                     @endforeach
                 </div>
-            <form id="comment-form-{{$trip->id}}" method="post" action="{{route('tripcomment.store', $trip->id)}}">
+            <form id="comment-form-{{$trip->id}}" enctype="multipart/form-data" method="post" action="{{route('tripcomment.store', $trip->id)}}">
                                 {{ csrf_field() }}
                             <input type="hidden" name="user_id" value="{{ Auth::user()->id }}" >
                             <input type="hidden" name="user_address" class="user_address_input">
@@ -752,20 +763,28 @@
                             <div class="row" style="padding: 10px;">
 
                                 <div class="form-group">
-                                    <div class="col-md-9">
-                                <input type="text" style="background-color:#eff1f3; border-radius: 15px" class="form-control col-md-5" name="content" placeholder="Viết bình luận............">
+                                    <div class="col-md-8">
+                                        <input type="text" style="background-color:#eff1f3; border-radius: 15px" class="form-control col-md-5" name="content" placeholder="Viết bình luận............">
 
                                     </div>
-                                    <span class="input-group-addon">
-                                        <a class="fa fa-camera" data-popup-open="popup-1" href="#"> Check in</a>
+                                    <span>
+                                        <button class="fa fa-camera btn btn-primary" data-popup-open="popup-1" type="button"> Check in</button>
                                     </span>
-                                    <span class="input-group-addon">
-                                        <a class="fa fa-upload" href="#"> Up load</a>
+                                    <span>
+                                        <button id="upload" class="fa fa-upload btn btn-primary" type="button" onclick="addUpload()"> Up load</button>
                                     </span>
 
                                     <br>
-                            <div id="results"></div>
+
                             </div>
+                            <br>
+                            <div class="col-md-12" id="results" style="float:left"></div>
+                            </div>
+                            <div style="display:none" id="zoneupload" class="row">
+                                <div class="fallback">
+                                    <input name="multiphoto[]" type="file" multiple />
+                                  </div>
+
                             </div>
                         <div class="row" style="padding: 0 10px 0 10px;">
                             <div class="form-group">
@@ -841,6 +860,9 @@
 <script>
     function addReply(id){
         $('.reply-form-'+id).toggle();
+    }
+    function addUpload(){
+        $('#zoneupload').toggle();
     }
 </script>
 
