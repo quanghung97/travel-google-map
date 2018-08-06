@@ -114,6 +114,7 @@ class TripController extends Controller
     {
         //eager loading
         $trip = TripRepository::with('wayPoints')->findOrFail($id);
+        $this->authorize('updateTrip', $trip);
         $this->authorize('ablePlan', $trip);
         $waypoint = $trip->wayPoints;
         $le_ti = 'leave_time'.(count($waypoint)-1);
@@ -158,8 +159,11 @@ class TripController extends Controller
     public function destroy($id)
     {
         $trip = TripRepository::findOrFail($id);
+        $this->authorize('updateTrip', $trip);
         $this->authorize('ablePlan', $trip);
         $trip->wayPoints()->delete();
+        $trip->comments()->delete();
+
         $trip->delete();
         return Redirect::back()->with('message', 'Xóa thành công');
     }

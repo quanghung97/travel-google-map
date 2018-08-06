@@ -690,6 +690,70 @@
                                     <img src="{{asset($image->url)}}" style="width:250px; height:250px" alt="Ảnh Check In">
                                 @endforeach
                                 <div style="margin:10px; width:90%">
+                                    @can('updateComment', $comment)
+                                    <a class="btn btn-primary btn-xs" data-toggle="modal" href="#{{$comment->id}}">Edit</a>
+                                    <div class="modal fade"  style="z-index: 2000;" id="{{$comment->id}}">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
+                                                    </button>
+                                                    <h4 class="modal-title">Edit Comment</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="comment-form">
+
+                                                        <form id="comment-form-{{$comment->id}}" enctype="multipart/form-data" method="post" action="{{route('comment.update',$comment->id)}}">
+                                                            {{csrf_field()}}
+                                                            {{method_field('patch')}}
+                                                                        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}" >
+                                                                        <input type="hidden" name="user_address" class="user_address_input">
+                                                                        <p id="user_address"></p>
+                                                                        <div class="row" style="padding: 10px;">
+
+                                                                            <div class="form-group">
+                                                                                <div class="col-md-10">
+                                                                                    <input type="text" style="background-color:#eff1f3; border-radius: 15px" class="form-control col-md-5" name="content"
+                                                                                    value="{{$comment->content}}">
+
+                                                                                </div>
+
+                                                                                <br>
+
+                                                                        </div>
+
+                                                                        <br>
+
+                                                                        </div>
+
+                                                                    <div class="row" style="padding: 0 10px 0 10px;">
+                                                                        <div class="form-group">
+                                                                            <input style="display:none" type="submit" class="btn btn-primary" style="width: 100%;" value="Gửi bình luận">
+                                                                        </div>
+                                                                    </div>
+                                                                    </form>
+
+
+                                                    </div>
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->
+                                @endcan
+                                @can('deleteComment', $comment)
+                                    {!! Form::open([
+                                        'method'=>'DELETE',
+                                        'url' => route('comment.destroy',$comment->id),
+                                        'style' => 'display:inline'
+                                    ]) !!}
+                                        {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', [
+                                                'type' => 'submit',
+                                                'class' => 'btn btn-danger btn-xs',
+                                                'title' => 'delete',
+                                                'onclick'=>'return confirm("Confirm delete?")'
+                                        ]) !!}
+                                    {!! Form::close() !!}
+                                @endcan
                                     <input type="button" style="background-color:white; border:none;" onclick="addReply({{$comment->id}})" value="Reply">
                                     @if ($comment->address != null)
                                     <span style="float:right;">tại  <small>{{$comment->address}}</small></span>
@@ -697,7 +761,6 @@
                                 </div>
 
                                     <div id="reply">
-
 
                         {{-- reply to comment --}}
 
@@ -802,7 +865,7 @@
 
 
 
-<div class="popup" data-popup="popup-1">
+<div class="popup" data-popup="popup-1" style="z-index: 4000;">
 	<div class="popup-inner">
         <h2>Chụp ảnh sefie</h2>
 

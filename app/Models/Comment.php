@@ -34,7 +34,7 @@ class Comment extends Model
 
     public function trip()
     {
-        return $this->belongsTo('App\Models\Trip', 'id', 'trip_id');
+        return $this->belongsTo('App\Models\Trip');
     }
 
     public function replies()

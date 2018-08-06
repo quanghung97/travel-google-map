@@ -37,11 +37,26 @@ class CommentController extends Controller
         return Redirect::back()->with('message', 'Reply thành công');
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $comment_id)
     {
+        $this->validate($request, [
+            'content'=>'required'
+        ]);
+        $comment = CommentRepository::findOrFail($comment_id);
+        $this->authorize('updateComment', $comment);
+        //dd($request->content);
+        $comment->update($request->all());
+        return Redirect::back()->with('message', 'Sửa comment thành công');
+        //dd($request);
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
+        $comment = CommentRepository::findOrFail($id);
+        $this->authorize('deleteComment', $comment);
+        CommentRepository::findOrFail($id)->images()->delete();
+        CommentRepository::destroy($id);
+
+        return Redirect::back()->with('message', 'Xóa thành công comment');
     }
 }
