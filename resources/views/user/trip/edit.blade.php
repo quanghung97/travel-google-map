@@ -30,7 +30,7 @@
 </style>
 @endsection
 @section('mapjs')
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyiIshpnLak_30s9Z954mltbs97Iu4EpI" type="text/javascript"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdtVaJjFLyHdn0kTk9pF8upC4nNiLlqgM" type="text/javascript"></script>
 <script src="{{asset('js/ContextMenu.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
     var directionsService;
