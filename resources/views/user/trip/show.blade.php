@@ -835,21 +835,22 @@
                                         <button class="fa fa-camera btn btn-primary" data-popup-open="popup-1" type="button"> Check in</button>
                                     </span>
                                     <span>
-                                        <button id="upload" class="fa fa-upload btn btn-primary" type="button" onclick="addUpload()"> Up load</button>
+                                                <div class="file btn btn-sm btn-primary fa fa-upload">
+                                                    <label for="files"> Upload</label>
+                                                    <input id="files" class="file btn btn-sm btn-primary fa fa-upload" style=" position:absolute; opacity:0" name="multiphoto[]" type="file" multiple />
+                                                </div>
                                     </span>
-
+                                    <span>
+                                     <button style="display:none" type="button" class="btn btn-danger btn-sm fa fa-trash" id="clear"> Clear</button>
+                                     <output style="border: 4px dotted #cccccc; display: none; margin:0 auto; width:100%;" id="result" />
+                                    </span>
                                     <br>
 
                             </div>
                             <br>
                             <div class="col-md-12" id="results" style="float:left"></div>
                             </div>
-                            <div style="display:none" id="zoneupload" class="row">
-                                <div class="fallback">
-                                    <input name="multiphoto[]" type="file" multiple />
-                                  </div>
-
-                            </div>
+                            
                         <div class="row" style="padding: 0 10px 0 10px;">
                             <div class="form-group">
                                 <input style="display:none" type="submit" class="btn btn-primary" style="width: 100%;" value="Gửi bình luận">
@@ -924,9 +925,6 @@
 <script>
     function addReply(id){
         $('.reply-form-'+id).toggle();
-    }
-    function addUpload(){
-        $('#zoneupload').toggle();
     }
 </script>
 
@@ -1009,4 +1007,59 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 	</script>
 
+    <script type="text/javascript">
+        window.onload = function(){   
+    //Check File API support
+    if(window.File && window.FileList && window.FileReader)
+    {
+        $('#files').on("change", function(event) {
+            var files = event.target.files; //FileList object
+            var output = document.getElementById("result");
+            for(var i = 0; i< files.length; i++)
+            {
+                var file = files[i];
+                //Only pics
+                // if(!file.type.match('image'))
+                if(file.type.match('image.*')){
+                    if(this.files[0].size < 2097152){    
+                  // continue;
+                    var picReader = new FileReader();
+                    picReader.addEventListener("load",function(event){
+                        var picFile = event.target;
+                        var span = document.createElement("span");
+                        span.innerHTML = "<img style='width:250px; height:250px' src='" + picFile.result + "'" +
+                                "title='preview image'/>";
+                        output.insertBefore(span,null);            
+                    });
+                    //Read the image
+                    $('#clear, #result').show();
+                    picReader.readAsDataURL(file);
+                    }else{
+                        alert("Image Size is too big. Minimum size is 2MB.");
+                        $(this).val("");
+                    }
+                }else{
+                alert("You can only upload image file.");
+                $(this).val("");
+            }
+            }                               
+           
+        });
+    }
+}
+
+   $('#files').on("click", function() {
+        $('.thumbnail').parent().remove();
+        $('result').hide();
+        $(this).val("");
+    });
+
+    $('#clear').on("click", function() {
+        $('.thumbnail').parent().remove();
+        $('#result').hide();
+        $('#files').val("");
+        $(this).hide();
+    });
+
+    </script>
 @endsection
