@@ -1067,7 +1067,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     picReader.addEventListener("load",function(event){
                         var picFile = event.target;
                         var span = document.createElement("span");
-                        span.innerHTML = "<img style='width:250px; height:250px' src='" + picFile.result + "'" +
+                        span.innerHTML = "<img class='thumbnail1' style='width:250px; height:250px' src='" + picFile.result + "'" +
                                 "title='preview image'/>";
                         output.insertBefore(span,null);            
                     });
@@ -1089,13 +1089,13 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
    $('#files').on("click", function() {
-        $('.thumbnail').parent().remove();
-        $('result').hide();
+        $('.thumbnail1').parent().remove();
+        $('#result').hide();
         $(this).val("");
     });
 
     $('#clear').on("click", function() {
-        $('.thumbnail').parent().remove();
+        $('.thumbnail1').parent().remove();
         $('#result').hide();
         $('#files').val("");
         $(this).hide();
