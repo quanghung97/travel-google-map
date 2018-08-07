@@ -415,11 +415,21 @@
                                                         <tr>
                                                             <td>{{ $trip->wayPoints[$i]->address }}</td>
                                                             <td>
-                                                                  {{  date('d-m-Y H:i:s',strtotime($trip->wayPoints[$i]->leave_time))  }}
+
+                                                                  @if ($trip->wayPoints[$i]->leave_time == null)
+                                                                      -
+                                                                  @else
+                                                                      {{  date('d-m-Y H:i:s',strtotime($trip->wayPoints[$i]->leave_time))  }}
+                                                                  @endif
                                                             </td>
                                                             <td>{{ $trip->wayPoints[$i+1]->address }}</td>
                                                             <td>
-                                                                    {{  date('d-m-Y H:i:s',strtotime( $trip->wayPoints[$i+1]->arrival_time ))  }}
+
+                                                                    @if ($trip->wayPoints[$i+1]->arrival_time == null)
+                                                                        -
+                                                                    @else
+                                                                        {{  date('d-m-Y H:i:s',strtotime( $trip->wayPoints[$i+1]->arrival_time ))  }}
+                                                                    @endif
                                                             </td>
 
                                                             <td>{{ $trip->wayPoints[$i]->vehicle }}</td>
@@ -442,11 +452,21 @@
                                                         <tr>
                                                             <td>{{ $trip->wayPoints[$i]->address }}</td>
                                                             <td>
+                                                                @if ($trip->wayPoints[$i]->leave_time == null)
+                                                                    -
+                                                                @else
                                                                     {{  date('d-m-Y H:i:s',strtotime($trip->wayPoints[$i]->leave_time))  }}
+                                                                @endif
+
                                                             </td>
                                                             <td>{{ $trip->wayPoints[$i+1]->address }}</td>
                                                             <td>
-                                                                    {{  date('d-m-Y H:i:s',strtotime( $trip->wayPoints[$i+1]->arrival_time ))  }}
+                                                                    @if ($trip->wayPoints[$i+1]->arrival_time == null)
+                                                                        -
+                                                                    @else
+                                                                        {{  date('d-m-Y H:i:s',strtotime( $trip->wayPoints[$i+1]->arrival_time ))  }}
+                                                                    @endif
+
                                                             </td>
 
                                                             <td>{{ $trip->wayPoints[$i]->vehicle }}</td>
@@ -461,11 +481,21 @@
                                                 <tr>
                                                     <td>{{ $trip->wayPoints[count($trip->wayPoints)-1]->address }}</td>
                                                     <td>
-                                                            {{  date('d-m-Y H:i:s',strtotime($trip->wayPoints[count($trip->wayPoints)-1]->leave_time ))  }}
+
+                                                            @if ($trip->wayPoints[count($trip->wayPoints)-1]->leave_time == null)
+                                                                -
+                                                            @else
+                                                                {{  date('d-m-Y H:i:s',strtotime($trip->wayPoints[count($trip->wayPoints)-1]->leave_time ))  }}
+                                                            @endif
                                                     </td>
                                                     <td>{{ $trip->wayPoints[0]->address }}</td>
                                                     <td>
-                                                            {{  date('d-m-Y H:i:s',strtotime(  $trip->wayPoints[0]->arrival_time ))  }}
+
+                                                            @if ( $trip->wayPoints[0]->arrival_time == null)
+                                                                -
+                                                            @else
+                                                                {{  date('d-m-Y H:i:s',strtotime(  $trip->wayPoints[0]->arrival_time ))  }}
+                                                            @endif
                                                     </td>
 
                                                     <td>{{ $trip->wayPoints[count($trip->wayPoints)-1]->vehicle }}</td>
@@ -488,11 +518,21 @@
                                                 <tr>
                                                     <td>{{ $trip->wayPoints[count($trip->wayPoints)-1]->address }}</td>
                                                     <td>
-                                                            {{  date('d-m-Y H:i:s',strtotime(  $trip->wayPoints[count($trip->wayPoints)-1]->leave_time  ))  }}
+
+                                                            @if ( $trip->wayPoints[count($trip->wayPoints)-1]->leave_time == null)
+                                                                -
+                                                            @else
+                                                                {{  date('d-m-Y H:i:s',strtotime(  $trip->wayPoints[count($trip->wayPoints)-1]->leave_time  ))  }}
+                                                            @endif
                                                     </td>
                                                     <td>{{ $trip->wayPoints[0]->address }}</td>
                                                     <td>
-                                                            {{  date('d-m-Y H:i:s',strtotime(   $trip->wayPoints[0]->arrival_time   ))  }}
+
+                                                            @if ( $trip->wayPoints[0]->arrival_time  == null)
+                                                                -
+                                                            @else
+                                                                {{  date('d-m-Y H:i:s',strtotime(   $trip->wayPoints[0]->arrival_time   ))  }}
+                                                            @endif
                                                     </td>
                                                     <td>{{ $trip->wayPoints[count($trip->wayPoints)-1]->vehicle }}</td>
                                                     <td>
@@ -541,7 +581,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Show List Joiner <small>Sessions</small></h2>
+                            <h2>Show List Joiner <small>Số người tham gia <strong>{{$trip->people_number}}</strong></small></h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
