@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\Facades\TripRepository;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $trip = TripRepository::with('wayPoints')->get();
+
+        return view('user.show_all_trips', compact('trip'));
     }
 }

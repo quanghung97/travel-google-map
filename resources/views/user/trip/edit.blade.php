@@ -531,6 +531,7 @@
                                         </table>
                                     </div>
                                 </div>
+                                <a href="{{url('user/trip/edit_waypoint/'.$trip->id)}}"><input type="button" class="btn btn-warning" style="float:right" value="Sửa các điểm đến"></a>
                                 <button style="float:right" class="btn btn-success" type="submit">Ghi nhận</button>
                                 {!! Form::close() !!}
                                 </div>
