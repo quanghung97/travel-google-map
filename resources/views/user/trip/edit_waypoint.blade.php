@@ -204,6 +204,12 @@
                         // createTable();
                         updateRow(marker);
                 });
+                google.maps.event.addListener(marker, 'rightclick', function() {
+                    if(!end_plan){
+                        // deleteRow(marker);
+                        deleteMarker(marker);
+                    }
+                });
 
                 }
             });
@@ -250,6 +256,7 @@
                     recalculateRoute(marker);
                     updateRow(marker);
                 });
+                
             }
         });
     }
@@ -555,8 +562,11 @@
                                         </table>
                                     </div>
                                 </div>
-                                <button type="submit" id="submit" disabled="disabled" class="btn btn-danger" style="float:right">Tạo kế hoạch</button>
+                                <button type="submit" id="submit" disabled="disabled" class="btn btn-danger" style="float:right">Cập nhật điểm</button>
                                 </form>
+
+                                <p><small>Chú ý: Do sự bất đồng bộ của Google nên số thứ tự điểm trong bảng có thể bị sai. Vui lòng F5 để load lại trang</small></p>
+
                             </div>
                             </div>
                         </div>
