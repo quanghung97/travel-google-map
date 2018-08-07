@@ -890,7 +890,7 @@
                             <br>
                             <div class="col-md-12" id="results" style="float:left"></div>
                             </div>
-                            
+
                         <div class="row" style="padding: 0 10px 0 10px;">
                             <div class="form-group">
                                 <input style="display:none" type="submit" class="btn btn-primary" style="width: 100%;" value="Gửi bình luận">
@@ -1048,7 +1048,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	</script>
 
     <script type="text/javascript">
-        window.onload = function(){   
+        window.onload = function(){
     //Check File API support
     if(window.File && window.FileList && window.FileReader)
     {
@@ -1061,7 +1061,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 //Only pics
                 // if(!file.type.match('image'))
                 if(file.type.match('image.*')){
-                    if(this.files[0].size < 2097152){    
+                    if(this.files[0].size < 2097152){
                   // continue;
                     var picReader = new FileReader();
                     picReader.addEventListener("load",function(event){
@@ -1069,21 +1069,21 @@ document.addEventListener("DOMContentLoaded", function() {
                         var span = document.createElement("span");
                         span.innerHTML = "<img class='thumbnail1' style='width:250px; height:250px' src='" + picFile.result + "'" +
                                 "title='preview image'/>";
-                        output.insertBefore(span,null);            
+                        output.insertBefore(span,null);
                     });
                     //Read the image
                     $('#clear, #result').show();
                     picReader.readAsDataURL(file);
                     }else{
                         alert("Image Size is too big. Minimum size is 2MB.");
-                        $(this).val("");
+
                     }
                 }else{
                 alert("You can only upload image file.");
-                $(this).val("");
+                
             }
-            }                               
-           
+            }
+
         });
     }
 }
