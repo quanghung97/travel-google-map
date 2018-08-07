@@ -122,7 +122,7 @@
                   </li>
 
                   <li class="">
-                    <a href="{{url('user/trip/create')}}" class="user-profile dropdown-toggle" >
+                    <a href="{{url('user/trip/create')}}" class="user-profile" >
                           Lên kế hoạch
                     </a>
 

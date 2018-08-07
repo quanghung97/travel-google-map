@@ -22,12 +22,6 @@
         {!! Form::select('roles[]', $roles, isset($user)?$user->getRoleNames():null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control', 'multiple']) !!}
         {!! $errors->first('roles', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('balance') ? 'has-error' : ''}}">
-    {!! Form::label('balance', 'Balance', ['class' => 'col-md-4 control-label']) !!}
-    <div class="col-md-6">
-        {!! Form::number('balance', null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
-        {!! $errors->first('balance', '<p class="help-block">:message</p>') !!}
-    </div>
 </div>
 
 <div class="form-group">
