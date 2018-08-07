@@ -162,8 +162,14 @@ class TripController extends Controller
         $this->authorize('updateTrip', $trip);
         $this->authorize('ablePlan', $trip);
         $trip->wayPoints()->delete();
-        $trip->comments()->delete();
+        $trip->users()->detach();
+        $comments = $trip->comments();
+        //dd($trip->comments);
+        foreach ($trip->comments as $comment) {
+            $comment->images()->delete();
+        }
 
+        $comments->delete();
         $trip->delete();
         return Redirect::back()->with('message', 'Xóa thành công');
     }
