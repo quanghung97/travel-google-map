@@ -58,6 +58,7 @@
                                         <td>
                                             <a href="{{ url('/user/trip/' . $item->id) }}" title="View trip"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             @can('ablePlan', $item)
+                                            @can('updateTrip', $item)
                                             <a href="{{ url('/user/trip/' . $item->id . '/edit') }}" title="Edit trip"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
                                             {!! Form::open([
                                                 'method'=>'DELETE',
@@ -71,6 +72,24 @@
                                                         'onclick'=>'return confirm("Confirm delete?")'
                                                 ]) !!}
                                             {!! Form::close() !!}
+                                            @endcan
+                                            @can('cantupdateTrip', $item)
+                                            @can('follow', $item)
+                                                <a href="{{ url('/user/trip/follow/unfollow/' . $item->id) }}"><button class="btn btn-warning btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Unfollow</button></a>
+                                              @else
+                                                <a href="{{ url('/user/trip/follow/follow/' . $item->id) }}"><button class="btn btn-success btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Follow</button></a>
+                                              @endcan
+                                              @can('joinAble', $item)
+                                                <a href="{{url('user/trip/verify/verify/'.$item->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Join</button></a>
+                                              @endcan
+                                              @can('join', $item)
+                                                <a href="{{url('user/trip/join/unjoin/'.$item->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Unjoin</button></a>
+                                              @endcan
+                                              @can('verify', $item)
+                                                <a href="{{url('user/trip/verify/unverify/'.$item->id)}}"><button class="btn btn-danger btn-sm"><i class="fa fa-group"></i> Unverify</button></a>
+                                              @endcan
+                                            @endcan
+                                            
                                             @endcan
                                         </td>
                                     </tr>
