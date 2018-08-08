@@ -133,6 +133,7 @@
             destination: new google.maps.LatLng(locations[0][1], locations[0][2]),
             travelMode: google.maps.DirectionsTravelMode.DRIVING
         };
+        
         directionsService.route(request, function(response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
                 var marker = new google.maps.Marker({
@@ -155,14 +156,18 @@
             }
         });
         isFirst = false;
-        for (var i = 0; i < locations.length - 1; i++) {
-            var request = {
+        var i = 0;
+        while( i < locations.length-1) {
+            (function(i) {
+            setTimeout(function(){
+                var request = {
                 origin: new google.maps.LatLng(locations[i][1], locations[i][2]),
                 destination: new google.maps.LatLng(locations[i + 1][1], locations[i + 1][2]),
                 travelMode: google.maps.DirectionsTravelMode.DRIVING
             };
             directionsService.route(request, function(response, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
+                   
                     var marker = new google.maps.Marker({
                         position: response.routes[0].legs[0].end_location,
                         map: map,
@@ -173,9 +178,7 @@
                     appendTable(marker);
                     showInfo(marker);
                     marker.arrayIndex = markers.length - 1;
-                    
-
-
+                
                     var polyline = new google.maps.Polyline();
                     var path = response.routes[0].overview_path;
                     for (var x in path) {
@@ -183,21 +186,26 @@
                     }
                     polyline.setMap(map);
                     polylines.push(polyline);
+                    
                     google.maps.event.addListener(marker, 'dragend', function() {
                         recalculateRoute(marker);
                         // createTable();
                         updateRow(marker);
-                });
+                    });
                 google.maps.event.addListener(marker, 'rightclick', function() {
                     if(!end_plan){
                         // deleteRow(marker);
                         deleteMarker(marker);
                     }
                 });
-
+                
                 }
             });
+            } ,3000*i); })(i);
+        i++;
         }
+            
+        
 
 
 
@@ -295,7 +303,7 @@
                                 <button type="submit" id="submit" disabled="disabled" class="btn btn-danger" style="float:right">Cập nhật điểm</button>
                                 </form>
 
-                                <p><small>Chú ý: Do sự bất đồng bộ của Google nên số thứ tự điểm trong bảng có thể bị sai. Vui lòng F5 để load lại trang</small></p>
+                                <p><small>Chú ý: Do sự bất đồng bộ vui lòng không click vào map khi đang load các điểm đã tạo trước đó, số thứ tự trong bảng có thể bị sai. Vui lòng F5 để load lại trang</small></p>
 
                             </div>
                             </div>

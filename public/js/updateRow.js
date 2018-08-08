@@ -14,6 +14,7 @@ function updateRow(marker){
                             $("#address"+marker.arrayIndex).attr('value',results[0].formatted_address);
                             $("#td_address"+marker.arrayIndex).text(results[0].formatted_address);
                         } else {
+                            alert('Query Limited,This problem have too much points and google map need updateRow, table may be dont have exactly infomation location. Ok to continue this query');
                             console.log('query limited');
                         }
                     });

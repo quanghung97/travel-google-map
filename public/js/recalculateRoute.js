@@ -18,6 +18,8 @@
                     }
                     polyline.setMap(map);
                     polylines[marker.arrayIndex - 1] = polyline;
+                } else {
+                    alert('query limited');
                 }
             });
         }
@@ -39,6 +41,8 @@
                     }
                     polyline.setMap(map);
                     polylines[marker.arrayIndex] = polyline;
+                } else {
+                    alert('query limited');
                 }
             });
         }
