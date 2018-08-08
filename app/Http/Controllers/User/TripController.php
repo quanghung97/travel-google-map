@@ -174,20 +174,22 @@ class TripController extends Controller
         return Redirect::back()->with('message', 'Xóa thành công');
     }
 
-    public function edit_wayPoint($id){
+    public function edit_wayPoint($id)
+    {
         $trip = TripRepository::with('wayPoints')->findOrFail($id);
         $this->authorize('updateTrip', $trip);
         $this->authorize('ablePlan', $trip);
         // dd($data);
         return view('user.trip.edit_waypoint', compact('trip'));
     }
-    public function update_wayPoint(Request $request,$id){
+    public function update_wayPoint(Request $request, $id)
+    {
         $trip = TripRepository::with('wayPoints')->findOrFail($id);
         $this->authorize('ablePlan', $trip);
         $waypoint = $trip->wayPoints;
         $leave_time = $waypoint[0]->leave_time;
         $arrival_time = $waypoint[0]->arrival_time;
-        for($i = 0; $i < count($waypoint); $i++ ){
+        for ($i = 0; $i < count($waypoint); $i++) {
             $waypoint[$i]->delete();
         }
         $requestData = $request->except('name', 'file', '_token', 'leave_time0', 'arrival_time0');
