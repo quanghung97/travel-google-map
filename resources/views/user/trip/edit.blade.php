@@ -1,37 +1,14 @@
 @extends('user.layouts.app_user')
 @section('css')
-<style type="text/css">
-    #map {
-        height: 300px;
-    }
-
-    .context_menu{
-	    background-color:white;
-	    border:1px solid gray;
-    }
-    .context_menu_item{
-	    padding:3px 6px;
-    }
-    .context_menu_item:hover{
-	    background-color:#CCCCCC;
-    }
-    .context_menu_separator{
-	    background-color:gray;
-	    height:1px;
-	    margin:0;
-	    padding:0;
-    }
-    th {
-        text-align: center;
-    }
-    .table td{
-        position:relative;
-    }
-</style>
+    <link rel="stylesheet" href="{{asset('css/map.css')}}">
 @endsection
 @section('mapjs')
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdtVaJjFLyHdn0kTk9pF8upC4nNiLlqgM" type="text/javascript"></script>
 <script src="{{asset('js/ContextMenu.js')}}" type="text/javascript"></script>
+<script src="{{asset('js/deleteMarker.js')}}"></script>
+<script src="{{asset('js/recalculateRoute.js')}}"></script>
+<script src="{{asset('js/showInfo.js')}}"></script>
+<script src="{{asset('js/addWayPointToRoute.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
     var directionsService;
     var directionsRenderer;
@@ -61,130 +38,14 @@
         @foreach($trip->wayPoints as $item)
         [{{ $item->id }}, {{$item->lat}}, {{$item->lng}}],
         @endforeach
-        [{{ $item->id }}, {{$trip->wayPoints[0]->lat}}, {{$trip->wayPoints[0]->lng}}]
-    ];
+        [{{ $item->id }}, {{$trip->wayPoints[0]->lat}}, {{$trip->wayPoints[0]->lng}}]];
     var markers = [];
     var polylines = [];
     var isFirst = true;
 
-    function addWayPointToRoute(location) {
-        if (isFirst) {
-            addFirstWayPoint(location);
-            isFirst = false;
-        } else {
-            appendWayPoint(location);
-        }
-    }
+   
 
-    function addFirstWayPoint(location) {
-        var request = {
-            origin: location,
-            destination: location,
-            travelMode: google.maps.DirectionsTravelMode.DRIVING
-        };
-        directionsService.route(request, function(response, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
-                var marker = new google.maps.Marker({
-                    position: response.routes[0].legs[0].start_location,
-                    map: map,
-                    draggable: false,
-                    icon: new google.maps.MarkerImage(
-                        'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-                    )
-                });
-                marker.arrayIndex = 0;
-                markers.push(marker);
-                showInfo(marker);
-                google.maps.event.addListener(marker, 'dragend', function() {
-                    recalculateRoute(marker);
-                });
-            }
-        });
-    }
-
-    function appendWayPoint(location) {
-        var request = {
-            origin: markers[markers.length - 1].position,
-            destination: location,
-            travelMode: google.maps.DirectionsTravelMode.DRIVING
-        };
-
-        directionsService.route(request, function(response, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
-                if (location == markers[0].position) {
-                    var marker = new google.maps.Marker({
-                        position: response.routes[0].legs[0].end_location,
-                        map: map,
-                        draggable: false,
-                        icon: new google.maps.MarkerImage(
-                            'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-                        )
-                    });
-
-                } else {
-                    var marker = new google.maps.Marker({
-                        position: response.routes[0].legs[0].end_location,
-                        map: map,
-                        draggable: false,
-                    });
-                }
-                markers.push(marker);
-                showInfo(marker);
-                marker.arrayIndex = markers.length - 1;
-
-                google.maps.event.addListener(marker, 'dragend', function() {
-                    recalculateRoute(marker);
-                });
-
-
-                var polyline = new google.maps.Polyline();
-                var path = response.routes[0].overview_path;
-                for (var x in path) {
-                    polyline.getPath().push(path[x]);
-                }
-                polyline.setMap(map);
-                polylines.push(polyline);
-
-                google.maps.event.addListener(marker, 'rightclick', function() {
-                    deleteMarker(marker);
-                });
-
-            }
-        });
-
-    }
-
-    function showInfo(marker) {
-        google.maps.event.addListener(marker, 'click', function(event) {
-            var geocoder = new google.maps.Geocoder;
-            var infowindow = new google.maps.InfoWindow;
-            geocoder.geocode({
-                'location': event.latLng
-            }, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    map.setCenter(results[0].geometry.location);
-                    if (results && results.length > 0) {
-                        marker.formatted_address = results[0].formatted_address;
-                        //updateMarkerAddress(results[0].formatted_address);
-                    } else {
-                        marker.formatted_address = 'Cannot determine address at this location.';
-                        //updateMarkerAddress('Cannot determine address at this location.');
-                    }
-                    infowindow.setContent(marker.formatted_address + "<br>coordinates: " + marker.getPosition().toUrlValue(6));
-
-                } else {
-                    alert('Geocode was not successful for the following reason: ' + status);
-                }
-
-            });
-            //infowindow.setContent("double click to delete this waypoint");
-            infowindow.open(map, this);
-            //updateMarkerPosition(event.latLng);
-            google.maps.event.addListener(marker, "dragstart", function() {
-                infowindow.close();
-            });
-        });
-    }
+    
 
     function drawAgain() {
         //addFirstWayPoint(new google.maps.LatLng(locations[0][1], locations[0][2]));
@@ -549,69 +410,7 @@
 
 @section('js')
 <script type="text/javascript">
-    // $(document).ready(function() {
-    //     var listaddress = [];
-    //     $("#cretrip").click(function() {
-    //         //var table = ;
-
-
-    //         //$("#listwp").append('<div class="module_holder"><div class="module_item"><img src="images/i-5.png" alt="Sweep Stakes"><br>sendSMS</div></div>');
-
-    //         var i = 0;
-    //         while (i < markers.length) {
-
-    //             (function(i) {
-    //                 setTimeout(function() {
-    //                     var geocoderr = new google.maps.Geocoder;
-    //                     results = null;
-    //                     geocoderr.geocode({
-    //                         'location': markers[i].position
-    //                     }, function(results, status) {
-    //                         if (status == google.maps.GeocoderStatus.OK) {
-    //                             // var table = $("#datatable").DataTable();
-    //                             // table.row.add([
-    //                             //     results[0].geometry.location.lat(),
-    //                             //     results[0].geometry.location.lng(),
-    //                             //     results[0].formatted_address,
-    //                             // ]).draw();
-    //                             // var address = results[0].formatted_address;
-    //                             // $('#listwp').append(address + "<br>");
-    //                             // address = '';
-    //                             $('#listwp > tbody:last-child').append(
-    //                                 '<tr>' // need to change closing tag to an opening `<tr>` tag.
-    //                                  +
-    //                                  '<td name="ordernum'+i+'">' + (i+1) + '</td>' +
-    //                                 '<td name="lat'+i+'">' + results[0].geometry.location.lat() + '</td>' +
-    //                                 '<td name="lng'+i+'">' + results[0].geometry.location.lng() + '</td>' +
-    //                                 '<td name="address'+i+'">' + results[0].formatted_address + '</td>'
-    //                                  +
-    //                                 '</tr>');
-
-    //                         } else {
-    //                             console.log('query limited');
-    //                         }
-
-    //                     });
-    //                 }, 3000 * i);
-    //             })(i);
-
-    //             i++;
-    //         }
-
-    //infowindow.setContent("double click to delete this waypoint");
-    //infowindow.open(map, this);
-    //updateMarkerPosition(event.latLng);
-
-    //console.log(listaddress[0]);
-    //console.log(markers[i].getPosition().lat());
-    //using ajax to send to controller php
-    //console.log(listaddress[i]);
-
-
-    //     });
-
-    // });
-
+    
     function createTable() {
         var i = 0;
         while (i < markers.length) {
@@ -695,25 +494,6 @@
         });
 
     });
-
-    var addNewLogo = function (input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                //Hiển thị ảnh vừa mới upload lên
-                $('#logo-img').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
 </script>
-
-<script type="text/javascript">
-      $(document).ready(function() {
-          $('#datatable').DataTable();
-          //$('<input />').appendTo('#datepicker')
-              // $('<input />').appendTo('.datetimepicker').datetimepicker();
-
-      });
-</script>
+<script src="{{asset('js/changeImage.js')}}"></script>
 @endsection
