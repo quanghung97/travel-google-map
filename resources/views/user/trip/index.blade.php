@@ -10,12 +10,13 @@
                 <div class="card">
 
                     <div class="card-body">
-                        <a href="{{ url('/admin/admin/user/create') }}" class="btn btn-success btn-sm" title="Add New user">
-                            <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                        </a>
-
                         <br/>
                         <br/>
+                        @if(session('message'))
+                        <div class="alert alert-success">
+                            <strong>{{session('message')}}</strong>
+                        </div>
+                        @endif
                         <div class="clearfix"></div>
 
                         <div class="row">
@@ -40,6 +41,7 @@
                           </ul>
                           <div class="clearfix"></div>
                         </div>
+                        <div class="x_content">
                         <div class="table-responsive">
                             <table id="datatable" class="table table-borderless">
                                 <thead>
@@ -55,10 +57,11 @@
                                         <td>{{ $item->status }}</td>
                                         <td>
                                             <a href="{{ url('/user/trip/' . $item->id) }}" title="View trip"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                            @can('ablePlan', $item)
                                             <a href="{{ url('/user/trip/' . $item->id . '/edit') }}" title="Edit trip"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
                                             {!! Form::open([
                                                 'method'=>'DELETE',
-                                                'url' => ['/user/trip/', $item->id],
+                                                'url' => ['/user/trip', $item->id],
                                                 'style' => 'display:inline'
                                             ]) !!}
                                                 {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', [
@@ -68,11 +71,13 @@
                                                         'onclick'=>'return confirm("Confirm delete?")'
                                                 ]) !!}
                                             {!! Form::close() !!}
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
+                        </div>
                         </div>
                       </div>
                       </div>
@@ -86,9 +91,5 @@
     </div>
 @endsection
 @section('js')
-  <script type="text/javascript">
-    $(document).ready( function () {
-        $('#datatable').DataTable();
-      } );
-        </script>
+  
 @endsection

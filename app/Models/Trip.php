@@ -29,7 +29,7 @@ class Trip extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\Models\User', 'user_trip', 'trip_id', 'user_id');
+        return $this->belongsToMany('App\Models\User', 'user_trip', 'trip_id', 'user_id')->withPivot('status');
     }
 
     public function owner()
@@ -57,7 +57,7 @@ class Trip extends Model
 
     public function comments()
     {
-        return $this->hasMany('App\Models\Comment', 'trip_id', 'id');
+        return $this->morphMany('App\Models\Comment', 'commentable');
     }
 
     public function wayPoints()

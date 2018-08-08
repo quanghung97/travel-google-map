@@ -1,10 +1,8 @@
 
-@if (!auth()->user()->can('Access Admin'))
   @extends('layouts.app_user')
   @section('sidebar')
     @include('user.layouts.sidebar_user')
   @endsection
-
   @section('js')
             <script type="text/javascript">
                   $(document).ready(function() {
@@ -21,4 +19,5 @@
                       });
                   </script>
 @endsection
-@endif
+
+

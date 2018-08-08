@@ -18,9 +18,7 @@ class ListController extends Controller
 
     public function hotest()
     {
-        $listFollowJoinUser = TripRepository::getAllTripHotest();
-        // dd($listFollowJoinUser);
-        //dd($listFollowJoinUser[0]->usersJoin_count);
+        $trip = TripRepository::getTripHotest();
         return view('user.home.hot.index', compact('trip'));
     }
 

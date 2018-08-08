@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Redirect;
 
 class StoreTripRequest extends FormRequest
 {
@@ -25,6 +26,8 @@ class StoreTripRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'leave_time0' => 'required',
+            'arrival_time0' => 'required'
         ];
     }
 
@@ -37,6 +40,8 @@ class StoreTripRequest extends FormRequest
     {
         return [
             'name.required' => 'Bạn chưa nhập Tên chuyến đi!',
+            'leave_time0.required' => 'Bạn chưa nhập thời gian bắt đầu',
+            'arrival_time0.required' => 'Bạn chưa nhập thời gian kết thúc'
         ];
     }
 }

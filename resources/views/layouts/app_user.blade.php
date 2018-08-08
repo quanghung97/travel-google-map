@@ -7,7 +7,7 @@
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-  	<link rel="icon" href="images/favicon.ico" type="image/ico" />
+  	<link rel="icon" href="{{ URL::asset('gentelella_master/production/images/favicon.ico') }}" type="image/ico" />
 
       <title>User Travel </title>
       <!-- Bootstrap -->
@@ -38,6 +38,8 @@
       <link href="{{ URL::asset('gentelella_master/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css') }}" rel="stylesheet">
       <link href="{{ URL::asset('gentelella_master/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css') }}" rel="stylesheet">
 
+      <!-- Dropzone.js -->
+      <link href="{{ URL::asset('gentelella_master/vendors/dropzone/dist/min/dropzone.min.css') }}" rel="stylesheet">
       @yield('css')
       @yield('mapjs')
     </head>
@@ -48,7 +50,7 @@
           <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
               <div class="navbar nav_title" style="border: 0;">
-                <a class="site_title"><i class="fa fa-paw"></i> <span>Travelling</span></a>
+                <a href="{{url('/home')}}" class="site_title"><i class="fa fa-paw"></i> <span>Travelling</span></a>
               </div>
 
               <div class="clearfix"></div>
@@ -120,7 +122,7 @@
                   </li>
 
                   <li class="">
-                    <a href="{{url('user/trip/create')}}" class="user-profile dropdown-toggle" >
+                    <a href="{{url('user/trip/create')}}" class="user-profile" >
                           Lên kế hoạch
                     </a>
 
@@ -207,6 +209,9 @@
       <script src="{{ URL::asset('gentelella_master/vendors/jszip/dist/jszip.min.js') }}"></script>
       <script src="{{ URL::asset('gentelella_master/vendors/pdfmake/build/pdfmake.min.js') }}"></script>
       <script src="{{ URL::asset('gentelella_master/vendors/pdfmake/build/vfs_fonts.js') }}"></script>
+
+      <!-- Dropzone.js -->
+      <script src="{{ URL::asset('gentelella_master/vendors/dropzone/dist/min/dropzone.min.js') }}"></script>
       @yield('js')
 
     </body>

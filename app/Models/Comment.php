@@ -25,16 +25,16 @@ class Comment extends Model
      *
      * @var array
      */
-    protected $fillable = ['content', 'trip_id', 'user_id', 'parent_id'];
+    protected $fillable = ['content', 'trip_id', 'user_id', 'address'];
 
     public function user()
     {
-        return $this->belongsTo('App\Models\User', 'id', 'user_id');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function trip()
     {
-        return $this->belongsTo('App\Models\Trip', 'id', 'trip_id');
+        return $this->belongsTo('App\Models\Trip');
     }
 
     public function replies()
@@ -50,5 +50,18 @@ class Comment extends Model
     public function images()
     {
         return $this->hasMany('App\Models\Image', 'comment_id', 'id');
+    }
+
+    /**
+    * Get all of the owning commentable models.
+    */
+    public function commentable()
+    {
+        return $this->morphTo();
+    }
+
+    public function comments()
+    {
+        return $this->morphMany('App\Models\Comment', 'commentable');
     }
 }

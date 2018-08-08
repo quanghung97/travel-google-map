@@ -3,8 +3,12 @@
 namespace App\Providers;
 
 use App\Models\User;
+use App\Models\Trip;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Gate;
 use App\Policies\ProfilePolicy;
+use App\Policies\TripPolicy;
+use App\Policies\CommentPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -17,6 +21,8 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
         User::class => ProfilePolicy::class,
+        Trip::class => TripPolicy::class,
+        Comment::class => CommentPolicy::class,
     ];
 
     /**

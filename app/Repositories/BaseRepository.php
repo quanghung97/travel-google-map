@@ -144,6 +144,7 @@ abstract class BaseRepository implements BaseInterface
         return $this->model->whereIn('id', $values)
             ->orderByRaw("FIND_IN_SET($column, '$valuesString')");
     }
+
     /**
      * Call method not exist in object
      * @return mixed

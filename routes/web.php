@@ -30,13 +30,29 @@ Route::group(['prefix'=>'user', 'middleware'=>'auth'], function () {
     //@show Trip in TripController filter follow, owner, join, verify
     //@update Trip in TripController filter follow, owner, join, verify
     Route::resource('trip', 'User\TripController');
+    Route::resource('comment', 'CommentController', ['only'=>['update','destroy']]);
     Route::group(['prefix'=>'trip'], function () {
+        Route::get('/edit_waypoint/{id}', 'User\TripController@edit_wayPoint');
+        Route::post('/edit_waypoint/{id}', 'User\TripController@update_wayPoint');
+
         Route::group(['prefix'=>'follow'], function () {
-            Route::get('/', 'User\TripFollowController@index');
+            Route::get('/index/{id}', 'User\TripFollowController@index');
+            Route::get('/follow/{id}', 'User\TripFollowController@flow');
+            Route::get('/unfollow/{id}', 'User\TripFollowController@unflow');
         });
         Route::group(['prefix'=>'join'], function () {
-            Route::get('/', 'User\TripFollowController@index');
+            Route::get('/index/{id}', 'User\TripJoinController@index');
+            Route::get('/unjoin/{id}', 'User\TripJoinController@unjoin');
+            Route::get('/out/{a}/{b}', 'User\TripJoinController@out');
         });
+        Route::group(['prefix'=>'verify'], function () {
+            Route::get('/verify/{id}', 'User\TripVerifyController@verify');
+            Route::get('/unverify/{id}', 'User\TripVerifyController@unverify');
+            Route::get('/deny/{a}/{b}', 'User\TripVerifyController@deny');
+            Route::get('/accept/{a}/{b}', 'User\TripVerifyController@accept');
+        });
+        Route::post('comment/create/{trip}', 'CommentController@addTripComment')->name('tripcomment.store');
+        Route::post('reply/create/{comment}', 'CommentController@addReplyComment')->name('replycomment.store');
     });
     Route::group(['prefix'=>'home'], function () {
         Route::get('newest', 'User\Home\ListController@newest');
