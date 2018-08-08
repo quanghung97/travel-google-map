@@ -20,6 +20,13 @@
                     polylines[marker.arrayIndex - 1] = polyline;
                 } else {
                     alert('query limited');
+                    var polyline = new google.maps.Polyline();
+                    var path = response.routes[0].overview_path;
+                    for (var x in path) {
+                        polyline.getPath().push(path[x]);
+                    }
+                    polyline.setMap(map);
+                    polylines[marker.arrayIndex - 1] = polyline;
                 }
             });
         }
@@ -43,6 +50,13 @@
                     polylines[marker.arrayIndex] = polyline;
                 } else {
                     alert('query limited');
+                    var polyline = new google.maps.Polyline();
+                    var path = response.routes[0].overview_path;
+                    for (var x in path) {
+                        polyline.getPath().push(path[x]);
+                    }
+                    polyline.setMap(map);
+                    polylines[marker.arrayIndex] = polyline;
                 }
             });
         }
