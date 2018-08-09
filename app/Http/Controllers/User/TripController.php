@@ -174,14 +174,14 @@ class TripController extends Controller
         return Redirect::back()->with('message', 'Xóa thành công');
     }
 
-    public function edit_wayPoint($id){
+    public function editWayPoint($id){
         $trip = TripRepository::with('wayPoints')->findOrFail($id);
         $this->authorize('updateTrip', $trip);
         $this->authorize('ablePlan', $trip);
         // dd($data);
         return view('user.trip.edit_waypoint', compact('trip'));
     }
-    public function update_wayPoint(Request $request,$id){
+    public function updateWayPoint(Request $request,$id){
         $trip = TripRepository::with('wayPoints')->findOrFail($id);
         $this->authorize('ablePlan', $trip);
         $waypoint = $trip->wayPoints;

@@ -33,8 +33,8 @@ Route::group(['prefix'=>'user', 'middleware'=>'auth'], function () {
     Route::resource('comment', 'CommentController', ['only'=>['update','destroy']]);
     Route::group(['prefix'=>'trip'], function () {
 
-        Route::get('/edit_waypoint/{id}','User\TripController@edit_wayPoint');
-        Route::post('/edit_waypoint/{id}','User\TripController@update_wayPoint');
+        Route::get('/edit-waypoint/{id}','User\TripController@editWayPoint');
+        Route::post('/edit-waypoint/{id}','User\TripController@updateWayPoint');
 
         Route::group(['prefix'=>'follow'], function () {
             Route::get('/index/{id}', 'User\TripFollowController@index');

@@ -270,7 +270,7 @@
                                 <div class="x_content">
 
 
-                                <form action="{{url('user/trip/edit_waypoint/'.$trip->id)}}" enctype="multipart/form-data" method="POST">
+                                <form action="{{url('user/trip/edit-waypoint/'.$trip->id)}}" enctype="multipart/form-data" method="POST">
                                     {{ csrf_field() }}
                                     <div class="row">
 
