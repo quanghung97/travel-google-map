@@ -9,7 +9,6 @@ use App\Repositories\Facades\WayPointRepository;
 use Illuminate\Http\Request;
 use Auth;
 use Redirect;
-use App\Models\WayPoint;
 use Carbon\Carbon;
 
 class TripController extends Controller
